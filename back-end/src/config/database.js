@@ -1,8 +1,8 @@
 //Thiết lập các kết nối đến database
 require('dotenv').config();
-const mssql = require('mssql');
+const mssql = require('mssql/msnodesqlv8');
 
-const connection =mssql.ConnectionPool({
+var config={
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
@@ -10,6 +10,8 @@ const connection =mssql.ConnectionPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
-});
+};
 
+
+const connection = mssql.connect(config); //Kết nối đến database
 module.exports = connection;
