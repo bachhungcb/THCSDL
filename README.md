@@ -10,3 +10,4 @@
 Lưu ý: +Tuyệt đối không push module lên git, trong khi làm btl thì không có vấn đề nhưng đi làm bị tế sống là cái chắc. </br>
        +Anh em muốn chạy back end hay front end thì phải vào hẳn folder của nó để chạy, nếu không chắc chắn sẽ lỗi </br>
 Chúc anh em code vui vẻ, nhóm mình sẽ làm theo kiểu CSR(Client side rendering) để moị người có thể tìm hiểu thêm cả thư viện ReactJS nữa.</br>
+P/S: Đã cập nhật cách connect mới bằng mssql dễ dàng hơn, anh em có thể vào để đọc thử.</br>
