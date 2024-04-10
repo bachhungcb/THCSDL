@@ -1,14 +1,15 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const port = process.env.PORT || 3030;//8080
-const hostname = process.env.DB_HOST || 'localhost';
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const webRoutes = require("./routes/routes");
+const port = process.env.PORT || 3030; //8080
+const hostname = process.env.DB_HOST || "localhost";
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.get("/api/v1", (req, res) => {
-    res.send("hello !!!!");
-  });
+app.use("/", webRoutes);
 app.listen(port, hostname, () => {
-    console.log(`Server is running on http://${hostname}:${port}`);
+  console.log(`Server is running on http://${hostname}:${port}`);
 });

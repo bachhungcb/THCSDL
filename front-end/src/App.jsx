@@ -4,7 +4,7 @@ import './App.css'
 
 function App() {
   const [data, setData] = useState();
-  const urlWithProxy = "/api/v1";
+  const urlWithProxy = "/animes";
 
   function getDataFromServer() {
     axios
