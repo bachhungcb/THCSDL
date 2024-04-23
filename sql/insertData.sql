@@ -27,9 +27,9 @@ FROM anime
 INNER JOIN link_1 ON anime.title = link_1.name;
 
 UPDATE characters
-SET characters.characterProfile = characters1.characterProfile
+SET characters.characterProfile = characters_1.characterProfile
 FROM characters
-INNER JOIN characters1 ON characters.names = characters1.characterName;
+INNER JOIN characters_1 ON characters.names = characters_1.characterName;
 
 
 DELETE FROM anime_URL
