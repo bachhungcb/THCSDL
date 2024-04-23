@@ -7,6 +7,7 @@ FROM anime
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
 WHERE anime.anime_id = 0;
 
+SELECT * FROM anime
 
 --Chọn ra top 3 anime có điểm cao nhất từ dưới lên--
 SELECT TOP 3 anime.anime_id, anime.title, anime.synopsis, anime.genres, informations.scores

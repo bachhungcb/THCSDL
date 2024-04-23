@@ -1,6 +1,15 @@
 INSERT INTO anime(anime_id, title, synopsis, genres, age_requirement, anime_type, episodes)
 SELECT anime_id, name, synopsis,genre, age_requirement, type, episodes FROM anime_1
 
+CREATE LOGIN yusari_admin WITH PASSWORD = '88888888';  
+ALTER SERVER ROLE [sysadmin] ADD MEMBER yusari_admin;
+CREATE USER yusari_user FOR LOGIN yusari_admin;
+ALTER USER yusari_user WITH DEFAULT_SCHEMA=[dbo];
+ALTER ROLE [db_owner] ADD MEMBER yusari_user;
+
+USE master;
+SELECT name, password FROM syslogins;
+
 INSERT INTO anime_producers
 SELECT * FROM anime_producer_1
 
@@ -27,9 +36,9 @@ FROM anime
 INNER JOIN link_1 ON anime.title = link_1.name;
 
 UPDATE characters
-SET characters.characterProfile = characters1.characterProfile
+SET characters.characterProfile = characters_1.characterProfile
 FROM characters
-INNER JOIN characters1 ON characters.names = characters1.characterName;
+INNER JOIN characters_1 ON characters.names = characters_1.characterName;
 
 
 DELETE FROM anime_URL
