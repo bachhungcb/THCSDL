@@ -27,27 +27,42 @@ function App() {
 
   // display data in a table
   return (
-    <div className="App">
+      <div className="App">
+        <div className='main-nav'>
+
+        </div>
       {!isLoading && (
-        <div>
+        <div className='top-anime-table-container'>
+          <h2 className='top-header'>Top Anime Series</h2>
           <table>
-            <thead>
+            <thead className='tablehead'>
               <tr>
-                <th>Name</th>
-                <th>Poster</th>
-                <th>Genre</th>
-                <th>Status</th>
-                <th>Episodes</th>
+                <th className='head-poster'>Poster</th>
+                <th className='head-title'>Title</th>
+                <th className='head-genre'>Genre</th>
+                <th className='head-status'>Status</th>
+                <th className='head-episodes'>Episodes</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='tablebody'>
               {data.map((anime) => (
                 <tr key={anime.anime_id}>
-                  <td>{anime.title}</td>
-                  <td>{anime.animePoster && <img src={anime.animePoster} alt={anime.title} />}</td>
-                  <td>{anime.genres}</td>
-                  <td>{anime.stat}</td>
-                  <td>{anime.episodes}</td>
+                  <td className='body-poster'>{anime.animePoster && <img className='body-poster-img' src={anime.animePoster} alt={anime.title} />}
+                    <div className='hover-info'>
+                        <h3>{anime.title}</h3>
+                        {/* <p>Rank:</p>{informations.ranks}<br></br>
+                        <p>Score:</p>{informations.scores}<br></br> */}
+                        <p>Genres: {anime.genres}</p>
+                        <p>Age requirement: {anime.age_requirement}</p>
+                        <p>Type: {anime.anime_type}</p>
+                        <p>Episodes: {anime.episodes}</p>
+                        <p>Status: {anime.stat}</p>
+                    </div>
+                  </td>
+                  <td className='body-title'>{anime.title}</td>
+                  <td className='body-genres'>{anime.genres}</td>
+                  <td className='body-status'>{anime.stat}</td>
+                  <td className='body-episodes'>{anime.episodes}<br></br>({anime.anime_type})</td>
                 </tr>
               ))}
             </tbody>
@@ -55,7 +70,11 @@ function App() {
         </div>
       )}
     </div>
+    
   );
 }
+
+
+
 
 export default App;
