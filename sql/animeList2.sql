@@ -59,3 +59,4 @@ ADD characterProfile VARCHAR(MAX);
 
 ALTER TABLE anime
 ADD nameURL VARCHAR(MAX);
+DROP TABLE anime_URL
