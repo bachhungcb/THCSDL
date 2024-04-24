@@ -54,4 +54,8 @@ ORDER BY informations.scores;
 SELECT anime.title, anime.genres FROM anime
 WHERE anime.genres LIKE '%Historical%';
 
-
+--Đưa ra thông tin producers của một bộ anime--
+SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
+JOIN anime_producers ON anime_producers.producers_id = producers.producers_id
+JOIN anime ON anime.anime_id = anime_producers.anime_id
+WHERE anime.anime_id = 0
