@@ -2,10 +2,11 @@ INSERT INTO anime(anime_id, title, synopsis, genres, age_requirement, anime_type
 SELECT anime_id, name, synopsis,genre, age_requirement, type, episodes FROM anime_1
 
 INSERT INTO anime_producers
-SELECT * FROM anime_producer_1
+SELECT * FROM producers_1
 
 INSERT INTO producers(producers_name, producers_id)
-SELECT producer, producer_id FROM producers_1
+SELECT producer, producer_id FROM anime_producer_1
+
 
 INSERT INTO characters(anime_id, names, roles)
 SELECT anime_id, characterName,characterRole FROM characters_1
