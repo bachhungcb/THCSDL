@@ -33,26 +33,8 @@ const getAnimeById = async (animeId) => {
     const animeResult = await pool
       .request()
       .input("anime_id", animeId)
-      .query("SELECT * FROM anime WHERE anime_id = @anime_id");
-    const animeStatusResult = await pool
-      .request()
-      .input("anime_id", animeId)
-      .query("SELECT * FROM anime_status WHERE anime_id = @anime_id");
-    const animeStatisticResult = await pool
-      .request()
-      .input("anime_id", animeId)
-      .query("SELECT * FROM informations WHERE anime_id = @anime_id");
-    const animeData = animeResult.recordset[0]; // Assuming there's only one record for each anime_id
-    const animeStatusData = animeStatusResult.recordset[0];
-    const animeStatisticData = animeStatisticResult.recordset[0];
-
-    // Combine data from all tables into a single object
-    const combinedData = {
-      animeData: animeData,
-      animeStatusData: animeStatusData,
-      animeStatisticData: animeStatisticData,
-    };
-    return combinedData;
+      .query("SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity FROM anime JOIN informations ON informations.anime_id = anime.anime_id JOIN anime_status ON anime_status.anime_id = anime.anime_id WHERE anime.anime_id = 0;")
+      return animeResult.recordset;
   } catch (error) {
     console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
