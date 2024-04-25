@@ -11,10 +11,11 @@ USE master;
 SELECT name, password FROM syslogins;
 
 INSERT INTO anime_producers
-SELECT * FROM anime_producer_1
+SELECT * FROM producers_1
 
 INSERT INTO producers(producers_name, producers_id)
-SELECT producer, producer_id FROM producers_1
+SELECT producer, producer_id FROM anime_producer_1
+
 
 INSERT INTO characters(anime_id, names, roles)
 SELECT anime_id, characterName,characterRole FROM characters_1

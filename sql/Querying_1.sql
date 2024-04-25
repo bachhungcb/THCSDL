@@ -1,11 +1,11 @@
 ﻿--Đưa ra các thông tin về một bộ anime với anime id cho trước--
-SELECT	anime.anime_id, anime.title, informations.scores, informations.ranks, characters.names, characters.roles,
-		anime_status.aired_from,anime_status.aired_to
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity
 FROM anime
- JOIN characters ON characters.anime_id = anime.anime_id
  JOIN informations ON informations.anime_id = anime.anime_id
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
 WHERE anime.anime_id = 0;
+
+SELECT * FROM anime
 
 SELECT * FROM anime
 
@@ -51,7 +51,11 @@ JOIN informations ON anime.anime_id = informations.anime_id
 ORDER BY informations.scores;
 
 --Đưa ra anime có thể loại X--
-SELECT anime.title, anime.genres FROM anime
+SELECT anime.title, anime.genres FROM anime 
 WHERE anime.genres LIKE '%Historical%';
 
-
+--Đưa ra thông tin producers của một bộ anime--
+SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
+JOIN anime_producers ON anime_producers.producers_id = producers.producers_id
+JOIN anime ON anime.anime_id = anime_producers.anime_id
+WHERE anime.anime_id = 0
