@@ -59,10 +59,24 @@ const getProducerByAnimeId = async (animeId) => {
   return producersResults.recordset;
 }
 
+const getAnimeByGenres = async (anime_genres) => {
+  try {
+    const pool = await createPool;
+    const animeResult = await pool
+      .request()
+      .input("anime_genres", anime_genres)
+      .query("SELECT anime.title, anime.genres FROM anime JOIN informations ON informations.anime_id = anime.anime_id WHERE anime.genres LIKE '%' + @anime_genres +'%' ORDER BY informations.scores DESC;")
+      return animeResult.recordset;
+  } catch (error) {
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
+    throw error;
+  }
+};
 
 module.exports = {
   getDataForHomepage,
   getAnimeById,
   getCharacterByAnimeId,
-  getProducerByAnimeId
+  getProducerByAnimeId,
+  getAnimeByGenres
 };
