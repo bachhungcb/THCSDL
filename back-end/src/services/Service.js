@@ -50,19 +50,8 @@ const getCharacterByAnimeId = async (animeId) => {
     return characterResult.recordset;
 }
 
-const getProducerByAnimeId = async (animeId) => {
-  const pool = await createPool;
-  const producersResults = await pool
-    .request()
-    .input("anime_id", animeId)
-    .query('SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers JOIN anime_producers ON anime_producers.producers_id = producers.producers_id JOIN anime ON anime.anime_id = anime_producers.anime_id WHERE anime.anime_id = @anime_id');
-  return producersResults.recordset;
-}
-
-
 module.exports = {
   getDataForHomepage,
   getAnimeById,
-  getCharacterByAnimeId,
-  getProducerByAnimeId
+  getCharacterByAnimeId
 };
