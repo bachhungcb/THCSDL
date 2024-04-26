@@ -32,5 +32,4 @@ SET characters.characterProfile = characters_1.characterProfile
 FROM characters
 INNER JOIN characters_1 ON characters.names = characters_1.characterName;
 
-
 DELETE FROM anime_URL
