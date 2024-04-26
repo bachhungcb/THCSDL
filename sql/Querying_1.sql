@@ -5,6 +5,7 @@ FROM anime
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
 WHERE anime.anime_id = 0;
 
+SELECT * FROM anime
 
 SELECT * FROM anime
 
