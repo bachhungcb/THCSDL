@@ -1,28 +1,28 @@
 const createPool = require(`../config/database`);
 
-//get animes for homepage
-const getDataForHomepage = async () => {
+//get animes for homepage, display 50 animes per page
+const getDataForHomepage = async (offset) => {
   try {
     const pool = await createPool;
-    const animeResult = await pool.request().query(`SELECT * FROM anime`);
-    const animeStatusResult = await pool
+    const animeResult = await pool
       .request()
-      .query(`SELECT * FROM anime_status`);
-    const animeData = animeResult.recordset;
-    const animeStatusData = animeStatusResult.recordset;
-    //combine the two results for the front-end
-    const combinedData = animeData.map((anime) => {
-      const correspondingStatus = animeStatusData.find(
-        (stat) => stat.anime_id === anime.anime_id
+      .input(`offset`, offset)
+      .query(
+        `SELECT TOP (50) a.*, s.stat
+    FROM anime a
+    LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+    WHERE a.anime_id NOT IN (
+        SELECT TOP (@offset) anime_id 
+        FROM anime 
+        ORDER BY anime_id
+    )
+    ORDER BY a.anime_id;
+    `
       );
-      return {
-        ...anime,
-        stat: correspondingStatus ? correspondingStatus.stat : null,
-      };
-    });
-    return combinedData;
+    const animeData = animeResult.recordset;
+    return animeData;
   } catch (error) {
-    console.error(`Lỗi truy vấn cơ sở dữ liệu:`, error);
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
   }
 };
@@ -34,11 +34,15 @@ const getAnimeById = async (animeId) => {
       .request()
       .input(`anime_id`, animeId)
       .query(
-        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity FROM anime JOIN informations ON informations.anime_id = anime.anime_id JOIN anime_status ON anime_status.anime_id = anime.anime_id WHERE anime.anime_id = 0;`
+        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity 
+        FROM anime 
+        JOIN informations ON informations.anime_id = anime.anime_id 
+        JOIN anime_status ON anime_status.anime_id = anime.anime_id 
+        WHERE anime.anime_id = 0;`
       );
     return animeResult.recordset;
   } catch (error) {
-    console.error(`Lỗi truy vấn cơ sở dữ liệu:`, error);
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
   }
 };
