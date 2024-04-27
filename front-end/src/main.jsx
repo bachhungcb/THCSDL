@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import AnimeTable from './anime-table/AnimeTable.jsx'
-import './index.css'
+
+import AnimeTable from './AnimeTable.jsx'
+import NavBar from './NavBar.jsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AnimeTable />
-  </React.StrictMode>,
-)
+
+    <NavBar />
+    {/* <AnimeTable /> */}
