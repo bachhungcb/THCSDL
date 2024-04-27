@@ -22,9 +22,9 @@ CREATE TABLE informations(
 CREATE TABLE anime_status(
 	anime_id INT FOREIGN KEY REFERENCES anime(anime_id),
 	stat VARCHAR(20),
-	aired_from VARCHAR(20),
-	aired_to VARCHAR(20),
-	premiered VARCHAR(20),
+	aired_from VARCHAR(20) DEFAULT 'Unknown',
+	aired_to VARCHAR(20) DEFAULT 'Unknown',
+	premiered VARCHAR(20) DEFAULT 'Unknown',
 );
 
 CREATE TABLE producers(
@@ -60,3 +60,12 @@ ADD characterProfile VARCHAR(MAX);
 ALTER TABLE anime
 ADD nameURL VARCHAR(MAX);
 DROP TABLE anime_URL
+
+ALTER TABLE anime_status
+ADD CONSTRAINT DF_aired_from DEFAULT 'Unknown' FOR aired_from;
+
+ALTER TABLE anime_status
+ADD CONSTRAINT DF_aired_to DEFAULT 'Unknown' FOR aired_to;
+
+ALTER TABLE anime_status
+ADD CONSTRAINT DF_premiered DEFAULT 'Unknown' FOR premiered;

@@ -4,6 +4,7 @@ const {
   getCharacterByAnimeId,
   getProducerByAnimeId,
   getAnimeByGenres,
+  getAnimeByName,
 } = require("../services/Service");
 
 const getAnimes = async (req, res) => {
@@ -37,6 +38,11 @@ const getAnimeFromGenres = async (req, res) => {
   const anime = await getAnimeByGenres(anime_genres);
   res.status(200).send(anime);
 };
+const getAnimeFromName = async (req, res) => {
+  const anime_name = req.params.animeName;
+  const anime = await getAnimeByName(anime_name);
+  res.status(200).send(anime);
+};
 
 //export fuction getAnimes to be used in routes.js
 module.exports = {
@@ -45,4 +51,5 @@ module.exports = {
   getCharacterById,
   getProducers,
   getAnimeFromGenres,
+  getAnimeFromName,
 };

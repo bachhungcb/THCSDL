@@ -51,11 +51,19 @@ JOIN informations ON anime.anime_id = informations.anime_id
 ORDER BY informations.scores;
 
 --Đưa ra anime có thể loại X--
-SELECT anime.title, anime.genres FROM anime 
-WHERE anime.genres LIKE '%Historical%';
+SELECT anime.title, anime.genres FROM anime JOIN informations ON informations.anime_id = anime.anime_id WHERE anime.genres LIKE '%Historical%' ORDER BY informations.scores DESC;
+
 
 --Đưa ra thông tin producers của một bộ anime--
 SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
 JOIN anime_producers ON anime_producers.producers_id = producers.producers_id
 JOIN anime ON anime.anime_id = anime_producers.anime_id
 WHERE anime.anime_id = 0
+
+
+--Tìm kiếm thông tin của một bộ anime thông qua tên--
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity
+FROM anime
+ JOIN informations ON informations.anime_id = anime.anime_id
+ JOIN anime_status ON anime_status.anime_id = anime.anime_id
+WHERE anime.title LIKE '%Conan%'
