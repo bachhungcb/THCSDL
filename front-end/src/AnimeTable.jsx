@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css';
+import './AnimeTable.css';
 
-function App() {
+function AnimeTable() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // use to check if data is loading
 
@@ -27,10 +27,7 @@ function App() {
 
   // display data in a table
   return (
-      <div className="App">
-        <div className='main-nav'>
-
-        </div>
+      <div className="AnimeTable">
       {!isLoading && (
         <div className='top-anime-table-container'>
           <h2 className='top-header'>Top Anime Series</h2>
@@ -77,4 +74,4 @@ function App() {
 
 
 
-export default App;
+export default AnimeTable;

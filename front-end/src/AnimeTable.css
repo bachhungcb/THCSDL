@@ -55,7 +55,10 @@ table {
   border-collapse: collapse;
 }
 
+
+
 /*-------------thead--------------*/
+
 
 .tablehead{
   background-color: rgba(0, 132, 255, 0.96);
@@ -119,7 +122,7 @@ table {
   background-color: #fff;
   display: none;
   border: #1c439b 2px solid;
-  box-shadow: 0 0 10px #291c9b;
+  box-shadow: 0 0 5px #291c9b;
   border-radius: 10%;
   width: 350px;
   height: 150px;
@@ -129,9 +132,7 @@ table {
   top: 0;
   left: 100%;
   z-index: 100;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: break-word;
 }
 
 .hover-info h3{
