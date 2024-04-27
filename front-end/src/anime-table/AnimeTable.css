@@ -154,6 +154,12 @@ table {
   display: block;
 }
 
+.pagination-buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 
 
 

@@ -8,7 +8,10 @@ const {
 } = require("../services/Service");
 
 const getAnimes = async (req, res) => {
-  const animes = await getDataForHomepage();
+  const { page } = req.query;
+  const pageValue = parseInt(page);
+  const offset = (pageValue - 1) * 50 + 1;
+  const animes = await getDataForHomepage(offset);
   res.status(200).send(animes);
 };
 
