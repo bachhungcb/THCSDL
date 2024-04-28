@@ -14,14 +14,6 @@ return(
             <li><a href="#">Cak</a></li>
             <li><a href="#">Cak</a></li>
         </ul>
-        <div className='searching-bar'>
-            <form action="#">
-                <input type="text" placeholder="Search Anime" name="search"/>
-                <button type='submit'>
-                    Go
-                </button>
-            </form>
-        </div>
     </nav>
 )
 }
