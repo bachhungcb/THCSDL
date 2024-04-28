@@ -1,5 +1,6 @@
 //Thiết lập các kết nối đến database
 require("dotenv").config();
+const { request } = require("express");
 const sql = require("mssql");
 
 var dbConfig = {
@@ -11,7 +12,9 @@ var dbConfig = {
     encrypt: false,
     trustedConnection: true,
     instancename: process.env.DB_INSTANCE,
+    requestTimeout: 60000,
   },
+ 
 };
 
 async function createPool() {
