@@ -1,12 +1,14 @@
 .nav-bar {
     background-color: #2e51a2;
     position: absolute;
-    width: 100%;
+    width: 85%;
     margin: 0 auto;
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0;
+    z-index: var(--z-fixed);
   }
   
   .menu{

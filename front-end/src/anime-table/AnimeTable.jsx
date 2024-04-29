@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./AnimeTable.css";
+
 import { Button } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 

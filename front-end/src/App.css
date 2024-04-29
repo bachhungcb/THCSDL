@@ -1,0 +1,12 @@
+.navbar-container {
+    margin-bottom: 20px; 
+    padding: 0 20px;
+    position :static;
+  }
+  
+  .anime-table-container {
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+  }
+  
