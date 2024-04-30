@@ -118,7 +118,7 @@ const getCharacterByName = async (character_name) => {
       .input('character_name', character_name)
       .query(
         `SELECT DISTINCT TOP 10 characters.names, characters.characterProfile
-        FROM characters WITH (INDEX(idx_names)) 
+        FROM characters WITH (INDEX(ix_characters_name))      
         WHERE characters.names LIKE '%'+@character_name+'%'
         ORDER BY characters.names ;`
       );
@@ -128,7 +128,7 @@ const getCharacterByName = async (character_name) => {
     throw error;
   }
 };
-
+//sua cho dang sau Index thanh ten index cua minh
 const getProducerByName = async (producers_name) => {
   try {
     const pool = await createPool;
