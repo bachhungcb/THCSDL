@@ -9,10 +9,10 @@
     align-items: center;
   }
   
-  .searching-bar select {
-    margin-right: 10px; /* Khoảng cách giữa select và input */
+  /* .searching-bar select {
+    margin-right: 10px;
   }
   
   .searching-bar button {
-    margin-left: 10px; /* Khoảng cách giữa input và button */
-  }
+    margin-left: 10px; 
+  } */
