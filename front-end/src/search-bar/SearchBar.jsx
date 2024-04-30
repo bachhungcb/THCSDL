@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Select, Button, Form, Input } from "antd";
 import "./SearchBar.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 
 const { Option } = Select;
 
@@ -42,7 +44,7 @@ function SearchBar() {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Go
+          <FontAwesomeIcon icon={fas.faMagnifyingGlass} />
           </Button>
         </Form.Item>
       </Form>
