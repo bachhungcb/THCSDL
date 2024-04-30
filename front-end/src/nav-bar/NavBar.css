@@ -1,7 +1,7 @@
 .nav-bar {
     background-color: #2e51a2;
     position: absolute;
-    width: 85%;
+    width: 1140px;
     margin: 0 auto;
     height: 50px;
     display: flex;
@@ -12,7 +12,7 @@
   }
   
   .menu{
-    width: 65%;
+    width: 60%;
     display: flex;
     justify-content: left;
     list-style: none;
@@ -62,11 +62,12 @@
   
   .searching-bar button{
     margin-right: 15px;
-    padding: 10px;
+    padding: 9px;
     background-color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     color: #333;
-    font-size: 12px;
+    font-size: 15px;
     cursor: pointer;
+    line-height: 1;
   }
