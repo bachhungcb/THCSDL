@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import setSearchData from "./SearchStorage.jsx";
 import { Select, Button, Form, Input } from "antd";
 import "./SearchBar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,6 +21,7 @@ function SearchBar() {
           .get(`${urlWithProxy}/${userChoice}/${search}`)
           .then((res) => {
             console.log(res.data);
+            setSearchData(res.data);
           })
           .catch((err) => {
             console.error(err);
