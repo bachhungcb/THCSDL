@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  height: 50px;
+}
+.breadcrumb {
+  padding: 0 48px;
+  margin-left: 0;
+}
+.left-side{
+  background-color: white; /* Đặt màu nền là màu trắng */
+}

@@ -19,19 +19,19 @@ const getAnimes = async (req, res) => {
 };
 
 const getAnimeId = async (req, res) => {
-  const animeId = req.params.animeId;
+  const animeId = parseInt(req.params.animeId);
   const anime = await getAnimeById(animeId);
   res.status(200).send(anime);
 };
 
 const getCharacterById = async (req, res) => {
-  const animeId = req.params.animeId;
+  const animeId = parseInt(req.params.animeId);
   const characters = await getCharacterByAnimeId(animeId);
   res.status(200).send(characters);
 };
 
 const getProducers = async (req, res) => {
-  const animeId = req.params.animeId;
+  const animeId = parseInt(req.params.animeId);
   const producers = await getProducerByAnimeId(animeId);
   res.status(200).send(producers);
 };

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
+import AnimeDetail from "../anime-detail/AnimeDetail";
 import "./AnimeTable.css";
-
 import { Button } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 
@@ -65,8 +66,6 @@ function AnimeTable() {
                     )}
                     <div className="hover-info">
                       <h3>{anime.title}</h3>
-                      {/* <p>Rank:</p>{informations.ranks}<br></br>
-                        <p>Score:</p>{informations.scores}<br></br> */}
                       <p>Genres: {anime.genres}</p>
                       <p>Age requirement: {anime.age_requirement}</p>
                       <p>Type: {anime.anime_type}</p>
@@ -74,7 +73,7 @@ function AnimeTable() {
                       <p>Status: {anime.stat}</p>
                     </div>
                   </td>
-                  <td className="body-title">{anime.title}</td>
+                  <td className="body-title"><Link to={`/anime-detail/${anime.anime_id}`}>{anime.title}</Link></td>
                   <td className="body-genres">{anime.genres}</td>
                   <td className="body-status">{anime.stat}</td>
                   <td className="body-episodes">
