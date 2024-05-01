@@ -1,16 +1,18 @@
-import React from 'react'
-import NavBar from './nav-bar/NavBar.jsx'
-import AnimeTable from './anime-table/AnimeTable.jsx'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./homepage/Home.jsx";
+import AnimeDetail from "./anime-detail/AnimeDetail.jsx";
+import "./App.css";
 
 function App() {
-    return (
-        <div className="App">
-            <div className="navbar-container"><NavBar /></div>
-            <div className="anime-table-container"><AnimeTable /></div>
-        
-        </div>
-    )
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/anime-detail/:animeId" element={<AnimeDetail />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

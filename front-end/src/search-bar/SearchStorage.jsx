@@ -1,9 +1,11 @@
 let searchData = null;
 
-export const setSearchData = (data) => {
+function setSearchData(data) {
   searchData = data;
 };
 
-export const getSearchData = () => {
+function getSearchData() {
   return searchData;
 };
+
+export default { setSearchData, getSearchData };
