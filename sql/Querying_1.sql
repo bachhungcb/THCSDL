@@ -62,8 +62,19 @@ WHERE anime.anime_id = 0
 
 
 --Tìm kiếm thông tin của một bộ anime thông qua tên--
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity
+CREATE INDEX ix_anime_title ON anime(title)
+CREATE INDEX ix_animeStatus_animeID ON anime_status(anime_id)
+CREATE INDEX ix_informations_animeID ON informations(anime_id)
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity 
 FROM anime
- JOIN informations ON informations.anime_id = anime.anime_id
- JOIN anime_status ON anime_status.anime_id = anime.anime_id
-WHERE anime.title LIKE '%Conan%'
+ INNER JOIN informations ON informations.anime_id = anime.anime_id
+ INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
+WHERE anime.title LIKE '%Hen%'
+
+
+CREATE INDEX ix_characters_name ON characters(names)
+
+SELECT DISTINCT TOP 10 characters.names, characters.characterProfile
+        FROM characters  
+        WHERE characters.names LIKE '%Conan%'
+        ORDER BY characters.names;
