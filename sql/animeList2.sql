@@ -69,3 +69,26 @@ ADD CONSTRAINT DF_aired_to DEFAULT 'Unknown' FOR aired_to;
 
 ALTER TABLE anime_status
 ADD CONSTRAINT DF_premiered DEFAULT 'Unknown' FOR premiered;
+
+CREATE TABLE new_character(
+	Id INT NOT NULL IDENTITY (1,1),
+	Name VARCHAR(100) NULL,
+	Profile VARCHAR(MAX)
+);
+
+CREATE TABLE link_character(
+	anime_id INT,
+	character_id INT
+);
+
+ALTER TABLE link_character
+ADD FOREIGN KEY (character_id) REFERENCES new_character(Id);
+
+ALTER TABLE link_character
+ADD FOREIGN KEY (anime_id) REFERENCES anime(anime_id);
+
+ALTER TABLE new_character
+ADD PRIMARY KEY (Id);
+
+ALTER TABLE new_character
+ADD Roles VARCHAR(20);
