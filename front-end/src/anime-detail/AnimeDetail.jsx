@@ -58,7 +58,7 @@ function AnimeDetail() {
             <br></br>
           </Content>
           <Layout>
-            <Sider>
+            <Sider background-color="#f5f5f5">
               <div className="container" key = {anime.title}>
                 <img
                   className="anime-poster"
@@ -66,7 +66,59 @@ function AnimeDetail() {
                   alt={anime.title}
                 />
               </div>
+              <div className="Statics">
+                <h1>Statics</h1>
+                <div>
+                    <span className="Rank">Rank: #{anime.ranks}</span>
+                  </div>
+                  <div>
+                    <span className="dark">Scores: </span> {anime.scores}
+                  </div>
+                  <div>
+                    <span className="dark">Popularity: </span> #{anime.popularity}
+                  </div>
+                  <div>
+                    <span className="dark">Favourite: </span> {anime.favourite}
+                  </div>
+              </div>
             </Sider>
+            <Content>
+              <div className="Infomations">
+                <h1 className="Detail1">Anime Detail</h1>
+                <div className="Detail">
+                  <span className="dark">Type: </span>
+                   {anime.anime_type}
+                </div>
+                <div className="Detail">
+                  <span className="dark">Episode: </span>
+                   {anime.episodes}
+                </div>
+                <div className="Detail">
+                  <span className="dark">Status: </span>
+                   {anime.stat}
+                </div>
+                <div className="Detail">
+                  <span className="dark">Aired: </span>
+                   {anime.aired_from} to {anime.aired_to}
+                </div>
+                <div className="Detail">
+                  <span className="dark">Producers: </span>
+                   {anime.producers_name}
+                </div>
+                {/* <div className="Detail">
+                  <span className="dark">Studio:</span>
+                  "{anime.anime_type}"
+                </div> */}
+                <div className="Detail">
+                  <span className="dark">Genres: </span>
+                   {anime.genres}
+                </div>
+                <div className="synopsis">
+                  <h1 className="Detail2">Synopsis</h1>
+                <p>{anime.synopsis}</p>
+                </div>
+              </div>
+            </Content>
           </Layout>
         </Layout>
       ))}
