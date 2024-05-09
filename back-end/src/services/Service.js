@@ -9,9 +9,9 @@ const getDataForHomepage = async (offset) => {
       .input(`offset`, offset)
       .query(
         `SELECT TOP (50) a.*, s.stat
-    FROM anime a
-    LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-    WHERE a.anime_id NOT IN (
+        FROM anime a
+        LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+        WHERE a.anime_id NOT IN (
         SELECT TOP (@offset) anime_id 
         FROM anime 
         ORDER BY anime_id
@@ -34,7 +34,8 @@ const getAnimeById = async (animeId) => {
       .request()
       .input(`anime_id`, animeId)
       .query(
-        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to,anime.animePoster, informations.favourite, informations.popularity 
+        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,
+                anime_status.aired_to,anime.animePoster, informations.favourite, informations.popularity 
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN anime_status ON anime_status.anime_id = anime.anime_id 
@@ -117,10 +118,10 @@ const getCharacterByName = async (character_name) => {
       .request()
       .input('character_name', character_name)
       .query(
-        `SELECT DISTINCT TOP 10 characters.names, characters.characterProfile
-        FROM characters WITH (INDEX(ix_characters_name))      
-        WHERE characters.names LIKE '%'+@character_name+'%'
-        ORDER BY characters.names ;`
+        `SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
+        FROM new_character  
+        WHERE new_character.Name LIKE '%' + @character_name + '%'
+        ORDER BY new_character.Name;`
       );
     return characterResult.recordset;
   } catch (error) {

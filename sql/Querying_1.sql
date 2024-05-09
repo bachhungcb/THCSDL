@@ -1,8 +1,12 @@
 ﻿--Đưa ra các thông tin về một bộ anime với anime id cho trước--
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes,
+ anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
+ informations.popularity, genres.genres
 FROM anime
  JOIN informations ON informations.anime_id = anime.anime_id
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
+ JOIN link_genres ON link_genres.anime_id = anime.anime_id
+ JOIN genres ON genres.Id = link_genres.genres_id
 WHERE anime.anime_id = 0;
 
 SELECT * FROM anime
@@ -72,9 +76,17 @@ FROM anime
 WHERE anime.title LIKE '%Hen%'
 
 
-CREATE INDEX ix_characters_name ON characters(names)
+CREATE INDEX ix_characters_name ON new_character(Name)
+SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
+        FROM new_character  
+        WHERE new_character.Name LIKE '%Conan%'
+        ORDER BY new_character.Name;
 
-SELECT DISTINCT TOP 10 characters.names, characters.characterProfile
-        FROM characters  
-        WHERE characters.names LIKE '%Conan%'
-        ORDER BY characters.names;
+
+SELECT new_character.Name, new_character.Roles, anime.title
+FROM new_character
+JOIN link_character ON link_character.character_id = new_character.Id
+JOIN anime ON anime.anime_id = link_character.anime_id
+WHERE anime.anime_id = 604;
+
+
