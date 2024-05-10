@@ -14,13 +14,13 @@ SELECT * FROM anime
 SELECT * FROM anime
 
 --Chọn ra top 3 anime có điểm cao nhất từ dưới lên--
-SELECT TOP 3 anime.anime_id, anime.title, anime.synopsis, anime.genres, informations.scores
+SELECT DISTINCT TOP 3 anime.anime_id, anime.title, anime.synopsis, informations.scores
 FROM anime
 JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores;
 
 --chọn ra top 3 anime có điểm cao nhất từ trên xuống--
-SELECT TOP 3 anime.anime_id, anime.title, anime.synopsis, anime.genres, informations.scores
+SELECT TOP 3 anime.anime_id, anime.title, anime.synopsis, informations.scores
 FROM anime
 JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores DESC;
@@ -55,7 +55,13 @@ JOIN informations ON anime.anime_id = informations.anime_id
 ORDER BY informations.scores;
 
 --Đưa ra anime có thể loại X--
-SELECT anime.title, anime.genres FROM anime JOIN informations ON informations.anime_id = anime.anime_id WHERE anime.genres LIKE '%Historical%' ORDER BY informations.scores DESC;
+SELECT DISTINCT anime.title, genres.genres, informations.scores
+FROM anime 
+JOIN informations ON informations.anime_id = anime.anime_id 
+JOIN link_genres ON link_genres.anime_id = anime.anime_id
+JOIN genres ON genres.Id = link_genres.genres_id
+WHERE genres.genres LIKE '%Historical%' 
+ORDER BY informations.scores DESC;
 
 
 --Đưa ra thông tin producers của một bộ anime--
@@ -69,20 +75,21 @@ WHERE anime.anime_id = 0
 CREATE INDEX ix_anime_title ON anime(title)
 CREATE INDEX ix_animeStatus_animeID ON anime_status(anime_id)
 CREATE INDEX ix_informations_animeID ON informations(anime_id)
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity 
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
+anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity 
 FROM anime
  INNER JOIN informations ON informations.anime_id = anime.anime_id
  INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
 WHERE anime.title LIKE '%Hen%'
 
-
+--Tìm kiếm nhân vật thông qua tên
 CREATE INDEX ix_characters_name ON new_character(Name)
 SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
         FROM new_character  
         WHERE new_character.Name LIKE '%Conan%'
         ORDER BY new_character.Name;
 
-
+--Tìm kiếm nhân vật thông qua anime_id
 SELECT new_character.Name, new_character.Roles, anime.title
 FROM new_character
 JOIN link_character ON link_character.character_id = new_character.Id
