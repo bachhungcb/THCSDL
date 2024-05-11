@@ -79,10 +79,12 @@ const getAnimeByGenres = async (anime_genres) => {
       .request()
       .input(`anime_genres`, anime_genres)
       .query(
-        `SELECT TOP 10 anime.title, anime.genres 
+        `SELECT DISTINCT TOP 10 anime.title, genres.genres, informations.scores
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
-        WHERE anime.genres LIKE '%'+@anime_genres+'%' 
+        JOIN link_genres ON link_genres.anime_id = anime.anime_id
+        JOIN genres ON genres.Id = link_genres.genres_id
+        WHERE genres.genres LIKE '%' + anime_genres + '%' 
         ORDER BY informations.scores DESC;`
       );
     return animeResult.recordset;
