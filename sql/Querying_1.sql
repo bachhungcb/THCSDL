@@ -55,7 +55,7 @@ JOIN informations ON anime.anime_id = informations.anime_id
 ORDER BY informations.scores;
 
 --Đưa ra anime có thể loại X--
-SELECT DISTINCT anime.title, genres.genres, informations.scores
+SELECT DISTINCT TOP 10 anime.title, genres.genres, informations.scores
 FROM anime 
 JOIN informations ON informations.anime_id = anime.anime_id 
 JOIN link_genres ON link_genres.anime_id = anime.anime_id
