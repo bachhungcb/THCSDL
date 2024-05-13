@@ -51,8 +51,9 @@ const getCharacterByAnimeId = async (animeId) => {
   const pool = await createPool;
   const characterResult = await pool.request().input("anime_id", animeId)
     .query(`SELECT * 
-      FROM characters 
-      WHERE anime_id = @anime_id`);
+      FROM new_character 
+      JOIN link_character ON link_character.character_id = new_character.Id
+      WHERE link_character.anime_id = @anime_id`);
   return characterResult.recordset;
 };
 
@@ -82,8 +83,8 @@ const getAnimeByGenres = async (anime_genres) => {
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN link_genres ON link_genres.anime_id = anime.anime_id
-        JOIN genres ON genres.Id = link_genres.genres_id
-        WHERE genres.genres LIKE '%' + anime_genres + '%' 
+        JOIN genres ON genres.genres_id = link_genres.genres_id
+        WHERE genres.genres LIKE '%' + @anime_genres + '%' 
         ORDER BY informations.scores DESC;`
       );
     return animeResult.recordset;
@@ -98,7 +99,7 @@ const getAnimeByName = async (anime_name) => {
     const pool = await createPool;
     const animeResult = await pool
       .request()
-      .input('anime_name', anime_name)
+      .input("anime_name", anime_name)
       .query(
         `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity
         FROM anime WITH (INDEX(idx_title))
@@ -117,7 +118,7 @@ const getCharacterByName = async (character_name) => {
     const pool = await createPool;
     const characterResult = await pool
       .request()
-      .input('character_name', character_name)
+      .input("character_name", character_name)
       .query(
         `SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
         FROM new_character  
@@ -136,7 +137,7 @@ const getProducerByName = async (producers_name) => {
     const pool = await createPool;
     const producerResult = await pool
       .request()
-      .input('producers_name', producers_name)
+      .input("producers_name", producers_name)
       .query(
         `SELECT *
         FROM producers
