@@ -12,12 +12,11 @@ const getDataForHomepage = async (offset) => {
         FROM anime a
         LEFT JOIN anime_status s ON a.anime_id = s.anime_id
         WHERE a.anime_id NOT IN (
-        SELECT TOP (@offset) anime_id 
-        FROM anime 
-        ORDER BY anime_id
-    )
-    ORDER BY a.anime_id;
-    `
+            SELECT TOP (@offset) anime_id 
+            FROM anime 
+            ORDER BY anime_id
+        )
+        ORDER BY a.anime_id;`
       );
     const animeData = animeResult.recordset;
     return animeData;
