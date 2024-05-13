@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import setSearchData from "./SearchStorage.jsx";
+import SearchResult from "../search-result/SearchResult.jsx"; 
 import { Select, Button, Form, Input } from "antd";
 import "./SearchBar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +12,8 @@ function SearchBar() {
   const urlWithProxy = "http://localhost:8080/animes";
   const [form] = Form.useForm();
   const [userChoice, setUserChoice] = useState("names");
-
+  const [searchData, setSearchData] = useState([]);
+  
   const handleGoButtonClick = () => {
     form.validateFields().then((values) => {
       const { search } = values;
@@ -50,6 +51,7 @@ function SearchBar() {
           </Button>
         </Form.Item>
       </Form>
+      <SearchResult userChoice = {userChoice} results={searchData} />
     </div>
   );
 }

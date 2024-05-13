@@ -22,15 +22,15 @@ function AnimeDetail() {
         const detailResponse = await axios.get(
           `http://localhost:8080/animes/${animeId}`
         );
-        const characterResponse = await axios.get(
-          `http://localhost:8080/animes/characters/${animeId}`
-        );
+        // const characterResponse = await axios.get(
+        //   `http://localhost:8080/animes/characters/${animeId}`
+        // );
         const producerResponse = await axios.get(
           `http://localhost:8080/animes/producers/${animeId}`
         );
 
         setAnimeDetail(detailResponse.data);
-        setCharacters(characterResponse.data);
+        // setCharacters(characterResponse.data);
         setProducers(producerResponse.data);
         setIsLoading(false);
       } catch (error) {
