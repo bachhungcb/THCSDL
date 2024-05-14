@@ -33,13 +33,14 @@ const getAnimeById = async (animeId) => {
       .request()
       .input(`anime_id`, animeId)
       .query(
-        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from,
-        anime_status.aired_to,anime.animePoster, informations.favourite, informations.popularity 
+        `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from, anime_status.stat,
+                anime_status.aired_to,anime.animePoster, informations.favourite, informations.popularity 
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN anime_status ON anime_status.anime_id = anime.anime_id 
         WHERE anime.anime_id = @anime_id;`
       );
+  
     return animeResult.recordset;
   } catch (error) {
     console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
@@ -118,6 +119,7 @@ const getAnimeByName = async (anime_name) => {
         INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
         WHERE anime.title LIKE '%'+@anime_name+'%'`
       );
+
     return animeResult.recordset;
   } catch (error) {
     console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
