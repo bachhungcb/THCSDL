@@ -115,24 +115,6 @@ table {
   position: relative;
 }
 
-.hover-info{
-  background-color: #fff;
-  display: none;
-  border: #1c439b 2px solid;
-  box-shadow: 0 0 10px #291c9b;
-  border-radius: 25px;
-  width: 350px;
-  height: 150px;
-  text-align: left;
-  margin-left: 10px;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  z-index: 100;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 .hover-info h3{
   background-color: #1c439b;

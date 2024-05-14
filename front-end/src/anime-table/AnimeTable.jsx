@@ -1,34 +1,35 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import axios from "axios";
-import AnimeDetail from "../anime-detail/AnimeDetail";
-import "./AnimeTable.css";
-import { Button } from "antd";
+import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
+import MainLayout from "../templates/MainLayout";
+import "./AnimeTable.css";
 
 function AnimeTable() {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // use to check if data is loading
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [animesPerPage] = useState(50);
   const urlWithProxy = "http://localhost:8080/animes";
 
   useEffect(() => {
     getDataFromServer();
-  }, [currentPage]); // Update data when currentPage changes// run only once when the component mounts
+  }, [currentPage]);
 
   function getDataFromServer() {
     axios
       .get(`${urlWithProxy}?page=${currentPage}`)
       .then((res) => {
         setData(res.data);
-        setIsLoading(false); // load data successfully, update isLoading to false
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error(err);
-        setIsLoading(false); //if there is an error, update isLoading to false
+        setIsLoading(false);
       });
   }
+
   function handleNextPage() {
     setCurrentPage(currentPage + 1);
   }
@@ -36,70 +37,89 @@ function AnimeTable() {
   function handlePrevPage() {
     setCurrentPage(currentPage - 1);
   }
-  // display data in a table
-  return (
-    <div className="App">
-      <div className="main-nav"></div>
-      {!isLoading && (
-        <div className="top-anime-table-container">
-          <h2 className="top-header">Top Anime Series</h2>
-          <table>
-            <thead className="tablehead">
-              <tr>
-                <th className="head-poster">Poster</th>
-                <th className="head-title">Title</th>
-                <th className="head-genre">Genre</th>
-                <th className="head-status">Status</th>
-                <th className="head-episodes">Episodes</th>
-              </tr>
-            </thead>
-            <tbody className="tablebody">
-              {data.map((anime) => (
-                <tr key={anime.anime_id}>
-                  <td className="body-poster">
-                    {anime.animePoster && (
-                      <img
-                        className="body-poster-img"
-                        src={anime.animePoster}
-                        alt={anime.title}
-                      />
-                    )}
-                    <div className="hover-info">
-                      <h3>{anime.title}</h3>
-                      <p>Genres: {anime.genres}</p>
-                      <p>Age requirement: {anime.age_requirement}</p>
-                      <p>Type: {anime.anime_type}</p>
-                      <p>Episodes: {anime.episodes}</p>
-                      <p>Status: {anime.stat}</p>
-                    </div>
-                  </td>
-                  <td className="body-title"><Link to={`/anime-detail/${anime.anime_id}`}>{anime.title}</Link></td>
-                  <td className="body-genres">{anime.genres}</td>
-                  <td className="body-status">{anime.stat}</td>
-                  <td className="body-episodes">
-                    {anime.episodes}
-                    <br></br>({anime.anime_type})
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {/* Button to next or previous page, anh em xem để tìm hiểu cách dùng ant design luôn */}
-          <div className="pagination-buttons">
-            {currentPage > 1 && (
-              <Button type="primary" onClick={handlePrevPage}>
-                <CaretLeftOutlined /> Previous
-              </Button>
-            )}
-            {!isLoading && data.length === animesPerPage && (
-              <Button type="primary" onClick={handleNextPage}>
-                Next <CaretRightOutlined />
-              </Button>
+
+  const columns = [
+    {
+      title: "Poster",
+      dataIndex: "animePoster",
+      key: "poster",
+      render: (text, record) => {
+        const content = (
+          <div className="hover-info">
+            <h3>{record.title}</h3>
+            <p>Genres: {record.genres}</p>
+            <p>Age requirement: {record.age_requirement}</p>
+            <p>Type: {record.anime_type}</p>
+            <p>Episodes: {record.episodes}</p>
+            <p>Status: {record.stat}</p>
+          </div>
+        );
+
+        return (
+          <div className="poster-container">
+            {record.animePoster && (
+              <Popover content={content} title={record.title}>
+                <img
+                  src={record.animePoster}
+                  alt={record.title}
+                  className="body-poster-img"
+                />
+              </Popover>
             )}
           </div>
+        );
+      },
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      render: (text, record) => (
+        <Link to={`/top-anime-series/${record.anime_id}`}>{text}</Link>
+      ),
+    },
+    {
+      title: "Status",
+      dataIndex: "stat",
+      key: "status",
+    },
+    {
+      title: "Episodes",
+      dataIndex: "episodes",
+      key: "episodes",
+      render: (text, record) => (
+        <>
+          {text}
+          <br />({record.anime_type})
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <MainLayout>
+      <div className="top-anime-table-container">
+        <h2 className="top-header">Top Anime Series</h2>
+        <Table
+          dataSource={data}
+          columns={columns}
+          pagination={false}
+          className="anime-table"
+        />
+        <div className="pagination-buttons">
+          {currentPage > 1 && (
+            <Button type="primary" onClick={handlePrevPage}>
+              <CaretLeftOutlined /> Previous
+            </Button>
+          )}
+          {!isLoading && data.length === animesPerPage && (
+            <Button type="primary" onClick={handleNextPage}>
+              Next <CaretRightOutlined />
+            </Button>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </MainLayout>
   );
 }
 
