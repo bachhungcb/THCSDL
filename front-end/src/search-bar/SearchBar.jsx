@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import SearchResult from "../search-result/SearchResult.jsx"; 
+import { useNavigate} from "react-router-dom";
 import { Select, Button, Form, Input } from "antd";
 import "./SearchBar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,34 +7,25 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 
 const { Option } = Select;
 
-function SearchBar() {
-  const urlWithProxy = "http://localhost:8080/animes";
-  const [form] = Form.useForm();
+function SearchBar({ onSearch }) {
+  const [searchValue, setSearchValue] = useState("");
   const [userChoice, setUserChoice] = useState("names");
-  const [searchData, setSearchData] = useState([]);
-  
-  const handleGoButtonClick = () => {
-    form.validateFields().then((values) => {
-      const { search } = values;
-      if (search.trim() !== "") {
-        axios
-          .get(`${urlWithProxy}/${userChoice}/${search}`)
-          .then((res) => {
-            console.log(res.data);
-            setSearchData(res.data);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    });
+  const navigation = useNavigate();
+
+  const handleSearch = () => {
+    onSearch(searchValue, userChoice);
+    navigation.push("/search-results");
   };
 
   return (
     <div className="searching-bar">
-      <Form form={form} layout="inline" onFinish={handleGoButtonClick}>
-        <Form.Item name="search" rules={[{ required: true, message: 'Please input your search!' }]}>
-          <Input placeholder="What are you looking for?" />
+      <Form layout="inline">
+        <Form.Item>
+          <Input
+            placeholder="What are you looking for?"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
         </Form.Item>
         <Form.Item>
           <Select value={userChoice} onChange={(value) => setUserChoice(value)}>
@@ -46,12 +36,11 @@ function SearchBar() {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" onClick={handleSearch}>
           <FontAwesomeIcon icon={fas.faMagnifyingGlass} />
           </Button>
         </Form.Item>
       </Form>
-      <SearchResult userChoice = {userChoice} results={searchData} />
     </div>
   );
 }
