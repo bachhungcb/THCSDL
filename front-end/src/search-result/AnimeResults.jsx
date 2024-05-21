@@ -1,3 +1,4 @@
+
 function AnimeResults({ results }) {
   return (
     <div>

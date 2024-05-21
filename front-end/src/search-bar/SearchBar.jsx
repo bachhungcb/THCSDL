@@ -13,8 +13,7 @@ function SearchBar({ onSearch }) {
   const navigation = useNavigate();
 
   const handleSearch = () => {
-    onSearch(searchValue, userChoice);
-    navigation.push("/search-results");
+    navigation(`/search-results?userChoice=${userChoice}&searchValue=${(searchValue)}`);
   };
 
   return (
