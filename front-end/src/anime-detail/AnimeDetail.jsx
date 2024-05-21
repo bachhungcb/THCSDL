@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
 import { Layout, Card, ConfigProvider } from "antd";
@@ -13,7 +13,7 @@ function AnimeDetail() {
   const [characters, setCharacters] = useState([]);
   const [producers, setProducers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     async function fetchData() {
       try {
