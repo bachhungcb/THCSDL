@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
+import {useTitle} from "../templates/TitleContext";
 import "./AnimeTable.css";
 
 function AnimeTable() {
+  const { setTitle } = useTitle();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,7 +77,12 @@ function AnimeTable() {
       dataIndex: "title",
       key: "title",
       render: (text, record) => (
-        <Link to={`/top-anime-series/${record.anime_id}`}>{text}</Link>
+        <Link
+          to={`/top-anime-series/${record.anime_id}`}
+          onClick={() => setTitle(record.title)}
+        >
+          {text}
+        </Link>
       ),
     },
     {
@@ -104,6 +111,7 @@ function AnimeTable() {
         <Table
           dataSource={data}
           columns={columns}
+          rowKey="anime_id"
           pagination={false}
           className="anime-table"
           size="small"

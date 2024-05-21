@@ -1,12 +1,14 @@
 import axios from "axios";
 import {useState,useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {List} from "antd";
 import ResultLayout from "../templates/ResultLayout.jsx";
 function ProducerResults({ userChoice, searchValue}) {
+  const location = useLocation();
+  const path= location.pathname.split('/');
+  console.log(path);
   const [searchData, setSearchData] = useState([]);
   useEffect(() => {
-    // Thực hiện tìm kiếm khi có sự thay đổi về giá trị tìm kiếm hoặc lựa chọn người dùng
     if (searchValue.trim() !== "") {
       axios
         .get(`http://localhost:8080/animes/${userChoice}/${searchValue}`)
