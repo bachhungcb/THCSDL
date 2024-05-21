@@ -1,7 +1,8 @@
 import React from "react";
-import { Layout, Breadcrumb } from "antd";
+import { Layout } from "antd";
 import NavBar from "../nav-bar/NavBar";
-import "./MainLayout.css"; // Tạo file CSS để tùy chỉnh giao diện nếu cần
+import CustomBreadCrumbs from "./BreadCrumbs.jsx"
+import "./MainLayout.css"; 
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -13,11 +14,7 @@ const MainLayout = ({ children, breadcrumbs }) => {
       </Header>
       <Layout>
         {breadcrumbs && (
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            {breadcrumbs.map((breadcrumb, index) => (
-              <Breadcrumb.Item key={index}>{breadcrumb}</Breadcrumb.Item>
-            ))}
-          </Breadcrumb>
+           <CustomBreadCrumbs breadcrumbs={breadcrumbs} />
         )}
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">{children}</div>

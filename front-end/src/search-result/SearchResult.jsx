@@ -1,28 +1,21 @@
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import React from "react";
+import { useLocation } from "react-router-dom";
 import AnimeResults from "./AnimeResults";
 import ProducerResults from "./ProducerResults";
 import CharacterResults from "./CharacterResults";
 import NavBar from "../nav-bar/NavBar";
 const { Header, Content, Footer } = Layout;
 
-function SearchResult({ searchValue, userChoice }) {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+function SearchResult() {
+  const query = useQuery();
+  const userChoice = query.get("userChoice");
+  const searchValue = query.get("searchValue");
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  useEffect(() => {
-    // Thực hiện tìm kiếm khi có sự thay đổi về giá trị tìm kiếm hoặc lựa chọn người dùng
-    if (searchValue.trim() !== "") {
-      axios
-        .get(`http://localhost:8080/animes/${userChoice}/${searchValue}`)
-        .then((res) => {
-          setSearchData(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [searchValue, userChoice]);
   if (searchValue === null) {
     return (
       <Layout>
@@ -51,7 +44,7 @@ function SearchResult({ searchValue, userChoice }) {
       case "genres":
         return <AnimeResults results={searchValue} />;
       case "producers_names":
-        return <ProducerResults producers={searchValue} />;
+        return <ProducerResults userChoice={userChoice} searchValue={searchValue} />;
       case "characters_names":
         return <CharacterResults characters={searchValue} />;
     }

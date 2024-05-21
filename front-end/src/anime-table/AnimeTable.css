@@ -103,12 +103,13 @@ table {
   border-right: #e5e5e5 2px solid ;
   border-left: #e5e5e5 2px solid ;
   border-bottom: #e5e5e5 2px solid;
-  height: 170px;
+  height: 95px;
 }
 
 .body-poster-img{
   width: 120px;
   height: auto;
+  transform: scale(0.5);
 }
 
 .body-poster{

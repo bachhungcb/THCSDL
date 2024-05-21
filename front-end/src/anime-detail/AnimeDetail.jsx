@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
-import { Layout} from "antd";
+import { Layout, Card, ConfigProvider } from "antd";
 import "./AnimeDetail.css";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -40,10 +40,10 @@ function AnimeDetail() {
   }, [animeId]);
 
   return (
-    <MainLayout breadcrumbs={[`Home`, `Anime Detail`]}>
+    <MainLayout breadcrumbs={[`Home`, `Top Anime Series`]}>
       {animeDetail.map((anime) => (
         <Layout key={anime.title}>
-          <Sider className="sider">
+          <Sider className="left-side">
             <div className="container">
               <img
                 className="anime-poster"
@@ -68,37 +68,49 @@ function AnimeDetail() {
             </div>
           </Sider>
           <Content className="content">
-            <div className="infomations">
-              <h1 className="detail1">Anime Detail</h1>
-              <div className="detail">
-                <span className="dark">Type: </span>
-                {anime.anime_type}
-              </div>
-              <div className="detail">
-                <span className="dark">Episode: </span>
-                {anime.episodes}
-              </div>
-              <div className="detail">
-                <span className="dark">Status: </span>
-                {anime.stat}
-              </div>
-              <div className="detail">
-                <span className="dark">Aired: </span>
-                {anime.aired_from} to {anime.aired_to}
-              </div>
-              <div className="detail">
-                <span className="dark">Producers: </span>
-                {anime.producers_name}
-              </div>
-              <div className="detail">
-                <span className="dark">Genres: </span>
-                {anime.genres}
-              </div>
-              <div className="synopsis">
-                <h1 className="detail2">Synopsis</h1>
-                <p>{anime.synopsis}</p>
-              </div>
-            </div>
+            <ConfigProvider
+              theme={{
+                components: {
+                  Card: {
+                    headerFontSize: "1.5rem",
+                  },
+                },
+              }}
+            >
+              <Card title={anime.title}>
+                <div className="infomations">
+                  <h3 className="detail1">Anime Detail</h3>
+                  <div className="detail">
+                    <span className="dark">Type: </span>
+                    {anime.anime_type}
+                  </div>
+                  <div className="detail">
+                    <span className="dark">Episode: </span>
+                    {anime.episodes}
+                  </div>
+                  <div className="detail">
+                    <span className="dark">Status: </span>
+                    {anime.stat}
+                  </div>
+                  <div className="detail">
+                    <span className="dark">Aired: </span>
+                    {anime.aired_from} to {anime.aired_to}
+                  </div>
+                  <div className="detail">
+                    <span className="dark">Producers: </span>
+                    {anime.producers_name}
+                  </div>
+                  <div className="detail">
+                    <span className="dark">Genres: </span>
+                    {anime.genres}
+                  </div>
+                  <div className="synopsis">
+                    <h3 className="detail2">Synopsis</h3>
+                    <p>{anime.synopsis}</p>
+                  </div>
+                </div>
+              </Card>
+            </ConfigProvider>
           </Content>
         </Layout>
       ))}

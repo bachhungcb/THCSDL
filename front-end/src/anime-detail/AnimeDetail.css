@@ -10,7 +10,12 @@
   margin-left: 0;
 }
 .left-side{
-  background-color: white; /* Đặt màu nền là màu trắng */
+  background-color: white
+  !important; /* Đặt màu nền là màu trắng */
+  text-align: left;
+}
+.content{
+  text-align: left;
 }
 
 .Infomations{

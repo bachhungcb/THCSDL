@@ -79,9 +79,10 @@ function AnimeTable() {
       ),
     },
     {
-      title: "Status",
-      dataIndex: "stat",
-      key: "status",
+      title: "Score",
+      dataIndex: "scores",
+      key: "score",
+      render: (record) => <>{record.scores}</>,
     },
     {
       title: "Episodes",
@@ -105,6 +106,7 @@ function AnimeTable() {
           columns={columns}
           pagination={false}
           className="anime-table"
+          size="small"
         />
         <div className="pagination-buttons">
           {currentPage > 1 && (
