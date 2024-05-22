@@ -42,7 +42,7 @@ function AnimeDetail() {
   return (
     <MainLayout breadcrumbs={[`Home`, `Top Anime Series`]}>
       {animeDetail.map((anime) => (
-        <Layout key={anime.title}>
+        <Layout key={anime.anime_id}>
           <Sider className="left-side">
             <div className="container">
               <img
