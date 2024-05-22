@@ -5,6 +5,7 @@ import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import "./AnimeTable.css";
+import { width } from "@fortawesome/free-brands-svg-icons/fa42Group";
 
 function AnimeTable() {
   const [data, setData] = useState([]);
@@ -40,9 +41,17 @@ function AnimeTable() {
 
   const columns = [
     {
-      title: "Poster",
-      dataIndex: "animePoster",
-      key: "poster",
+      title: "Rank",
+      dataIndex: "rank",
+      key: "rank",
+      width: "10%",
+      // render: (record) => <>{record.ranks}</>,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: "70%",
       render: (text, record) => {
         const content = (
           <div className="hover-info">
@@ -54,40 +63,44 @@ function AnimeTable() {
             <p>Status: {record.stat}</p>
           </div>
         );
-
         return (
-          <div className="poster-container">
+          <div className="body-title">
+            <div className="body-poster">
             {record.animePoster && (
-              <Popover content={content} title={record.title}>
-                <img
-                  src={record.animePoster}
-                  alt={record.title}
-                  className="body-poster-img"
-                />
-              </Popover>
-            )}
+                <Popover content={content}>
+                  <img
+                    src={record.animePoster}
+                    alt={record.title}
+                    className="body-poster-img"
+                  />
+                </Popover>
+              )}
+            </div>
+            <div className="body-title-text">
+            <Link to={`/top-anime-series/${record.anime_id}`} className="anime-name">{text}</Link>
+            <br/>
+            {record.aired_from}
+            <br/>
+            {record.aired_to}
+            <br/>
+            {record.premiered}
+            </div>
           </div>
         );
       },
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      render: (text, record) => (
-        <Link to={`/top-anime-series/${record.anime_id}`}>{text}</Link>
-      ),
-    },
-    {
       title: "Score",
       dataIndex: "scores",
       key: "score",
+      width: "10%",
       render: (record) => <>{record.scores}</>,
     },
     {
       title: "Episodes",
       dataIndex: "episodes",
       key: "episodes",
+      width: "10%",
       render: (text, record) => (
         <>
           {text}

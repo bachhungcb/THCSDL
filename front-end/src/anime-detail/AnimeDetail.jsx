@@ -97,6 +97,10 @@ function AnimeDetail() {
                     {anime.aired_from} to {anime.aired_to}
                   </div>
                   <div className="detail">
+                    <span className="dark">Premiered: </span>
+                    {anime.premiered}
+                  </div>
+                  <div className="detail">
                     <span className="dark">Producers: </span>
                     {anime.producers_name}
                   </div>

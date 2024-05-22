@@ -41,9 +41,11 @@
   color: #888;
 }
 
+
+
 /*----------main container----------*/
-.top-anime-table-container{
-  width: 1140px;
+.ant-table-container{
+  width: 1000px;
   margin: 0 auto;
 }
 
@@ -56,64 +58,34 @@ table {
 }
 
 /*-------------thead--------------*/
-
-.tablehead{
-  background-color: rgba(0, 132, 255, 0.96);
-  color: white;
-  text-align: 15px;
-  border-bottom: 2px solid rgba(0, 132, 255, 0.96);
+.ant-table-thead{
+  text-align: center;
 }
 
-.head-poster{
-  width: 10%;
-  border-left: 2px solid rgba(0, 132, 255, 0.96);
-  border-right: 2px solid;
+/*-------------tbody--------------*/
+.body-title {
+  display: flex;
+  align-items: center;
 }
 
-.head-title{
-  width: 30%;
-  border-right: 2px solid;
+.body-poster {
+  width: 80px;
+  height: auto;
 }
 
-.head-genre{
-  width: 40%;
-  border-right: 2px solid;
+.body-title-text {
+  width: 250px;
+  height: auto;
 }
 
-.head-status{
-  width: 10%;
-  border-right: 2px solid;
-}
-.head-episodes{
-  width: 10%;
-  border-right: 2px solid rgba(0, 132, 255, 0.96);
-}
-
-
-/*-------------tbody------------*/
-
-.tablebody tr:nth-child(even) {
-  background-color: #f5f5f5ea;
-}
-.tablebody tr:nth-child(odd) {
-  background-color: white;
-}
-
-.tablebody tr td{
-  border-right: #e5e5e5 2px solid ;
-  border-left: #e5e5e5 2px solid ;
-  border-bottom: #e5e5e5 2px solid;
-  height: 95px;
+.anime-name{
+  font-size: 120%;
 }
 
 .body-poster-img{
-  width: 120px;
+  width: 60px;
   height: auto;
-  transform: scale(0.5);
-}
-
-.body-poster{
-  position: relative;
+  transform: scale(1);
 }
 
 
@@ -130,11 +102,6 @@ table {
   line-height: 3px;
   font-size: 14px;
   color: black;
-  
-}
-
-.body-poster:hover .hover-info{
-  display: block;
 }
 
 .pagination-buttons{
