@@ -37,7 +37,7 @@ function CharacterResults({ userChoice, searchValue }) {
             <List.Item.Meta
               avatar={<Avatar src={item.Profile} />}
               title={<Link to={`/character/${item.Id}`}>{item.Name}</Link>}
-              description={item.Role}
+              description={item.Roles}
             />
           </List.Item>
         )}
