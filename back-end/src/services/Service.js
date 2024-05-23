@@ -35,7 +35,7 @@ const getAnimeById = async (animeId) => {
       .input(`anime_id`, animeId)
       .query(
         `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from, anime_status.stat,
-                anime_status.aired_to,anime_status.premiered,anime.animePoster, informations.favourite, informations.popularity 
+                anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, informations.popularity 
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN anime_status ON anime_status.anime_id = anime.anime_id 
@@ -114,7 +114,7 @@ const getAnimeByName = async (anime_name) => {
       .input("anime_name", anime_name)
       .query(
         `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
-        anime_status.aired_from,anime_status.aired_to, informations.favourite, informations.popularity
+        anime_status.aired_from, anime_status.aired_to, informations.favourite, informations.popularity
         FROM anime WITH (INDEX(idx_title))
         INNER JOIN informations ON informations.anime_id = anime.anime_id
         INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
