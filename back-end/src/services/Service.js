@@ -8,7 +8,7 @@ const getDataForHomepage = async (offset) => {
       .request()
       .input(`offset`, offset)
       .query(
-        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity
+        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
         FROM anime a
         LEFT JOIN anime_status s ON a.anime_id = s.anime_id
         LEFT JOIN informations i ON a.anime_id = i.anime_id
