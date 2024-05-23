@@ -58,11 +58,24 @@ function AnimeTable() {
         const content = (
           <div className="hover-info">
             <h3>{record.title}</h3>
-            <p>Genres: {record.genres}</p>
-            <p>Age requirement: {record.age_requirement}</p>
-            <p>Type: {record.anime_type}</p>
-            <p>Episodes: {record.episodes}</p>
-            <p>Status: {record.stat}</p>
+            <div>
+              <span className="dark">Age requirement: </span> {record.age_requirement}
+            </div>
+            <div>
+              <span className="dark">Type: </span> {record.anime_type}
+            </div>
+            <div>
+              <span className="dark">Episodes: </span> {record.episodes}
+            </div>
+            <div>
+              <span className="dark">Status: </span> {record.stat}
+            </div>
+            <div>
+              <span className="dark">Popularity: </span> #{record.popularity}
+            </div>
+            <div>
+              <span className="dark">Favourite: </span> {record.favourite}
+            </div>
           </div>
         );
         return (
@@ -91,24 +104,24 @@ function AnimeTable() {
         );
       },
     },
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      render: (text, record) => (
-        <Link
-          to={`/top-anime-series/${record.anime_id}`}
-          onClick={() => setTitle(record.title)}
-        >
-          {text}
-        </Link>
-      ),
-    },
+    // {
+    //   title: "Title",
+    //   dataIndex: "title",
+    //   key: "title",
+    //   render: (text, record) => (
+    //     <Link
+    //       to={`/top-anime-series/${record.anime_id}`}
+    //       onClick={() => setTitle(record.title)}
+    //     >
+    //       {text}
+    //     </Link>
+    //   ),
+    // },
     {
       title: "Score",
       dataIndex: "scores",
       key: "scores",
-      width: "10%"
+      width: "10%",
       render: (record) => <>{record.scores}</>,
     },
     {

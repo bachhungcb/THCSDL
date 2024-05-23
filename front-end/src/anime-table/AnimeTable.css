@@ -94,6 +94,8 @@ table {
   font-size: 16px;
   color: white;
   padding-left: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .hover-info p{
