@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams,useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
+import CharactersCard from "./CharactersCard.jsx";
 import { Layout, Card, ConfigProvider } from "antd";
 import "./AnimeDetail.css";
 
@@ -10,25 +11,20 @@ const { Header, Content, Footer, Sider } = Layout;
 function AnimeDetail() {
   const { animeId } = useParams();
   const [animeDetail, setAnimeDetail] = useState([]);
-  const [characters, setCharacters] = useState([]);
-  const [producers, setProducers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     async function fetchData() {
       try {
         const detailResponse = await axios.get(
           `http://localhost:8080/animes/${animeId}`
         );
-        const characterResponse = await axios.get(
-          `http://localhost:8080/animes/characters/${animeId}`
-        );
+
         const producerResponse = await axios.get(
           `http://localhost:8080/animes/producers/${animeId}`
         );
 
         setAnimeDetail(detailResponse.data);
-        setCharacters(characterResponse.data);
         setProducers(producerResponse.data);
         setIsLoading(false);
       } catch (error) {
@@ -44,28 +40,42 @@ function AnimeDetail() {
       {animeDetail.map((anime) => (
         <Layout key={anime.anime_id}>
           <Sider className="left-side">
-            <div className="container">
-              <img
-                className="anime-poster"
-                src={anime.animePoster}
-                alt={anime.title}
-              />
-            </div>
-            <div className="statics">
-              <h1>Statics</h1>
-              <div>
-                <span className="rank">Rank: #{anime.ranks}</span>
+            <Card>
+              <div className="container">
+                <img
+                  className="anime-poster"
+                  src={anime.animePoster}
+                  alt={anime.title}
+                />
               </div>
-              <div>
-                <span className="dark">Scores: </span> {anime.scores}
+            </Card>
+            <Card>
+              <div className="statics">
+                <h1>Statics</h1>
+                <div>
+                  <span className="rank">Rank: #{anime.ranks}</span>
+                </div>
+                <div>
+                  <span className="dark">Scores: </span> {anime.scores}
+                </div>
+                <div>
+                  <span className="dark">Popularity: </span> #{anime.popularity}
+                </div>
+                <div>
+                  <span className="dark">Favourite: </span> {anime.favourite}
+                </div>
               </div>
-              <div>
-                <span className="dark">Popularity: </span> #{anime.popularity}
+            </Card>
+            <Card>
+              <div className="producers">
+                <h1>Producers</h1>
+                <ul>
+                  {producers.map((producer) => (
+                    <li key={producer.producers_id}>{producer.producers_name}</li>
+                  ))}
+                </ul>
               </div>
-              <div>
-                <span className="dark">Favourite: </span> {anime.favourite}
-              </div>
-            </div>
+            </Card>
           </Sider>
           <Content className="content">
             <ConfigProvider
@@ -114,6 +124,7 @@ function AnimeDetail() {
                   </div>
                 </div>
               </Card>
+              <CharactersCard anime_id={anime.anime_id} />
             </ConfigProvider>
           </Content>
         </Layout>

@@ -8,7 +8,7 @@ const getDataForHomepage = async (offset) => {
       .request()
       .input(`offset`, offset)
       .query(
-        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity
+        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
         FROM anime a
         LEFT JOIN anime_status s ON a.anime_id = s.anime_id
         LEFT JOIN informations i ON a.anime_id = i.anime_id
@@ -34,14 +34,16 @@ const getAnimeById = async (animeId) => {
       .request()
       .input(`anime_id`, animeId)
       .query(
-        `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes, anime.synopsis, anime_status.aired_from, anime_status.stat,
-                anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, informations.popularity 
+        `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes,
+                anime.synopsis, anime_status.aired_from, anime_status.stat,
+                anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, 
+                informations.popularity, producers.producers_name 
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN anime_status ON anime_status.anime_id = anime.anime_id 
         WHERE anime.anime_id = @anime_id;`
       );
-  
+
     return animeResult.recordset;
   } catch (error) {
     console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
@@ -50,7 +52,7 @@ const getAnimeById = async (animeId) => {
 };
 
 const getCharacterByAnimeId = async (animeId) => {
-  try{
+  try {
     const pool = await createPool;
     const characterResult = await pool.request().input("anime_id", animeId)
       .query(`SELECT * 
@@ -58,14 +60,14 @@ const getCharacterByAnimeId = async (animeId) => {
         JOIN link_character ON link_character.character_id = new_character.Id
         WHERE link_character.anime_id = @anime_id`);
     return characterResult.recordset;
-  }catch(error){
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error)
+  } catch (error) {
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
   }
 };
 
 const getProducerByAnimeId = async (animeId) => {
-  try{
+  try {
     const pool = await createPool;
     const producersResults = await pool
       .request()
@@ -78,8 +80,8 @@ const getProducerByAnimeId = async (animeId) => {
         WHERE anime.anime_id = @anime_id`
       );
     return producersResults.recordset;
-  }catch(error){
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error)
+  } catch (error) {
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
   }
 };
