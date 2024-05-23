@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import NavBar from "../nav-bar/NavBar";
 import CustomBreadCrumbs from "./BreadCrumbs.jsx"
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer} = Layout;
 function ResultLayout({children, breadcrumbs}) {
     return(
         <Layout style={{ minHeight: "100vh" }}>

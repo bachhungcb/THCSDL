@@ -88,7 +88,7 @@ function AnimeTable() {
     {
       title: "Score",
       dataIndex: "scores",
-      key: "score",
+      key: "scores",
       render: (record) => <>{record.scores}</>,
     },
     {
