@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
+import {useTitle} from "../templates/TitleContext";
 import "./AnimeTable.css";
 import { width } from "@fortawesome/free-brands-svg-icons/fa42Group";
 
 function AnimeTable() {
+  const { setTitle } = useTitle();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -90,10 +92,23 @@ function AnimeTable() {
       },
     },
     {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      render: (text, record) => (
+        <Link
+          to={`/top-anime-series/${record.anime_id}`}
+          onClick={() => setTitle(record.title)}
+        >
+          {text}
+        </Link>
+      ),
+    },
+    {
       title: "Score",
       dataIndex: "scores",
-      key: "score",
-      width: "10%",
+      key: "scores",
+      width: "10%"
       render: (record) => <>{record.scores}</>,
     },
     {
@@ -117,6 +132,7 @@ function AnimeTable() {
         <Table
           dataSource={data}
           columns={columns}
+          rowKey="anime_id"
           pagination={false}
           className="anime-table"
           size="small"

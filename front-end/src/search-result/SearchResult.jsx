@@ -4,6 +4,7 @@ import AnimeResults from "./AnimeResults";
 import ProducerResults from "./ProducerResults";
 import CharacterResults from "./CharacterResults";
 import NavBar from "../nav-bar/NavBar";
+import "./SearchResult.css";
 const { Header, Content, Footer } = Layout;
 
 function useQuery() {
