@@ -74,7 +74,7 @@ table {
 }
 
 .body-title-text {
-  width: 250px;
+  width: 350px;
   height: auto;
 }
 
@@ -104,6 +104,24 @@ table {
   line-height: 3px;
   font-size: 14px;
   color: black;
+}
+
+.body-title-text{
+  line-height: normal;
+  margin-top: -20px;
+}
+
+.anime-name{
+  color: #1c439b;
+  font-weight: 500;
+}
+
+.anime-name:hover {
+  text-decoration: underline;
+}
+
+.small{
+  font-size: 12px;
 }
 
 .pagination-buttons{

@@ -92,14 +92,17 @@ function AnimeTable() {
               )}
             </div>
             <div className="body-title-text">
-            <Link to={`/top-anime-series/${record.anime_id}`} className="anime-name">{text}</Link>
-            <br/>
-            {record.aired_from}
-            <br/>
-            {record.aired_to}
-            <br/>
-            {record.premiered}
-            </div>
+              <Link to={`/top-anime-series/${record.anime_id}`} className="anime-name">{text}</Link>
+              <div>
+                <span className="small">{record.aired_from}</span>
+              </div>
+              <div>
+                <span className="small"> - {record.aired_to}</span>
+              </div>
+              <div>
+                <span className="small">{record.premiered}</span>
+              </div>
+              </div>
           </div>
         );
       },
