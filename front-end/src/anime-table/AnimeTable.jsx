@@ -26,6 +26,7 @@ function AnimeTable() {
       .then((res) => {
         setData(res.data);
         setIsLoading(false);
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -92,7 +93,7 @@ function AnimeTable() {
               )}
             </div>
             <div className="body-title-text">
-            <Link to={`/top-anime-series/${record.anime_id}`} className="anime-name">{text}</Link>
+            <Link to={`/top-anime-series/${record.anime_id} ` } onClick={() => setTitle(record.title)} className="anime-name">{text}</Link>
             <br/>
             {record.aired_from}
             <br/>
@@ -111,7 +112,7 @@ function AnimeTable() {
     //   render: (text, record) => (
     //     <Link
     //       to={`/top-anime-series/${record.anime_id}`}
-    //       onClick={() => setTitle(record.title)}
+    //       }
     //     >
     //       {text}
     //     </Link>

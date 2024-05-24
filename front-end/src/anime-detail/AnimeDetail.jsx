@@ -11,6 +11,7 @@ const { Header, Content, Footer, Sider } = Layout;
 function AnimeDetail() {
   const { animeId } = useParams();
   const [animeDetail, setAnimeDetail] = useState([]);
+  const [producers, setProducers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -71,7 +72,7 @@ function AnimeDetail() {
                 <h1>Producers</h1>
                 <ul>
                   {producers.map((producer) => (
-                    <li key={producer.producers_id}>{producer.producers_name}</li>
+                    <li key={producer.Id}>{producer.producers}</li>
                   ))}
                 </ul>
               </div>
@@ -124,7 +125,7 @@ function AnimeDetail() {
                   </div>
                 </div>
               </Card>
-              <CharactersCard anime_id={anime.anime_id} />
+              <CharactersCard animeId={animeId} />
             </ConfigProvider>
           </Content>
         </Layout>
