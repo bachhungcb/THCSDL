@@ -37,7 +37,7 @@ const getAnimeById = async (animeId) => {
         `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes,
                 anime.synopsis, anime_status.aired_from, anime_status.stat,
                 anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, 
-                informations.popularity, producers.producers_name 
+                informations.popularity
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN anime_status ON anime_status.anime_id = anime.anime_id 
