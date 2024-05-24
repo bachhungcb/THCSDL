@@ -105,19 +105,6 @@ function AnimeTable() {
         );
       },
     },
-    // {
-    //   title: "Title",
-    //   dataIndex: "title",
-    //   key: "title",
-    //   render: (text, record) => (
-    //     <Link
-    //       to={`/top-anime-series/${record.anime_id}`}
-    //       }
-    //     >
-    //       {text}
-    //     </Link>
-    //   ),
-    // },
     {
       title: "Score",
       dataIndex: "scores",

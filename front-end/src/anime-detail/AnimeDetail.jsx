@@ -121,7 +121,9 @@ function AnimeDetail() {
                   </div>
                   <div className="synopsis">
                     <h3 className="detail2">Synopsis</h3>
-                    <p>{anime.synopsis}</p>
+                    <div>
+                      <span>{anime.synopsis}</span>
+                    </div>
                   </div>
                 </div>
               </Card>
