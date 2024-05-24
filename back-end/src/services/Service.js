@@ -166,6 +166,26 @@ const getProducerByName = async (producers_name) => {
     throw error;
   }
 };
+const getGenresByAnimeId = async (animeId) => {
+  try {
+    const pool = await createPool;
+    const genresResult = await pool
+      .request()
+      .input("anime_id", animeId)
+      .query(
+        `SELECT genres.genres_id, genres.genres
+        FROM genres
+        JOIN link_genres ON link_genres.genres_id = genres.genres_id
+        JOIN anime ON anime.anime_id = link_genres.anime_id
+        WHERE anime.anime_id = @anime_id`
+      );
+    return genresResult.recordset;
+  } catch (error) {
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
+    throw error;
+  }
+
+}
 
 module.exports = {
   getDataForHomepage,
@@ -176,4 +196,5 @@ module.exports = {
   getAnimeByName,
   getCharacterByName,
   getProducerByName,
+  getGenresByAnimeId
 };

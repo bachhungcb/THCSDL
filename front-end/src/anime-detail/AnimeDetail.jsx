@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
 import CharactersCard from "./CharactersCard.jsx";
@@ -12,6 +12,7 @@ function AnimeDetail() {
   const { animeId } = useParams();
   const [animeDetail, setAnimeDetail] = useState([]);
   const [producers, setProducers] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -24,9 +25,13 @@ function AnimeDetail() {
         const producerResponse = await axios.get(
           `http://localhost:8080/animes/producers/${animeId}`
         );
+        const genresResponse = await axios.get(
+          `http://localhost:8080/animes/genres_names/${animeId}`
+        );
 
         setAnimeDetail(detailResponse.data);
         setProducers(producerResponse.data);
+        setGenres(genresResponse.data);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -41,15 +46,13 @@ function AnimeDetail() {
       {animeDetail.map((anime) => (
         <Layout key={anime.anime_id}>
           <Sider className="left-side">
-            <Card>
-              <div className="container">
-                <img
-                  className="anime-poster"
-                  src={anime.animePoster}
-                  alt={anime.title}
-                />
-              </div>
-            </Card>
+            <div className="container">
+              <img
+                className="anime-poster"
+                src={anime.animePoster}
+                alt={anime.title}
+              />
+            </div>
             <Card>
               <div className="statics">
                 <h1>Statics</h1>
@@ -112,12 +115,13 @@ function AnimeDetail() {
                     {anime.premiered}
                   </div>
                   <div className="detail">
-                    <span className="dark">Producers: </span>
-                    {anime.producers_name}
-                  </div>
-                  <div className="detail">
                     <span className="dark">Genres: </span>
-                    {anime.genres}
+                    {genres.map((genre, index) => (
+                      <span key={genre.genres_id}>
+                        {genre.genres}
+                        {index !== genres.length - 1 && ", "}
+                      </span>
+                    ))}
                   </div>
                   <div className="synopsis">
                     <h3 className="detail2">Synopsis</h3>
