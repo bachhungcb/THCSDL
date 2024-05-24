@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Card, Row, Col, List, Avatar } from "antd";
+import { Card, Row, Col, List, Avatar, ConfigProvider } from "antd";
 
 function CharactersCard({ animeId }) {
   const [characters, setCharacters] = useState([]);
@@ -22,6 +22,14 @@ function CharactersCard({ animeId }) {
 
   const [leftColumn, rightColumn] = splitData(characters);
   return (
+    <ConfigProvider
+    theme ={{
+      components: {
+        Avatar: {
+          containerSize: 'large',
+        }
+      }
+    }}>
     <Card title="Characters" >
       <Row>
         <Col span={12}>
@@ -54,6 +62,7 @@ function CharactersCard({ animeId }) {
         </Col>
       </Row>
     </Card>
+    </ConfigProvider>
   );
 }
 

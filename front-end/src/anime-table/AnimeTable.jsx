@@ -4,9 +4,8 @@ import axios from "axios";
 import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
-import {useTitle} from "../templates/TitleContext";
+import { useTitle } from "../templates/TitleContext";
 import "./AnimeTable.css";
-import { width } from "@fortawesome/free-brands-svg-icons/fa42Group";
 
 function AnimeTable() {
   const { setTitle } = useTitle();
@@ -26,7 +25,6 @@ function AnimeTable() {
       .then((res) => {
         setData(res.data);
         setIsLoading(false);
-        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -45,10 +43,9 @@ function AnimeTable() {
   const columns = [
     {
       title: "Rank",
-      dataIndex: "rank",
-      key: "rank",
+      dataIndex: "ranks",
+      key: "ranks",
       width: "10%",
-      // render: (record) => <>{record.ranks}</>,
     },
     {
       title: "Title",
@@ -82,7 +79,7 @@ function AnimeTable() {
         return (
           <div className="body-title">
             <div className="body-poster">
-            {record.animePoster && (
+              {record.animePoster && (
                 <Popover content={content}>
                   <img
                     src={record.animePoster}
@@ -93,37 +90,21 @@ function AnimeTable() {
               )}
             </div>
             <div className="body-title-text">
-            <Link to={`/top-anime-series/${record.anime_id} ` } onClick={() => setTitle(record.title)} className="anime-name">{text}</Link>
-            <br/>
-            {record.aired_from}
-            <br/>
-            {record.aired_to}
-            <br/>
-            {record.premiered}
+              <Link to={`/top-anime-series/${record.anime_id}`} onClick={() => setTitle(record.title)} className="anime-name">{text}</Link>
+              <br />
+              Aired: {record.aired_from} to {record.aired_to}
+              <br />
+              Premiered: {record.premiered}
             </div>
           </div>
         );
       },
     },
-    // {
-    //   title: "Title",
-    //   dataIndex: "title",
-    //   key: "title",
-    //   render: (text, record) => (
-    //     <Link
-    //       to={`/top-anime-series/${record.anime_id}`}
-    //       }
-    //     >
-    //       {text}
-    //     </Link>
-    //   ),
-    // },
     {
       title: "Score",
       dataIndex: "scores",
       key: "scores",
       width: "10%",
-      render: (record) => <>{record.scores}</>,
     },
     {
       title: "Episodes",
