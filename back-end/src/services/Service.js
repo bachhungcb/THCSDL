@@ -58,17 +58,17 @@ const getAnimeByType = async (offset,animeType) => {
       .input(`offset`, offset)
       .input(`type`, animeType)
       .query(
-        `SELECT TOP (50) a.*, a.type, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-         FROM anime a
-         LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-         LEFT JOIN informations i ON a.anime_id = i.anime_id
-         WHERE a.anime_id NOT IN (
-         SELECT TOP (@offset) anime_id 
-         FROM anime 
-         ORDER BY anime_id
-         )
-         AND a.type = @type
-         ORDER BY a.anime_id;`
+        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
+        FROM anime a
+        LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+        LEFT JOIN informations i ON a.anime_id = i.anime_id
+        WHERE a.anime_id NOT IN (
+        SELECT TOP (@offset) anime_id 
+        FROM anime 
+        ORDER BY anime_id
+        )
+        AND a.anime_type = @type
+        ORDER BY a.anime_id;`
       );
     const animeData = animeResult.recordset;
     return animeData;
