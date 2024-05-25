@@ -1,14 +1,15 @@
 import './NavBar.css';
 import SearchBar from "../search-bar/SearchBar";
+import { Link } from 'react-router-dom';
 function NavBar() {
 return(
     <nav className='nav-bar'>
         <ul className='menu'>
-            <li><a href="#">All Anime</a></li>
-            <li><a href="#">Top movie</a></li>
-            <li><a href="#">Top OVA</a></li>
-            <li><a href="#">Top TV Series</a></li>
-            <li><a href="#">Character</a></li>
+            <li><Link to="/top-anime-series">All Anime</Link></li>
+            <li><Link to="/top-type/Movie">Top movie</Link></li>
+            <li><Link to="/top-type/OVA">Top OVA</Link></li>
+            <li><Link to="/top-type/TV">Top TV Series</Link></li>
+            <li><Link to="/characters">Character</Link></li>
         </ul>
         <SearchBar />
     </nav>

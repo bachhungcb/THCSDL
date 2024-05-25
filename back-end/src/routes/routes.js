@@ -7,7 +7,8 @@ const {
   getAnimeFromName,
   getCharacterFromName,
   getProducerFromName,
-  getGenres
+  getGenres,
+  getType,
 } = require("../controllers/controllers");
 const express = require("express");
 const router = express.Router();
@@ -21,5 +22,6 @@ router.get("/animes/names/:anime_name", getAnimeFromName);
 router.get("/animes/characters_names/:character_name", getCharacterFromName);
 router.get("/animes/producers_names/:producer_name", getProducerFromName);
 router.get("/animes/genres_names/:animeId", getGenres);
+router.get("/animes/types/:type", getType);
 
 module.exports = router;
