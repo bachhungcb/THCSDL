@@ -238,6 +238,24 @@ const getNumberOfAnime = async (offset) => {
   }
 };
 
+const ProducersById = async (producers_id) => {
+  try {
+    const pool = await createPool;
+    const producerResult = await pool
+      .request()
+      .input("producers_id", producers_id)
+      .query(
+        `SELECT producers.producers_name, producers.producers_id
+        FROM producers
+        WHERE producers.producers_id = @producers_id`
+      );
+    return producerResult.recordset;
+  } catch (error) {
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   getDataForHomepage,
   getAnimeById,
@@ -249,5 +267,6 @@ module.exports = {
   getCharacterByName,
   getProducerByName,
   getGenresByAnimeId,
-  getNumberOfAnime
+  getNumberOfAnime,
+  ProducersById
 };

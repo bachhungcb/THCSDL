@@ -9,8 +9,8 @@ const {
   getProducerByName,
   getGenresByAnimeId,
   getAnimeByType,
-  getNumberOfAnime
-
+  getNumberOfAnime,
+  ProducersById
 } = require("../services/Service");
 
 
@@ -81,6 +81,12 @@ const getNumberOfAnimeByProducers = async (req, res) => {
   res.status(200).send(result);
 };
 
+const getProducerByProducersId = async (req, res) => {
+  const producers_id = parseInt(req.params.producers_id);
+  const producers = await ProducersById(producers_id);
+  res.status(200).send(producers);
+};
+
 //export fuction getAnimes to be used in routes.js
 module.exports = {
   getAnimes,
@@ -93,5 +99,6 @@ module.exports = {
   getProducerFromName,
   getGenres,
   getType,
-  getNumberOfAnimeByProducers
+  getNumberOfAnimeByProducers,
+  getProducerByProducersId
 };
