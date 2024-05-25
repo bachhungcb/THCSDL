@@ -8,6 +8,7 @@ const {
   getCharacterByName,
   getProducerByName,
   getGenresByAnimeId,
+  getAnimeByType,
 } = require("../services/Service");
 
 
@@ -62,6 +63,14 @@ const getGenres = async (req, res) => {
   const genres = await getGenresByAnimeId(animeId);
   res.status(200).send(genres);
 };
+const getType = async (req, res) => {
+  const type = req.params.type;
+  const { page } = req.query;
+  const pageValue = parseInt(page);
+  const offset = (pageValue - 1) * 50 ;
+  const anime = await getAnimeByType(offset,type);
+  res.status(200).send(anime);
+};
 //export fuction getAnimes to be used in routes.js
 module.exports = {
   getAnimes,
@@ -73,4 +82,5 @@ module.exports = {
   getCharacterFromName,
   getProducerFromName,
   getGenres,
+  getType,
 };
