@@ -26,7 +26,7 @@ JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores DESC;
 
 --Đưa ra tên của top 3 studio có điểm trung bình cao nhất--
-SELECT TOP 3  producers.producers_name, AVG(CONVERT(DECIMAL,informations.scores)) AS Score FROM informations
+SELECT TOP 50  producers.producers_name, AVG(CONVERT(DECIMAL,informations.scores)) AS Score FROM informations
 JOIN anime ON anime.anime_id = informations.anime_id
 JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
 JOIN producers ON producers.producers_id = anime_producers.producers_id
@@ -84,9 +84,9 @@ WHERE anime.title LIKE '%Hen%'
 
 --Tìm kiếm nhân vật thông qua tên
 CREATE INDEX ix_characters_name ON new_character(Name)
-SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
+SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile, new_character.Id
         FROM new_character  
-        WHERE new_character.Name LIKE '%Conan%'
+        WHERE new_character.Name LIKE '%Edogawa%'
         ORDER BY new_character.Name;
 
 --Tìm kiếm nhân vật thông qua anime_id
@@ -97,3 +97,28 @@ JOIN anime ON anime.anime_id = link_character.anime_id
 WHERE anime.anime_id = 604;
 
 
+SELECT TOP 50  producers.producers_name, SUM(anime.anime_id) AS Total_Anime FROM informations
+JOIN anime ON anime.anime_id = informations.anime_id
+JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
+JOIN producers ON producers.producers_id = anime_producers.producers_id
+GROUP BY producers.producers_name
+ORDER BY AVG(CONVERT(DECIMAL,informations.scores)) DESC;
+--Lấy ra producers và tổng số bộ anime mà họ đã sản xuất
+SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime 
+      FROM informations
+      JOIN anime ON anime.anime_id = informations.anime_id
+      JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
+      JOIN producers ON producers.producers_id = anime_producers.producers_id
+      GROUP BY producers.producers_name
+      ORDER BY AVG(CONVERT(DECIMAL,informations.scores)) DESC
+      OFFSET 0 ROWS
+	  FETCH NEXT 50 ROWS ONLY;
+--Đưa ra thông tin của một producers dựa trên id của producers đó
+SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
+WHERE producers.producers_id = 1
+
+
+SELECT new_character.Name, anime.title AS title FROM anime
+JOIN link_character ON link_character.anime_id = anime.anime_id
+JOIN new_character ON link_character.character_id = new_character.Id
+WHERE new_character.Id = 4505
