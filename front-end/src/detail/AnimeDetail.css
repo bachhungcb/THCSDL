@@ -49,6 +49,15 @@
   color: white;
 }
 
+.producers h1{
+  margin-top: 0px;
+  margin-bottom: -10px;
+}
+
+.anime-producers{
+  margin-left: -20px;
+}
+
 .ant-card-head-title{
   color: #1c439b;
   font-weight: 600;

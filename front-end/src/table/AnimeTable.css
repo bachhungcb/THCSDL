@@ -59,6 +59,10 @@ table {
 
 /*-------------thead--------------*/
 .ant-table-thead{
+  text-align: center !important;
+}
+
+.ant-table-cell{
   text-align: center;
 }
 
@@ -76,6 +80,9 @@ table {
 .body-title-text {
   width: 350px;
   height: auto;
+  text-align: left;
+  line-height: normal;
+  margin-top: -5px;
 }
 
 .anime-name{
@@ -83,8 +90,9 @@ table {
 }
 
 .body-poster-img{
-  width: 60px;
-  height: auto;
+  margin-top: 5px;
+  width: 55px;
+  height: 75px;
   transform: scale(1);
 }
 
@@ -104,11 +112,6 @@ table {
   line-height: 3px;
   font-size: 14px;
   color: black;
-}
-
-.body-title-text{
-  line-height: normal;
-  margin-top: -20px;
 }
 
 .anime-name{

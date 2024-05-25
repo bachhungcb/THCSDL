@@ -75,7 +75,7 @@ function AnimeDetail() {
                 <h1>Producers</h1>
                 <ul>
                   {producers.map((producer) => (
-                    <li key={producer.Id}>{producer.producers}</li>
+                    <li key={producer.Id} className="anime-producers">{producer.producers}</li>
                   ))}
                 </ul>
               </div>
