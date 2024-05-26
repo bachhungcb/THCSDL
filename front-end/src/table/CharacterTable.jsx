@@ -7,7 +7,7 @@ import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
 import "./AnimeTable.css";
 
-function TypeTable() {
+function CharacterTable() {
   const { type } = useParams();
   const { setTitle } = useTitle();
   const [data, setData] = useState([]);
@@ -165,4 +165,4 @@ function TypeTable() {
   );
 }
 
-export default TypeTable;
+export default CharacterTable;
