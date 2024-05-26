@@ -50,7 +50,7 @@ const getAnimeById = async (animeId) => {
     throw error;
   }
 };
-const getAnimeByType = async (offset,animeType) => {
+const getAnimeByType = async (offset, animeType) => {
   try {
     const pool = await createPool;
     const animeResult = await pool
@@ -174,6 +174,28 @@ const getCharacterByName = async (character_name) => {
     throw error;
   }
 };
+const getDataCharacterPage = async (offset) => {
+  try {
+    const pool = await createPool;
+    const characterResult = await pool
+      .request()
+      .input(`offset`, offset)
+      .query(
+        `SELECT TOP 50 new_character.Name, new_character.Profile
+        FROM new_character
+        WHERE new_character.Id NOT IN (
+            SELECT TOP (@offset) Id 
+            FROM new_character 
+            ORDER BY Id
+        )
+        ORDER BY new_character.Name;`
+      );
+    return characterResult.recordset;
+  } catch (error) {
+    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
+    throw error;
+  }
+};
 //sua cho dang sau Index thanh ten index cua minh
 const getProducerByName = async (producers_name) => {
   try {
@@ -232,7 +254,7 @@ const getNumberOfAnime = async (offset) => {
     return animeResult.recordset;
   } catch (error) {
     console.log(offset);
-    console.log(typeof(offset));
+    console.log(typeof offset);
     console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
   }
@@ -268,5 +290,6 @@ module.exports = {
   getProducerByName,
   getGenresByAnimeId,
   getNumberOfAnime,
-  ProducersById
+  ProducersById,
+  getDataCharacterPage,
 };
