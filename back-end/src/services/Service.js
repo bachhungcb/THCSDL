@@ -83,10 +83,10 @@ const getCharacterByAnimeId = async (animeId) => {
 const getProducerByAnimeId = async (animeId) => {
   
   const query = `SELECT producers.producers_id AS Id, producers.producers_name AS producers 
-  FROM producers 
-  JOIN anime_producers ON anime_producers.producers_id = producers.producers_id 
-  JOIN anime ON anime.anime_id = anime_producers.anime_id 
-  WHERE anime.anime_id = @anime_id`
+                FROM producers 
+                JOIN anime_producers ON anime_producers.producers_id = producers.producers_id 
+                JOIN anime ON anime.anime_id = anime_producers.anime_id 
+                WHERE anime.anime_id = @anime_id`
   return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
 };
 
