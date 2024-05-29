@@ -103,25 +103,14 @@ const getAnimeByGenres = async (anime_genres) => {
 };
 
 const getAnimeByName = async (anime_name) => {
-  try {
-    const pool = await createPool;
-    const animeResult = await pool
-      .request()
-      .input("anime_name", anime_name)
-      .query(
-        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
-        anime_status.aired_from, anime_status.aired_to, informations.favourite, informations.popularity
-        FROM anime WITH (INDEX(idx_title))
-        INNER JOIN informations ON informations.anime_id = anime.anime_id
-        INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
-        WHERE anime.title LIKE '%'+@anime_name+'%'`
-      );
 
-    return animeResult.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+  const query = `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
+                anime_status.aired_from, anime_status.aired_to, informations.favourite, informations.popularity
+                FROM anime WITH (INDEX(idx_title))
+                INNER JOIN informations ON informations.anime_id = anime.anime_id
+                INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
+                WHERE anime.title LIKE '%'+@anime_name+'%'`
+  return executeQuery(query, [{ name: 'anime_name', value: anime_name }]);
 };
 
 
