@@ -7,6 +7,7 @@ const executeQuery = async (query, params) => {
     const request = pool.request();
     for (const param of params) {
       request.input(param.name, param.value);
+      console.log(param.name, param.value);
     }
     const result = await request.query(query);
     return result.recordset;
@@ -53,44 +54,19 @@ const getAnimeById = async (animeId) => {
 };
 
 const getAnimeByType = async (offset, animeType) => {
-  // try {
-  //   const pool = await createPool;
-  //   const animeResult = await pool
-  //     .request()
-  //     .input(`offset`, offset)
-  //     .input(`type`, animeType)
-  //     .query(
-  //       `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-  //       FROM anime a
-  //       LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-  //       LEFT JOIN informations i ON a.anime_id = i.anime_id
-  //       WHERE a.anime_id NOT IN (
-  //       SELECT TOP (@offset) anime_id 
-  //       FROM anime 
-  //       ORDER BY anime_id
-  //       )
-  //       AND a.anime_type = @type
-  //       ORDER BY a.anime_id;`
-  //     );
-  //   const animeData = animeResult.recordset;
-  //   return animeData;
-  // } catch (error) {
-  //   console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-  //   throw error;
-  // }
-  // const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-  // FROM anime a
-  // LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-  // LEFT JOIN informations i ON a.anime_id = i.anime_id
-  // WHERE a.anime_id NOT IN (
-  // SELECT TOP (@offset) anime_id 
-  // FROM anime 
-  // ORDER BY anime_id
-  // )
-  // AND a.anime_type = @animeType
-  // ORDER BY a.anime_id;`
-  // return executeQuery(query, [{ name: 'offset', value: parseInt(offset) },
-  //                             { name: 'animeType', value: animeType}])
+  const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
+  FROM anime a
+  LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+  LEFT JOIN informations i ON a.anime_id = i.anime_id
+  WHERE a.anime_id NOT IN (
+  SELECT TOP (@offset) anime_id 
+  FROM anime 
+  ORDER BY anime_id
+  )
+  AND a.anime_type = @animeType
+  ORDER BY a.anime_id;`
+  return executeQuery(query, [{ name: 'offset', value: parseInt(offset)},
+                              { name: 'animeType', value: animeType}])
 };
 
 const getCharacterByAnimeId = async (animeId) => {
