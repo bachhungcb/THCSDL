@@ -42,6 +42,7 @@ const getDataForHomepage = async (offset) => {
 };
 
 const getAnimeById = async (animeId) => {
+
   const query = `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes,
                 anime.synopsis, anime_status.aired_from, anime_status.stat,
                 anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, 
@@ -54,6 +55,7 @@ const getAnimeById = async (animeId) => {
 };
 
 const getAnimeByType = async (offset, animeType) => {
+  
   const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
   FROM anime a
   LEFT JOIN anime_status s ON a.anime_id = s.anime_id
