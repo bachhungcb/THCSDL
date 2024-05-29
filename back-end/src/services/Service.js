@@ -57,16 +57,16 @@ const getAnimeById = async (animeId) => {
 const getAnimeByType = async (offset, animeType) => {
 
   const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-  FROM anime a
-  LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-  LEFT JOIN informations i ON a.anime_id = i.anime_id
-  WHERE a.anime_id NOT IN (
-  SELECT TOP (@offset) anime_id 
-  FROM anime 
-  ORDER BY anime_id
-  )
-  AND a.anime_type = @animeType
-  ORDER BY a.anime_id;`
+                FROM anime a
+                LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+                LEFT JOIN informations i ON a.anime_id = i.anime_id
+                WHERE a.anime_id NOT IN (
+                SELECT TOP (@offset) anime_id 
+                FROM anime 
+                ORDER BY anime_id
+                )
+                AND a.anime_type = @animeType
+                ORDER BY a.anime_id;`
   return executeQuery(query, [{ name: 'offset', value: parseInt(offset)},
                               { name: 'animeType', value: animeType}])
 };
@@ -74,30 +74,20 @@ const getAnimeByType = async (offset, animeType) => {
 const getCharacterByAnimeId = async (animeId) => {
 
   const query = `SELECT * 
-    FROM new_character 
-    JOIN link_character ON link_character.character_id = new_character.Id
-    WHERE link_character.anime_id = @anime_id`; 
+                FROM new_character 
+                JOIN link_character ON link_character.character_id = new_character.Id
+                WHERE link_character.anime_id = @anime_id`; 
   return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
 };
 
 const getProducerByAnimeId = async (animeId) => {
-  try {
-    const pool = await createPool;
-    const producersResults = await pool
-      .request()
-      .input(`anime_id`, animeId)
-      .query(
-        `SELECT producers.producers_id AS Id, producers.producers_name AS producers 
-        FROM producers 
-        JOIN anime_producers ON anime_producers.producers_id = producers.producers_id 
-        JOIN anime ON anime.anime_id = anime_producers.anime_id 
-        WHERE anime.anime_id = @anime_id`
-      );
-    return producersResults.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+  
+  const query = `SELECT producers.producers_id AS Id, producers.producers_name AS producers 
+  FROM producers 
+  JOIN anime_producers ON anime_producers.producers_id = producers.producers_id 
+  JOIN anime ON anime.anime_id = anime_producers.anime_id 
+  WHERE anime.anime_id = @anime_id`
+  return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
 };
 
 const getAnimeByGenres = async (anime_genres) => {
