@@ -81,6 +81,10 @@ function AnimeTable() {
             </div>
           </div>
         );
+        // let aired_to = "N/A";
+        // if (record.aired_to != null && record.aired_to != "('Unknown')") aired_to = record.aired_to;
+        // let premiered = record.premiered !== "" ? record.premiered : "N/A";
+        // Neu dung function thi phai doi ten record.aired_to va record.premiered o duoi thanh aired_to va premiered
         return (
           <div className="body-title">
             <div className="body-poster">
@@ -99,10 +103,10 @@ function AnimeTable() {
                 <span className="anime-name"><Link to={`/top-anime-series/${record.anime_id}`} onClick={() => setTitle(record.title)}>{text}</Link></span>
               </div>
               <div>
-                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to}
+                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to === "('Unknown')" ? "N/A" : record.aired_to}
               </div>
               <div>
-                <span className="dark">Premiered: </span>{record.premiered}
+                <span className="dark">Premiered: </span>{record.premiered || "N/A"}
               </div>
             </div>
           </div>
