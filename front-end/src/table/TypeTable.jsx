@@ -5,6 +5,7 @@ import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
+import loadingGif from "../assets/loading-screen.gif"; 
 import "./AnimeTable.css";
 
 function TypeTable() {
@@ -51,7 +52,7 @@ function TypeTable() {
       key: "ranks",
       width: "10%",
       render: (text) => (
-        <span style={{ fontSize: "46px", fontWeight: 800 , color: "#888"}}>
+        <span style={{ fontSize: "46px", fontWeight: 800, color: "#888" }}>
           {text}
         </span>
       ),
@@ -140,14 +141,22 @@ function TypeTable() {
     <MainLayout>
       <div className="top-anime-table-container">
         <h2 className="top-header">Top Anime {type}</h2>
-        <Table
-          dataSource={data}
-          columns={columns}
-          rowKey="anime_id"
-          pagination={false}
-          className="anime-table"
-          size="small"
-        />
+        {isLoading ? (
+          <div className="loading-container">
+            <img src={loadingGif} alt="Loading..." className="loading-gif" />
+          </div>
+        ) : (
+          <>
+            <Table
+              dataSource={data}
+              columns={columns}
+              rowKey="anime_id"
+              pagination={false}
+              className="anime-table"
+              size="small"
+            />
+          </>
+        )}
         <div className="pagination-buttons">
           {currentPage > 1 && (
             <Button type="primary" onClick={handlePrevPage}>

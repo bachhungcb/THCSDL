@@ -71,3 +71,8 @@
     cursor: pointer;
     line-height: 1;
   }
+
+  
+.menu li.active a {
+  border-bottom: 2px solid #f8f3f3; /* Underline the active link */
+}

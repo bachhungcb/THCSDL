@@ -7,7 +7,6 @@ const executeQuery = async (query, params) => {
     const request = pool.request();
     for (const param of params) {
       request.input(param.name, param.value);
-      console.log(param.name, param.value);
     }
     const result = await request.query(query);
     return result.recordset;

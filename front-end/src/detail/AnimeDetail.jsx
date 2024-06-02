@@ -108,11 +108,11 @@ function AnimeDetail() {
                   </div>
                   <div className="detail">
                     <span className="dark">Aired: </span>
-                    {anime.aired_from} to {anime.aired_to}
+                    {anime.aired_from} to {anime.aired_to === "('Unknown')" ? "N/A" : anime.aired_to}
                   </div>
                   <div className="detail">
                     <span className="dark">Premiered: </span>
-                    {anime.premiered}
+                    {anime.premiered || "N/A"}
                   </div>
                   <div className="detail">
                     <span className="dark">Genres: </span>

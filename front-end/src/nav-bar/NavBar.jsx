@@ -1,19 +1,33 @@
-import './NavBar.css';
+import "./NavBar.css";
 import SearchBar from "../search-bar/SearchBar";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
+
 function NavBar() {
-return(
-    <nav className='nav-bar'>
-        <ul className='menu'>
-            <li><Link to="/top-anime-series">All Anime</Link></li>
-            <li><Link to="/top-type/Movie">Top movie</Link></li>
-            <li><Link to="/top-type/OVA">Top OVA</Link></li>
-            <li><Link to="/top-type/TV">Top TV Series</Link></li>
-            <li><Link to="/characters">Character</Link></li>
-        </ul>
-        <SearchBar />
+  const location = useLocation();
+  const { pathname } = location;
+
+  return (
+    <nav className="nav-bar">
+      <ul className="menu">
+        <li className={pathname === "/top-anime-series" ? "active" : ""}>
+          <Link to="/top-anime-series">All Anime</Link>
+        </li>
+        <li className={pathname === "/top-type/Movie" ? "active" : ""}>
+          <Link to="/top-type/Movie">Top Movie</Link>
+        </li>
+        <li className={pathname === "/top-type/OVA" ? "active" : ""}>
+          <Link to="/top-type/OVA">Top OVA</Link>
+        </li>
+        <li className={pathname === "/top-type/TV" ? "active" : ""}>
+          <Link to="/top-type/TV">Top TV Series</Link>
+        </li>
+        <li className={pathname === "/characters" ? "active" : ""}>
+          <Link to="/characters">Character</Link>
+        </li>
+      </ul>
+      <SearchBar />
     </nav>
-)
+  );
 }
 
 export default NavBar;
