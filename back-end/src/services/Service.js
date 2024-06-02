@@ -1,161 +1,118 @@
 const createPool = require(`../config/database`);
 
-//get animes for homepage, display 50 animes per page
-const getDataForHomepage = async (offset) => {
+// Common function to execute queries
+const executeQuery = async (query, params) => {
   try {
     const pool = await createPool;
-    const animeResult = await pool
-      .request()
-      .input(`offset`, offset)
-      .query(
-        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-        FROM anime a
-        LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-        LEFT JOIN informations i ON a.anime_id = i.anime_id
-        WHERE a.anime_id NOT IN (
-            SELECT TOP (@offset) anime_id 
-            FROM anime 
-            ORDER BY anime_id
-        )
-        ORDER BY a.anime_id;`
-      );
-    const animeData = animeResult.recordset;
-    return animeData;
+    const request = pool.request();
+    for (const param of params) {
+      request.input(param.name, param.value);
+    }
+    const result = await request.query(query);
+    return result.recordset;
   } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
+    console.error("Database query error:", error);
+    throw new DatabaseQueryError(error, query);
   }
 };
 
+// Custom error class
+class DatabaseQueryError extends Error {
+  constructor(originalError, query) {
+    super(`Error executing query: ${query}`);
+    this.originalError = originalError;
+  }
+}
+
+//get animes for homepage, display 50 animes per page
+const getDataForHomepage = async (offset) => {
+
+  const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
+  FROM anime a
+  LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+  LEFT JOIN informations i ON a.anime_id = i.anime_id
+  WHERE a.anime_id NOT IN (
+      SELECT TOP (@offset) anime_id 
+      FROM anime 
+      ORDER BY anime_id
+  )
+  ORDER BY a.anime_id;`;
+  return executeQuery(query, [{ name: 'offset', value: offset }]);
+};
+
 const getAnimeById = async (animeId) => {
-  try {
-    const pool = await createPool;
-    const animeResult = await pool
-      .request()
-      .input(`anime_id`, animeId)
-      .query(
-        `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes,
+
+  const query = `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes,
                 anime.synopsis, anime_status.aired_from, anime_status.stat,
                 anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, 
                 informations.popularity
         FROM anime 
         JOIN informations ON informations.anime_id = anime.anime_id 
         JOIN anime_status ON anime_status.anime_id = anime.anime_id 
-        WHERE anime.anime_id = @anime_id;`
-      );
-
-    return animeResult.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+        WHERE anime.anime_id = @anime_id;`;
+  return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
 };
+
 const getAnimeByType = async (offset, animeType) => {
-  try {
-    const pool = await createPool;
-    const animeResult = await pool
-      .request()
-      .input(`offset`, offset)
-      .input(`type`, animeType)
-      .query(
-        `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-        FROM anime a
-        LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-        LEFT JOIN informations i ON a.anime_id = i.anime_id
-        WHERE a.anime_id NOT IN (
-        SELECT TOP (@offset) anime_id 
-        FROM anime 
-        ORDER BY anime_id
-        )
-        AND a.anime_type = @type
-        ORDER BY a.anime_id;`
-      );
-    const animeData = animeResult.recordset;
-    return animeData;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+
+  const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
+                FROM anime a
+                LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+                LEFT JOIN informations i ON a.anime_id = i.anime_id
+                WHERE a.anime_id NOT IN (
+                SELECT TOP (@offset) anime_id 
+                FROM anime 
+                ORDER BY anime_id
+                )
+                AND a.anime_type = @animeType
+                ORDER BY a.anime_id;`
+  return executeQuery(query, [{ name: 'offset', value: parseInt(offset)},
+                              { name: 'animeType', value: animeType}])
 };
 
 const getCharacterByAnimeId = async (animeId) => {
-  try {
-    const pool = await createPool;
-    const characterResult = await pool.request().input("anime_id", animeId)
-      .query(`SELECT * 
-        FROM new_character 
-        JOIN link_character ON link_character.character_id = new_character.Id
-        WHERE link_character.anime_id = @anime_id`);
-    return characterResult.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+
+  const query = `SELECT * 
+                FROM new_character 
+                JOIN link_character ON link_character.character_id = new_character.Id
+                WHERE link_character.anime_id = @anime_id`; 
+  return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
 };
 
 const getProducerByAnimeId = async (animeId) => {
-  try {
-    const pool = await createPool;
-    const producersResults = await pool
-      .request()
-      .input(`anime_id`, animeId)
-      .query(
-        `SELECT producers.producers_id AS Id, producers.producers_name AS producers 
-        FROM producers 
-        JOIN anime_producers ON anime_producers.producers_id = producers.producers_id 
-        JOIN anime ON anime.anime_id = anime_producers.anime_id 
-        WHERE anime.anime_id = @anime_id`
-      );
-    return producersResults.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+  
+  const query = `SELECT producers.producers_id AS Id, producers.producers_name AS producers 
+                FROM producers 
+                JOIN anime_producers ON anime_producers.producers_id = producers.producers_id 
+                JOIN anime ON anime.anime_id = anime_producers.anime_id 
+                WHERE anime.anime_id = @anime_id`
+  return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
 };
 
 const getAnimeByGenres = async (anime_genres) => {
-  try {
-    const pool = await createPool;
-    const animeResult = await pool
-      .request()
-      .input(`anime_genres`, anime_genres)
-      .query(
-        `SELECT DISTINCT TOP 10 anime.title, genres.genres, informations.scores
-        FROM anime 
-        JOIN informations ON informations.anime_id = anime.anime_id 
-        JOIN link_genres ON link_genres.anime_id = anime.anime_id
-        JOIN genres ON genres.genres_id = link_genres.genres_id
-        WHERE genres.genres LIKE '%' + @anime_genres + '%' 
-        ORDER BY informations.scores DESC;`
-      );
-    return animeResult.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+
+  const query = `SELECT DISTINCT TOP 10 anime.title, genres.genres, informations.scores
+                FROM anime 
+                JOIN informations ON informations.anime_id = anime.anime_id 
+                JOIN link_genres ON link_genres.anime_id = anime.anime_id
+                JOIN genres ON genres.genres_id = link_genres.genres_id
+                WHERE genres.genres LIKE '%' + @anime_genres + '%' 
+                ORDER BY informations.scores DESC;`
+  return executeQuery(query, [{ name: 'anime_genres', value: anime_genres }]);
 };
 
 const getAnimeByName = async (anime_name) => {
-  try {
-    const pool = await createPool;
-    const animeResult = await pool
-      .request()
-      .input("anime_name", anime_name)
-      .query(
-        `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
-        anime_status.aired_from, anime_status.aired_to, informations.favourite, informations.popularity
-        FROM anime WITH (INDEX(idx_title))
-        INNER JOIN informations ON informations.anime_id = anime.anime_id
-        INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
-        WHERE anime.title LIKE '%'+@anime_name+'%'`
-      );
 
-    return animeResult.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+  const query = `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
+                anime_status.aired_from, anime_status.aired_to, informations.favourite, informations.popularity
+                FROM anime WITH (INDEX(idx_title))
+                INNER JOIN informations ON informations.anime_id = anime.anime_id
+                INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
+                WHERE anime.title LIKE '%'+@anime_name+'%'`
+  return executeQuery(query, [{ name: 'anime_name', value: anime_name }]);
 };
+
+
 const getCharacterByName = async (character_name) => {
   try {
     const pool = await createPool;
@@ -174,6 +131,7 @@ const getCharacterByName = async (character_name) => {
     throw error;
   }
 };
+
 const getDataCharacterPage = async (offset) => {
   try {
     const pool = await createPool;
@@ -196,7 +154,8 @@ const getDataCharacterPage = async (offset) => {
     throw error;
   }
 };
-//sua cho dang sau Index thanh ten index cua minh
+
+
 const getProducerByName = async (producers_name) => {
   try {
     const pool = await createPool;
@@ -215,6 +174,7 @@ const getProducerByName = async (producers_name) => {
     throw error;
   }
 };
+
 const getGenresByAnimeId = async (animeId) => {
   try {
     const pool = await createPool;
@@ -234,12 +194,13 @@ const getGenresByAnimeId = async (animeId) => {
     throw error;
   }
 };
-const getNumberOfAnime = async (offset) => {
+
+const getNumberOfAnime = async (offset = 0) => {
   try {
     const pool = await createPool;
     const animeResult = await pool
       .request()
-      .input(`offset`, offset)
+      .input('offset', offset)
       .query(
         `SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime 
         FROM informations
@@ -253,8 +214,6 @@ const getNumberOfAnime = async (offset) => {
       );
     return animeResult.recordset;
   } catch (error) {
-    console.log(offset);
-    console.log(typeof offset);
     console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
     throw error;
   }
