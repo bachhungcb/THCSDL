@@ -115,22 +115,12 @@ const getAnimeByName = async (anime_name) => {
 
 
 const getCharacterByName = async (character_name) => {
-  try {
-    const pool = await createPool;
-    const characterResult = await pool
-      .request()
-      .input("character_name", character_name)
-      .query(
-        `SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
-        FROM new_character  
-        WHERE new_character.Name LIKE '%' + @character_name + '%'
-        ORDER BY new_character.Name;`
-      );
-    return characterResult.recordset;
-  } catch (error) {
-    console.error("Lỗi truy vấn cơ sở dữ liệu:", error);
-    throw error;
-  }
+  
+  const query = `SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
+  FROM new_character  
+  WHERE new_character.Name LIKE '%' + @character_name + '%'
+  ORDER BY new_character.Name;`
+  return executeQuery(query, [{ name: 'character_name', value: character_name }]);
 };
 
 const getDataCharacterPage = async (offset) => {
