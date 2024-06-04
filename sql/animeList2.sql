@@ -36,23 +36,18 @@ CREATE TABLE anime_producers(
 	producers_id INT FOREIGN KEY REFERENCES producers(producers_id)
 );
 
-CREATE TABLE characters(
-	anime_id INT FOREIGN KEY REFERENCES anime(anime_id),
-	names VARCHAR(100),
-	roles VARCHAR(20),
-	characterProfile VARCHAR(MAX)
-);
-
 CREATE TABLE new_character(
-	Id INT NOT NULL,
+	Id INT NOT NULL PRIMARY KEY,
 	Name VARCHAR(100),
 	Profile VARCHAR(MAX),
-	Roles VARCHAR(20)
+	Description VARCHAR(MAX),
+
 );
 
 CREATE TABLE link_character(
 	anime_id INT,
-	character_id INT
+	character_id INT,
+	Roles VARCHAR(20)
 );
 
 ALTER TABLE link_character
@@ -61,11 +56,7 @@ ADD FOREIGN KEY (character_id) REFERENCES new_character(Id);
 ALTER TABLE link_character
 ADD FOREIGN KEY (anime_id) REFERENCES anime(anime_id);
 
-ALTER TABLE new_character
-ADD PRIMARY KEY (Id);
 
-ALTER TABLE new_character
-ADD Roles VARCHAR(20);
 
 CREATE TABLE genres(
 	genres_id INT IDENTITY(1,1),
@@ -85,3 +76,14 @@ ADD FOREIGN KEY (anime_id) REFERENCES anime(anime_id);
 
 ALTER TABLE new_character
 ALTER COLUMN Id INT NOT NULL;
+
+CREATE TABLE Users(
+	Id VARCHAR(20) NOT NULL,
+	Email VARCHAR(20),
+	Password VARCHAR(20),
+	Role VARCHAR(10),
+	FullName NVARCHAR(50),
+	Birthday Date,
+	Avatar VARCHAR(30),
+	PhoneNumber VARCHAR(11)
+);
