@@ -17,7 +17,8 @@ const {
 
 //This is controller for getting login information
 const{
-  login
+  getLoginPage,
+  postLoginPage
 } = require("../controllers/loginController");
 
 const express = require("express");
@@ -37,6 +38,7 @@ router.get("/producers/anime/:offset", getNumberOfAnimeByProducers);
 router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/",getCharacterPage);
 
-router.get("/login", login);
+router.get("/login", getLoginPage);
+router.post("/post-login", postLoginPage);
 
 module.exports = router;
