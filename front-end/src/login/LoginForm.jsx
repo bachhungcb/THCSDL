@@ -1,22 +1,32 @@
-import React from "react";
+import React, {useState} from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import memcho from "../assets/memcho.png";
 import "./LoginForm.css";
 function LoginForm() {
+  const [state, setState] = useState({
+    email: "",
+    password: ""
+  });
+
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
+    
+
     try {
       const response = await axios.post("http://localhost:8080/login", {
-        email: values.email,
-        password: values.password,
+        email: state.email,
+        password: state.password,
       });
-      if (response.data.success) {
+
+      if (response.data) {
+        console.log(JSON.stringify(response.data.user));
         localStorage.setItem("user", JSON.stringify(response.data.user));
         navigate("/");
       } else {
+        console.log(response.data);
         alert("Login failed! Please check your email and password.");
       }
     } catch (error) {
@@ -27,6 +37,7 @@ function LoginForm() {
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    alert("Login failed! Please check your email and password.");
   };
 
   return (

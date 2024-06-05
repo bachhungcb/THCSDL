@@ -38,7 +38,7 @@ router.get("/producers/anime/:offset", getNumberOfAnimeByProducers);
 router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/",getCharacterPage);
 
-router.get("/login", getLoginPage);
-router.post("/post-login", postLoginPage);
+router.post("/login", postLoginPage);
+// router.post("/post-login", postLoginPage);
 
 module.exports = router;

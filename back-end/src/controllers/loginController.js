@@ -7,12 +7,9 @@ const { getLoginInformation } = require('../services/loginService');
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const postLoginPage = async (req,res) =>{
-    const loginPath = path.join(__dirname, '..', 'views', 'login.ejs'); //route to login page
-    console.log(loginPath);
-
     let {email, password} = req.body;
     await getLoginInformation(email, password);
-    res.redirect('/login');
+    res.status(200).JSON({success: true});
 
 };
 
