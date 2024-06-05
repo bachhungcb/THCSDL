@@ -17,7 +17,6 @@ const {
 
 //This is controller for getting login information
 const{
-  getLoginPage,
   postLoginPage
 } = require("../controllers/loginController");
 
