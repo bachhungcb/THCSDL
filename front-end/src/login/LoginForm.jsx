@@ -3,6 +3,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import memcho from "../assets/memcho.png";
+import MainLayout from "../templates/MainLayout";   
 import "./LoginForm.css";
 function LoginForm() {
   
@@ -13,22 +14,16 @@ function LoginForm() {
 
   const navigate = useNavigate();
 
-  const onFinish = async (values) => {
-    
-
+  const onFinish = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8080/login", {
-        email: state.email,
-        password: state.password,
-      });
-
-      if (response.data === 1) {
-        console.log(JSON.stringify(state));
-        localStorage.setItem("user", JSON.stringify(state));
+      const response = await axios.post("http://localhost:8080/login", data);
+      if (response.status === 200) {
+        localStorage.setItem("user", JSON.stringify(data));
         navigate("/");
-      } else {
-        console.log(response.data);
+      } else if (response.status === 401) {
         alert("Login failed! Please check your email and password.");
+      } else {
+        alert("Login failed! Please try again later.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -42,18 +37,10 @@ function LoginForm() {
   };
 
   return (
+    <MainLayout>
     <div className="login-container">
         <Form className="form-box"
           name="basic"
-          // labelCol={{
-          //   span: 8,
-          // }}
-          // wrapperCol={{
-          //   span: 16,
-          // }}
-          // style={{
-          //   maxWidth: 600,
-          // }}
           initialValues={{
             remember: true,
           }}
@@ -105,10 +92,6 @@ function LoginForm() {
         </div>  
         <div  className="loginbutton">
           <Form.Item
-            // wrapperCol={{
-            //   offset: 8,
-            //   span: 16,
-            // }}
           >
             <Button type="primary" htmlType="submit">
               <span>Log in</span>
@@ -117,10 +100,6 @@ function LoginForm() {
         </div>  
         <div className="register">
           <Form.Item
-            // wrapperCol={{
-            //   offset: 8,
-            //   span: 16,
-            // }}
           >
               Doesn't have an account? 
             <Link to="/register" style={{marginLeft: 8}} className="registertext"> 
@@ -137,6 +116,7 @@ function LoginForm() {
         </div>
         </Form>  
     </div>
+    </MainLayout>
   );
 }
 
