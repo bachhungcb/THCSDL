@@ -8,8 +8,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const postLoginPage = async (req,res) =>{
     let {email, password} = req.body;
-    await getLoginInformation(email, password);
-    res.status(200).JSON({success: true});
+    const loginStatus = await getLoginInformation(email, password);
+    console.log(req.body);
+    res.sendStatus(loginStatus);
 
 };
 

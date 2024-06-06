@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import memcho from "../assets/memcho.png";
 import "./LoginForm.css";
 function LoginForm() {
+  
   const [state, setState] = useState({
     email: "",
     password: ""
@@ -21,9 +22,9 @@ function LoginForm() {
         password: state.password,
       });
 
-      if (response.data) {
-        console.log(JSON.stringify(response.data.user));
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+      if (response.data === 1) {
+        console.log(JSON.stringify(state));
+        localStorage.setItem("user", JSON.stringify(state));
         navigate("/");
       } else {
         console.log(response.data);

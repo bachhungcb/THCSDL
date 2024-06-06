@@ -23,12 +23,14 @@ const getLoginInformation = async (email, password) =>{
                 BEGIN
                     SELECT 0 AS Result
                 END`);
-        console.log(result.recordset);
+        //console.log(result.recordset);
+        
         if(result.recordset[0].Result === 1){
             console.log('Login successful');
         }else{
             console.log('Login failed');
         }
+        return(result.recordset[0].Result);
         // Inform the state
     }catch(err){
         console.log(err);
