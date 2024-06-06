@@ -4,7 +4,7 @@ import Home from "./homepage/Home.jsx";
 import AnimeTable from "./table/AnimeTable.jsx";
 import AnimeDetail from "./detail/AnimeDetail.jsx";
 import SearchResult from "./search-result/SearchResult.jsx";
-import LoginForm from "./login/LoginForm.jsx";
+import LoginForm from "./login-register/LoginForm.jsx";
 import { TitleProvider } from "./templates/TitleContext.jsx";
 import { Layout } from "antd";
 import TypeTable from "./table/TypeTable.jsx";

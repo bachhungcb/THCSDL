@@ -1,3 +1,4 @@
+//This is controler for getting anime information from database
 const {
   getAnimes,
   getAnimeId,
@@ -13,6 +14,12 @@ const {
   getProducerByProducersId,
   getCharacterPage
 } = require("../controllers/controllers");
+
+//This is controller for getting login information
+const{
+  postLoginPage
+} = require("../controllers/loginController");
+
 const express = require("express");
 const router = express.Router();
 
@@ -29,5 +36,8 @@ router.get("/animes/types/:type", getType);
 router.get("/producers/anime/:offset", getNumberOfAnimeByProducers);
 router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/",getCharacterPage);
+
+router.post("/login", postLoginPage);
+// router.post("/post-login", postLoginPage);
 
 module.exports = router;
