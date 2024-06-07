@@ -101,17 +101,22 @@ function TypeTable() {
               )}
             </div>
             <div className="body-title-text">
-              <Link
-                to={`/top-anime-series/${record.anime_id}`}
-                onClick={() => setTitle(record.title)}
-                className="anime-name"
-              >
-                {text}
-              </Link>
-              <br />
-              Aired: {record.aired_from} to {record.aired_to}
-              <br />
-              Premiered: {record.premiered}
+              <div>
+                <span className="anime-name">
+                  <Link
+                    to={`/top-anime-series/${record.anime_id}`}
+                    onClick={() => setTitle(record.title)}
+                  >
+                    {text}
+                  </Link>
+                </span>
+              </div>
+              <div>
+                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to === "('Unknown')" ? "N/A" : record.aired_to}
+              </div>
+              <div>
+                <span className="dark">Premiered: </span>{record.premiered || "N/A"}
+              </div>
             </div>
           </div>
         );
