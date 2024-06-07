@@ -19,6 +19,11 @@ const {
 const{
   postLoginPage
 } = require("../controllers/loginController");
+//this is controller for getting register information
+
+const{
+  postRegisterPage
+} = require("../controllers/registerController");
 
 const express = require("express");
 const router = express.Router();
@@ -38,6 +43,6 @@ router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/",getCharacterPage);
 
 router.post("/login", postLoginPage);
-
+router.post("/register", postRegisterPage);
 
 module.exports = router;

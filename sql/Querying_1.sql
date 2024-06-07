@@ -122,3 +122,17 @@ SELECT new_character.Name, anime.title AS title FROM anime
 JOIN link_character ON link_character.anime_id = anime.anime_id
 JOIN new_character ON link_character.character_id = new_character.Id
 WHERE new_character.Id = 4505
+
+CREATE TRIGGER trg_update ON Users
+AFTER UPDATE
+AS
+BEGIN
+    -- Check if the Role column is updated
+    IF UPDATE(Role)
+    BEGIN
+        UPDATE Users
+        SET Role = 'user'
+        FROM inserted
+        WHERE Users.Id = inserted.Id; -- Assuming Id is the primary key
+    END
+END
