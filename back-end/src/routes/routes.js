@@ -38,6 +38,6 @@ router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/",getCharacterPage);
 
 router.post("/login", postLoginPage);
-// router.post("/post-login", postLoginPage);
+
 
 module.exports = router;
