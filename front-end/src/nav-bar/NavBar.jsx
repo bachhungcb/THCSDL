@@ -1,6 +1,8 @@
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./NavBar.css";
 import SearchBar from "../search-bar/SearchBar";
-import { Link, useLocation } from "react-router-dom";
+import LoginButton from "../login/LoginButton";
 
 function NavBar() {
   const location = useLocation();
@@ -25,6 +27,7 @@ function NavBar() {
           <Link to="/characters">Character</Link>
         </li>
       </ul>
+
       <SearchBar />
     </nav>
   );
