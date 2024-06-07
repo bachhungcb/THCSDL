@@ -6,19 +6,18 @@ const { getLoginInformation } = require('../services/loginService');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // Add this line to parse JSON request bodies
 
-
 const postLoginPage = async (req, res) => {
     const { email, password } = req.body;
     try {
         const isLoginSuccessful = await getLoginInformation(email, password);
         if (isLoginSuccessful) {
-            res.sendStatus(200); // OK
+            res.status(200).json({ isLoginSuccessful: true }); // OK with JSON response
         } else {
-            res.sendStatus(401); // Unauthorized
+            res.status(401).json({ isLoginSuccessful: false }); // Unauthorized with JSON response
         }
     } catch (error) {
         console.error('Login error:', error);
-        res.sendStatus(500); // Internal Server Error
+        res.status(500).json({ error: 'Internal Server Error' }); // Internal Server Error with JSON response
     }
 };
 
