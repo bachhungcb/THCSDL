@@ -79,11 +79,11 @@ ALTER COLUMN Id INT NOT NULL;
 
 CREATE TABLE Users(
 	Id INT IDENTITY(1,1),
-	Email VARCHAR(20),
-	Password VARCHAR(20),
-	Role VARCHAR(10),
-	FullName NVARCHAR(50),
+	Email VARCHAR(50) UNIQUE,
+	Password VARCHAR(MAX),
+	Role VARCHAR(MAX),
+	FullName NVARCHAR(MAX),
 	Birthday Date,
-	Avatar VARCHAR(30),
-	PhoneNumber VARCHAR(11)
+	Avatar VARCHAR(MAX),
+	PhoneNumber VARCHAR(MAX)
 );
