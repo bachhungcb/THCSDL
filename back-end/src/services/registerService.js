@@ -1,7 +1,7 @@
 const sql = require('mssql');
 const sqlConfig = require('../config/database');
 
-
+//lấy emai, password, fullname, birthday từ client
 const getRegisterInformation = async (email, password, fullname, birthday, phonenumber) => {
     try {
         let pool = await sql.connect(sqlConfig);
