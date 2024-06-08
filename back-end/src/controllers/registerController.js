@@ -7,17 +7,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // Add this line to parse JSON request bodies
 
 const postRegisterPage = async (req, res) => {
-    const { email, password } = req.body;
+    const { fullname, email, password, birthday } = req.body;
     try {
-        const isLoginSuccessful = await getRegisterInformation(email, password);
-        if (isLoginSuccessful) {
-            res.sendStatus(200); // OK
+        const isRegisterSuccessful = await getRegisterInformation(email, password, fullname, birthday);
+        if (isRegisterSuccessful) {
+            res.status(200).json({ isRegisterSuccessful: true }); // OK
         } else {
-            res.sendStatus(401); // Unauthorized
+            res.status(401).json({ isRegisterSuccessful: false }); // Unauthorized
         }
     } catch (error) {
-        console.error('Login error:', error);
-        res.sendStatus(500); // Internal Server Error
+        console.error('Registration error:', error);
+        res.status(500).json({ isRegisterSuccessful: false }); // Internal Server Error
     }
 };
 
