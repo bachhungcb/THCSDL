@@ -108,12 +108,6 @@ JOIN anime ON anime.anime_id = link_character.anime_id
 WHERE anime.anime_id = 604;
 
 
-SELECT TOP 50  producers.producers_name, SUM(anime.anime_id) AS Total_Anime FROM informations
-JOIN anime ON anime.anime_id = informations.anime_id
-JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
-JOIN producers ON producers.producers_id = anime_producers.producers_id
-GROUP BY producers.producers_name
-ORDER BY AVG(CONVERT(DECIMAL,informations.scores)) DESC;
 --Lấy ra producers và tổng số bộ anime mà họ đã sản xuất
 SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime 
       FROM informations
@@ -128,11 +122,23 @@ SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime
 SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
 WHERE producers.producers_id = 1
 
-
-SELECT new_character.Name, anime.title AS title FROM anime
-JOIN link_character ON link_character.anime_id = anime.anime_id
-JOIN new_character ON link_character.character_id = new_character.Id
-WHERE new_character.Id = 4505
+--Đưa ra thông tin của một bộ anime dưa trên thể loại anime
+CREATE PROCEDURE getAnimeByType 
+@offset INT,
+@anime_type VARCHAR(10)
+AS
+SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
+                FROM anime a
+                LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+                LEFT JOIN informations i ON a.anime_id = i.anime_id
+                WHERE a.anime_id NOT IN (
+                SELECT TOP (0) anime_id 
+                FROM anime 
+                ORDER BY anime_id
+                )
+                AND a.anime_type = 'OVA'
+                ORDER BY a.anime_id;
+GO
 
 CREATE TRIGGER trg_insert ON Users
 AFTER INSERT
