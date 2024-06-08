@@ -7,13 +7,13 @@ import MainLayout from "../templates/MainLayout";
 import "./LoginForm.css";
 
 function RegisterForm() {
-
   const navigate = useNavigate();
 
   const onFinish = async (data) => {
     try {
       const response = await axios.post("http://localhost:8080/register", data);
       const { isRegisterSuccessful } = response.data;
+      console.log(response.data);
       if (isRegisterSuccessful) {
         alert("Registration successful! Please log in.");
         navigate("/login");
@@ -33,7 +33,7 @@ function RegisterForm() {
 
   return (
     <MainLayout>
-      <div className="register-container">
+      <div className="login-container">
         <Form className="form-box"
           name="register"
           initialValues={{
@@ -47,7 +47,7 @@ function RegisterForm() {
           <div className="inputbox">
             <Form.Item
               label={<label className="custom-label">Name</label>}
-              name="name"
+              name="fullname"
               rules={[
                 {
                   required: true,
@@ -114,7 +114,7 @@ function RegisterForm() {
           <div className="inputbox">
             <Form.Item
               label={<label className="custom-label">Date of Birth</label>}
-              name="dob"
+              name="birthday"
               rules={[
                 {
                   required: true,
@@ -132,10 +132,10 @@ function RegisterForm() {
               </Button>
             </Form.Item>
           </div>
-          <div className="login">
+          <div className="register">
             <Form.Item>
               Already have an account? 
-              <Link to="/login" style={{marginLeft: 8}} className="logintext"> 
+              <Link to="/login" style={{marginLeft: 8}} className="registertext"> 
                 Login here
               </Link>{" "}
               <img
