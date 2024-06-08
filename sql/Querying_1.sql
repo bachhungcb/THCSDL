@@ -1,4 +1,7 @@
 ﻿--Đưa ra các thông tin về một bộ anime với anime id cho trước--
+CREATE PROCEDURE AnimeInformation
+@anime_id INT
+AS
 SELECT anime.title, informations.scores, informations.ranks, anime.episodes,
  anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
  informations.popularity, genres.genres
@@ -6,26 +9,30 @@ FROM anime
  JOIN informations ON informations.anime_id = anime.anime_id
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
  JOIN link_genres ON link_genres.anime_id = anime.anime_id
- JOIN genres ON genres.Id = link_genres.genres_id
-WHERE anime.anime_id = 0;
+ JOIN genres ON genres.genres_id = link_genres.genres_id
+WHERE anime.anime_id = @anime_id;
+GO
 
 SELECT * FROM anime
 
 SELECT * FROM anime
 
---Chọn ra top 3 anime có điểm cao nhất từ dưới lên--
+--Chọn ra top 3 anime có điểm thấp nhất--
+CREATE VIEW TOP3Anime AS
 SELECT DISTINCT TOP 3 anime.anime_id, anime.title, anime.synopsis, informations.scores
 FROM anime
 JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores;
 
 --chọn ra top 3 anime có điểm cao nhất từ trên xuống--
+CREATE VIEW TOP3ANIMEDESC AS
 SELECT TOP 3 anime.anime_id, anime.title, anime.synopsis, informations.scores
 FROM anime
 JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores DESC;
 
 --Đưa ra tên của top 3 studio có điểm trung bình cao nhất--
+CREATE VIEW TOP3Studio AS
 SELECT TOP 50  producers.producers_name, AVG(CONVERT(DECIMAL,informations.scores)) AS Score FROM informations
 JOIN anime ON anime.anime_id = informations.anime_id
 JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
@@ -34,12 +41,16 @@ GROUP BY producers.producers_name
 ORDER BY AVG(CONVERT(DECIMAL,informations.scores)) DESC;
 
 --Đưa ra điểm trung bình của một studio anime--
+CREATE PROCEDURE studioAVGScore
+@producer_id INT
+AS
 SELECT AVG(CONVERT(DECIMAL,informations.scores)) AS Score, producers.producers_name FROM informations
 JOIN anime ON anime.anime_id = informations.anime_id
 JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
 JOIN producers ON producers.producers_id = anime_producers.producers_id
-WHERE producers.producers_id = 0
+WHERE producers.producers_id = @producer_id
 GROUP BY producers.producers_name;
+GO
 
 --Đưa ra toàn bộ điểm trung bình của các studio anime--
 SELECT AVG(CONVERT(DECIMAL,informations.scores)) AS Score, producers.producers_name FROM informations
@@ -123,16 +134,16 @@ JOIN link_character ON link_character.anime_id = anime.anime_id
 JOIN new_character ON link_character.character_id = new_character.Id
 WHERE new_character.Id = 4505
 
-CREATE TRIGGER trg_update ON Users
-AFTER UPDATE
+CREATE TRIGGER trg_insert ON Users
+AFTER INSERT
 AS
 BEGIN
-    -- Check if the Role column is updated
-    IF UPDATE(Role)
-    BEGIN
-        UPDATE Users
-        SET Role = 'user'
-        FROM inserted
-        WHERE Users.Id = inserted.Id; -- Assuming Id is the primary key
-    END
+    -- Set the Role to 'user' for newly inserted records
+    UPDATE Users
+    SET Role = 'user'
+    FROM Users
+    INNER JOIN inserted ON Users.Id = inserted.Id;
 END
+
+EXEC AnimeInformation 0;
+EXEC studioAVGScore 0;
