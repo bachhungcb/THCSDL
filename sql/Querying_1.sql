@@ -76,11 +76,14 @@ ORDER BY informations.scores DESC;
 
 
 --Đưa ra thông tin producers của một bộ anime--
+CREATE PROCEDURE getProducerByAnimeId
+@anime_id INT
+AS
 SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
 JOIN anime_producers ON anime_producers.producers_id = producers.producers_id
 JOIN anime ON anime.anime_id = anime_producers.anime_id
-WHERE anime.anime_id = 0
-
+WHERE anime.anime_id = @anime_id
+GO
 
 --Tìm kiếm thông tin của một bộ anime thông qua tên--
 CREATE INDEX ix_anime_title ON anime(title)
@@ -132,13 +135,19 @@ SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.air
                 LEFT JOIN anime_status s ON a.anime_id = s.anime_id
                 LEFT JOIN informations i ON a.anime_id = i.anime_id
                 WHERE a.anime_id NOT IN (
-                SELECT TOP (0) anime_id 
+                SELECT TOP (@offset) anime_id 
                 FROM anime 
                 ORDER BY anime_id
                 )
-                AND a.anime_type = 'OVA'
+                AND a.anime_type = @anime_type
                 ORDER BY a.anime_id;
 GO
+--Đưa ra thông tin về nhân vật dựa trên anime_id
+SELECT * 
+FROM new_character 
+JOIN link_character ON link_character.character_id = new_character.Id
+WHERE link_character.anime_id = 0
+
 
 CREATE TRIGGER trg_insert ON Users
 AFTER INSERT
@@ -153,3 +162,5 @@ END
 
 EXEC AnimeInformation 0;
 EXEC studioAVGScore 0;
+EXEC getAnimeByType 0, 'OVA';
+EXEC getProducerByAnimeId 0

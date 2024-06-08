@@ -63,10 +63,11 @@ const getAnimeById = async (animeId) => {
 };
 
 const getAnimeByType = async (offset, animeType) => {
-
   const procedure = "getAnimeByType";
-  const params = [{ name: "offset", value: parseInt(offset) }, 
-                  { name: "anime_type", value: animeType }];
+  const params = [
+    { name: "offset", value: parseInt(offset) },
+    { name: "anime_type", value: animeType },
+  ];
   return executeProcedure(procedure, params);
 };
 
