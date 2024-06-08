@@ -1,4 +1,5 @@
 const createPool = require(`../config/database`);
+const sql = require('mssql')
 
 // Common function to execute queries
 const executeQuery = async (query, params) => {
@@ -41,16 +42,17 @@ const getDataForHomepage = async (offset) => {
 };
 
 const getAnimeById = async (animeId) => {
-
-  const query = `SELECT anime.title,anime.anime_type, informations.scores, informations.ranks, anime.episodes,
-                anime.synopsis, anime_status.aired_from, anime_status.stat,
-                anime_status.aired_to, anime_status.premiered, anime.animePoster, informations.favourite, 
-                informations.popularity
-        FROM anime 
-        JOIN informations ON informations.anime_id = anime.anime_id 
-        JOIN anime_status ON anime_status.anime_id = anime.anime_id 
-        WHERE anime.anime_id = @anime_id;`;
-  return executeQuery(query, [{ name: 'anime_id', value: animeId }]);
+try{
+  let pool = await createPool;
+  let result = 
+  await pool.request()
+            .input('anime_id', sql.Int, animeId)
+            .execute('AnimeInformation');
+  return result.recordset;
+}
+catch(err){
+  console.log(err);
+}
 };
 
 const getAnimeByType = async (offset, animeType) => {

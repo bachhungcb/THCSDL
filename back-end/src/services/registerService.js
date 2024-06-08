@@ -11,10 +11,10 @@ const getRegisterInformation = async (email, password, fullname, birthday) => {
             .input('password', sql.NVarChar, password)
             .input('FullName', sql.NVarChar, fullname)
             .input('Birthday', sql.Date, birthday)
-            .input('Role', sql.NVarChar, 'user') // Set default role as user
-            .query(`INSERT INTO 
-                    Users(FullName, Email, Password, Birthday, Role)
-                    VALUES(@FullName, @Email, @Password, @Birthday, @Role)`);
+            // .input('Role', sql.NVarChar, 'user') // Set default role as user, sử dụng trigger để tự động thêm role
+            .query(`INSERT INTO                     
+                    Users(FullName, Email, Password, Birthday)
+                    VALUES(@FullName, @Email, @Password, @Birthday)`);
         return result.rowsAffected[0] > 0; 
     } catch (err) {
         console.log(err);
