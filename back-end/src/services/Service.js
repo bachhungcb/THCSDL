@@ -28,8 +28,8 @@ const executeProcedure = async (procedure, params) => {
     const result = await request.execute(procedure);
     return result.recordset;
   } catch (err) {
-    console.error("Database query error:", error);
-    throw new DatabaseQueryError(error, query);
+    console.error("Database query error:", err);
+    throw new DatabaseQueryError(err, procedure);
   }
 };
 
@@ -63,21 +63,11 @@ const getAnimeById = async (animeId) => {
 };
 
 const getAnimeByType = async (offset, animeType) => {
-  const query = `SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
-                FROM anime a
-                LEFT JOIN anime_status s ON a.anime_id = s.anime_id
-                LEFT JOIN informations i ON a.anime_id = i.anime_id
-                WHERE a.anime_id NOT IN (
-                SELECT TOP (@offset) anime_id 
-                FROM anime 
-                ORDER BY anime_id
-                )
-                AND a.anime_type = @animeType
-                ORDER BY a.anime_id;`;
-  return executeQuery(query, [
-    { name: "offset", value: parseInt(offset) },
-    { name: "animeType", value: animeType },
-  ]);
+
+  const procedure = "getAnimeByType";
+  const params = [{ name: "offset", value: parseInt(offset) }, 
+                  { name: "anime_type", value: animeType }];
+  return executeProcedure(procedure, params);
 };
 
 const getCharacterByAnimeId = async (animeId) => {
