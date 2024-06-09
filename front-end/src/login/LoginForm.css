@@ -10,14 +10,14 @@
 }
 
 .logintitle{
-    margin-bottom: -10px;
+    margin-bottom: -20px;
     color: #fff;
 }
 
  .form-box{
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 450px;
+    height: 450px;
     background: transparent;
     border: 2px solid rgba(255,255,255,0.5);
     border-radius: 20px;
@@ -29,7 +29,7 @@
 
  .inputbox{
     position: relative;
-    margin: 30px auto;
+    margin: 25px auto;
     align-items: center;
     width: 310px;
     border-bottom: 2px solid #fff;
