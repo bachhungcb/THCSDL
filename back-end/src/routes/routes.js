@@ -19,11 +19,16 @@ const {
 const{
   postLoginPage
 } = require("../controllers/loginController");
-//this is controller for getting register information
 
+//this is controller for getting register information
 const{
   postRegisterPage
 } = require("../controllers/registerController");
+
+//this is controller for getting profile information
+const{
+  getUser
+} = require("../controllers/profileController");
 
 const express = require("express");
 const router = express.Router();
@@ -44,5 +49,7 @@ router.get("/characters/",getCharacterPage);
 
 router.post("/login", postLoginPage);
 router.post("/register", postRegisterPage);
+
+router.get("/profile/:userId", getUser);
 
 module.exports = router;
