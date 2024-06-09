@@ -112,6 +112,7 @@ WHERE anime.anime_id = 604;
 
 
 --Lấy ra producers và tổng số bộ anime mà họ đã sản xuất
+CREATE VIEW producersAndTheirAnimes AS
 SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime 
       FROM informations
       JOIN anime ON anime.anime_id = informations.anime_id
@@ -164,3 +165,4 @@ EXEC AnimeInformation 0;
 EXEC studioAVGScore 0;
 EXEC getAnimeByType 0, 'OVA';
 EXEC getProducerByAnimeId 0
+SELECT * FROM producersAndTheirAnimes
