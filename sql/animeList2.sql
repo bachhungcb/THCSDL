@@ -90,6 +90,10 @@ CREATE TABLE Users(
 	Birthday Date,
 	Avatar VARCHAR(MAX),
 );
+
+ALTER TABLE Users
+DROP COLUMN PhoneNumber;
+);
 ALTER TABLE Users
 ADD PRIMARY KEY(Id)
 
