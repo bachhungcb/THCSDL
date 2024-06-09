@@ -33,10 +33,10 @@ function LoginButton() {
         <Button onClick={handleLogout}>Logout</Button>
       </>
     ) : (<>
-      <Button type="primary" style={{ marginRight: 8 }} onClick={() => navigate("/login")}>
+      <Button className="loginbtn" type="primary" style={{ marginRight: 10 }} onClick={() => navigate("/login")}>
         Login
       </Button>
-      <Button onClick={() => navigate("/register")}>
+      <Button className="signupbtn" onClick={() => navigate("/register")}>
         Sign Up
       </Button>
       </>

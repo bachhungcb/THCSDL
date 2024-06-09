@@ -4,17 +4,11 @@
   padding: 0;
 }
 
-.header .loginbtn {
+.header .logincontainer {
   position: absolute;
   top: 0;
   right: 0;
-  margin: 4px 77px;
-  border-radius: 25px;
-  background: #fff;
-  color: #2e51a2;
-  width: 100px;
-  border: 2px solid #2e51a2;
-  line-height: 1;
+  margin: -12px 77px;
 } 
 
 

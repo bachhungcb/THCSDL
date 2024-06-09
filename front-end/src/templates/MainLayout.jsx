@@ -20,7 +20,10 @@ const MainLayout = ({ children, breadcrumbs }) => {
           alignItems: "center",
         }}
       >
-        <LoginButton />
+        <div className="logincontainer">
+          <LoginButton />
+        </div>
+        
         <NavBar />
       </Header>
       <Layout>
