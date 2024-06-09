@@ -7,7 +7,11 @@ CREATE TABLE anime(
 	anime_type VARCHAR(10),
 	episodes VARCHAR(50),
 	animePoster VARCHAR(MAX),
-	nameURL VARCHAR(MAX)
+	nameURL VARCHAR(MAX),
+	comment_set_id INT,
+	favourite_set_id INT,
+	CONSTRAINT fk_anime1 FOREIGN KEY (comment_set_id) REFERENCES comment_set(Id),
+	CONSTRAINT fk_anime2 FOREIGN KEY (favourite_set_id) REFERENCES favourite_set(Id)
 );
 
 CREATE TABLE informations(
@@ -85,5 +89,49 @@ CREATE TABLE Users(
 	FullName NVARCHAR(MAX),
 	Birthday Date,
 	Avatar VARCHAR(MAX),
-	PhoneNumber VARCHAR(MAX)
 );
+ALTER TABLE Users
+ADD PRIMARY KEY(Id)
+
+CREATE TABLE favourites_set(
+	Id INT PRIMARY KEY
+);
+
+CREATE TABLE User_favourites(
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	users_id INT,
+	anime_id INT,
+	added_at DATE,
+	favourites_set_id INT,
+	CONSTRAINT fk_1 FOREIGN KEY (users_id) REFERENCES Users(Id),
+	CONSTRAINT fk_2 FOREIGN KEY (favourites_set_id) REFERENCES favourites_set(Id),
+);
+
+CREATE TABLE comment_set(
+	Id INT PRIMARY KEY, 
+);
+
+CREATE TABLE User_comment(
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	users_id INT,
+	anime_id INT,
+	comment VARCHAR(MAX),
+	added_at DATE,
+	deleted_at DATE,
+	edited_at DATE,
+	comment_set_id INT,
+	CONSTRAINT fk_User_comment1 FOREIGN KEY (users_id) REFERENCES Users(Id),
+	CONSTRAINT fk_User_comment3 FOREIGN KEY (comment_set_id) REFERENCES comment_set(Id)
+);
+-----------
+ALTER TABLE anime
+ADD comment_set_id INT
+
+ALTER TABLE anime
+ADD CONSTRAINT fk_anime1 FOREIGN KEY (comment_set_id) REFERENCES comment_set(Id)
+
+ALTER TABLE anime
+ADD favourite_set_id INT
+
+ALTER TABLE anime
+ADD CONSTRAINT fk_anime2 FOREIGN KEY (favourite_set_id) REFERENCES favourites_set(Id)
