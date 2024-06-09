@@ -146,7 +146,9 @@ SELECT *
 FROM new_character 
 JOIN link_character ON link_character.character_id = new_character.Id
 WHERE link_character.anime_id = 0
-
+--Đưa ra thông tin về User dựa trên userid
+SELECT * FROM Users
+WHERE Id = 1999;
 
 CREATE TRIGGER trg_insert ON Users
 AFTER INSERT
@@ -165,5 +167,41 @@ EXEC getAnimeByType 0, 'OVA';
 EXEC getProducerByAnimeId 0
 SELECT * FROM producersAndTheirAnimes
 
-DROP PROCEDURE AnimeInformation;
-GO
+SELECT * FROM User_comment
+
+INSERT INTO User_comment(users_id, anime_id, comment)
+VALUES('1999','0','anime rat la hay')
+
+CREATE TRIGGER trg_setAddedDate
+ON User_comment
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_comment
+	SET added_at = GETDATE()
+	FROM User_comment uc
+	INNER JOIN inserted i ON uc.Id = i.Id
+END
+
+CREATE TRIGGER trg_setEditedDate
+ON User_comment
+AFTER UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_comment
+	SET edited_at = GETDATE()
+	FROM User_comment uc
+	INNER JOIN inserted i ON uc.Id = i.Id
+END
+
+
+UPDATE User_comment
+SET comment = 'anime khong hay'
+WHERE users_id= 1999
+AND anime_id = 0
+
+
