@@ -2,7 +2,7 @@
 CREATE PROCEDURE AnimeInformation
 @anime_id INT
 AS
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes,
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.animePoster,
  anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
  informations.popularity, genres.genres
 FROM anime
