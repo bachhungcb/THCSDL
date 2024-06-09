@@ -28,7 +28,6 @@ const MainLayout = ({ children, breadcrumbs }) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <NavBar />
         <div>
           {isLoggedIn ? (
             <>
@@ -40,11 +39,12 @@ const MainLayout = ({ children, breadcrumbs }) => {
               </Button>
             </>
           ) : (
-            <Button type="primary" onClick={() => navigate("/login")}>
+            <Button className="loginbtn" type="primary" onClick={() => navigate("/login")}>
               Login
             </Button>
           )}
         </div>
+        <NavBar />
       </Header>
       <Layout>
         {breadcrumbs && (
