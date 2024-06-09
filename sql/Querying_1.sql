@@ -1,31 +1,38 @@
 ﻿--Đưa ra các thông tin về một bộ anime với anime id cho trước--
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes,
+CREATE PROCEDURE AnimeInformation
+@anime_id INT
+AS
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.animePoster,
  anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
  informations.popularity, genres.genres
 FROM anime
  JOIN informations ON informations.anime_id = anime.anime_id
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
  JOIN link_genres ON link_genres.anime_id = anime.anime_id
- JOIN genres ON genres.Id = link_genres.genres_id
-WHERE anime.anime_id = 0;
+ JOIN genres ON genres.genres_id = link_genres.genres_id
+WHERE anime.anime_id = @anime_id;
+GO
 
 SELECT * FROM anime
 
 SELECT * FROM anime
 
---Chọn ra top 3 anime có điểm cao nhất từ dưới lên--
+--Chọn ra top 3 anime có điểm thấp nhất--
+CREATE VIEW TOP3Anime AS
 SELECT DISTINCT TOP 3 anime.anime_id, anime.title, anime.synopsis, informations.scores
 FROM anime
 JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores;
 
 --chọn ra top 3 anime có điểm cao nhất từ trên xuống--
+CREATE VIEW TOP3ANIMEDESC AS
 SELECT TOP 3 anime.anime_id, anime.title, anime.synopsis, informations.scores
 FROM anime
 JOIN informations ON informations.anime_id = anime.anime_id
 ORDER BY informations.scores DESC;
 
 --Đưa ra tên của top 3 studio có điểm trung bình cao nhất--
+CREATE VIEW TOP3Studio AS
 SELECT TOP 50  producers.producers_name, AVG(CONVERT(DECIMAL,informations.scores)) AS Score FROM informations
 JOIN anime ON anime.anime_id = informations.anime_id
 JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
@@ -34,12 +41,16 @@ GROUP BY producers.producers_name
 ORDER BY AVG(CONVERT(DECIMAL,informations.scores)) DESC;
 
 --Đưa ra điểm trung bình của một studio anime--
+CREATE PROCEDURE studioAVGScore
+@producer_id INT
+AS
 SELECT AVG(CONVERT(DECIMAL,informations.scores)) AS Score, producers.producers_name FROM informations
 JOIN anime ON anime.anime_id = informations.anime_id
 JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
 JOIN producers ON producers.producers_id = anime_producers.producers_id
-WHERE producers.producers_id = 0
+WHERE producers.producers_id = @producer_id
 GROUP BY producers.producers_name;
+GO
 
 --Đưa ra toàn bộ điểm trung bình của các studio anime--
 SELECT AVG(CONVERT(DECIMAL,informations.scores)) AS Score, producers.producers_name FROM informations
@@ -65,11 +76,14 @@ ORDER BY informations.scores DESC;
 
 
 --Đưa ra thông tin producers của một bộ anime--
+CREATE PROCEDURE getProducerByAnimeId
+@anime_id INT
+AS
 SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
 JOIN anime_producers ON anime_producers.producers_id = producers.producers_id
 JOIN anime ON anime.anime_id = anime_producers.anime_id
-WHERE anime.anime_id = 0
-
+WHERE anime.anime_id = @anime_id
+GO
 
 --Tìm kiếm thông tin của một bộ anime thông qua tên--
 CREATE INDEX ix_anime_title ON anime(title)
@@ -97,13 +111,8 @@ JOIN anime ON anime.anime_id = link_character.anime_id
 WHERE anime.anime_id = 604;
 
 
-SELECT TOP 50  producers.producers_name, SUM(anime.anime_id) AS Total_Anime FROM informations
-JOIN anime ON anime.anime_id = informations.anime_id
-JOIN anime_producers ON anime_producers.anime_id = anime.anime_id
-JOIN producers ON producers.producers_id = anime_producers.producers_id
-GROUP BY producers.producers_name
-ORDER BY AVG(CONVERT(DECIMAL,informations.scores)) DESC;
 --Lấy ra producers và tổng số bộ anime mà họ đã sản xuất
+CREATE VIEW producersAndTheirAnimes AS
 SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime 
       FROM informations
       JOIN anime ON anime.anime_id = informations.anime_id
@@ -117,22 +126,82 @@ SELECT producers.producers_name, SUM(anime.anime_id) AS Total_Anime
 SELECT producers.producers_id AS Id, producers.producers_name AS producers FROM producers
 WHERE producers.producers_id = 1
 
+--Đưa ra thông tin của một bộ anime dưa trên thể loại anime
+CREATE PROCEDURE getAnimeByType 
+@offset INT,
+@anime_type VARCHAR(10)
+AS
+SELECT TOP (50) a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered
+                FROM anime a
+                LEFT JOIN anime_status s ON a.anime_id = s.anime_id
+                LEFT JOIN informations i ON a.anime_id = i.anime_id
+                WHERE a.anime_id NOT IN (
+                SELECT TOP (@offset) anime_id 
+                FROM anime 
+                ORDER BY anime_id
+                )
+                AND a.anime_type = @anime_type
+                ORDER BY a.anime_id;
+GO
+--Đưa ra thông tin về nhân vật dựa trên anime_id
+SELECT * 
+FROM new_character 
+JOIN link_character ON link_character.character_id = new_character.Id
+WHERE link_character.anime_id = 0
+--Đưa ra thông tin về User dựa trên userid
+SELECT * FROM Users
+WHERE Id = 1999;
 
-SELECT new_character.Name, anime.title AS title FROM anime
-JOIN link_character ON link_character.anime_id = anime.anime_id
-JOIN new_character ON link_character.character_id = new_character.Id
-WHERE new_character.Id = 4505
+CREATE TRIGGER trg_insert ON Users
+AFTER INSERT
+AS
+BEGIN
+    -- Set the Role to 'user' for newly inserted records
+    UPDATE Users
+    SET Role = 'user'
+    FROM Users
+    INNER JOIN inserted ON Users.Id = inserted.Id;
+END
 
-CREATE TRIGGER trg_update ON Users
+EXEC AnimeInformation 0;
+EXEC studioAVGScore 0;
+EXEC getAnimeByType 0, 'OVA';
+EXEC getProducerByAnimeId 0
+SELECT * FROM producersAndTheirAnimes
+SELECT * FROM User_comment
+
+INSERT INTO User_comment(users_id, anime_id, comment)
+VALUES('1999','0','anime rat la hay')
+
+CREATE TRIGGER trg_setAddedDate
+ON User_comment
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_comment
+	SET added_at = GETDATE()
+	FROM User_comment uc
+	INNER JOIN inserted i ON uc.Id = i.Id
+END
+
+CREATE TRIGGER trg_setEditedDate
+ON User_comment
 AFTER UPDATE
 AS
 BEGIN
-    -- Check if the Role column is updated
-    IF UPDATE(Role)
-    BEGIN
-        UPDATE Users
-        SET Role = 'user'
-        FROM inserted
-        WHERE Users.Id = inserted.Id; -- Assuming Id is the primary key
-    END
+	SET NOCOUNT ON;
+
+	UPDATE User_comment
+	SET edited_at = GETDATE()
+	FROM User_comment uc
+	INNER JOIN inserted i ON uc.Id = i.Id
 END
+
+
+UPDATE User_comment
+SET comment = 'anime khong hay'
+WHERE users_id= 1999
+AND anime_id = 0
+

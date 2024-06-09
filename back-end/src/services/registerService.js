@@ -1,8 +1,8 @@
 const sql = require('mssql');
 const sqlConfig = require('../config/database');
 
-//lấy emai, password, fullname, birthday từ client
-const getRegisterInformation = async (email, password, fullname, birthday, phonenumber) => {
+//lấy email, password, fullname, birthday từ client
+const getRegisterInformation = async (email, password, fullname, birthday) => {
     try {
         let pool = await sql.connect(sqlConfig);
         let result = await pool
@@ -11,11 +11,11 @@ const getRegisterInformation = async (email, password, fullname, birthday, phone
             .input('password', sql.NVarChar, password)
             .input('FullName', sql.NVarChar, fullname)
             .input('Birthday', sql.Date, birthday)
-            .query(`INSERT INTO 
+            // .input('Role', sql.NVarChar, 'user') // Set default role as user, sử dụng trigger để tự động thêm role
+            .query(`INSERT INTO                     
                     Users(FullName, Email, Password, Birthday)
-                    VALUES(@FullName, @email, @password, @Birthday)`);
-                    console.log(result.recordset);
-        return result.recordset; // Return true if login is successful
+                    VALUES(@FullName, @Email, @Password, @Birthday)`);
+        return result.rowsAffected[0] > 0; 
     } catch (err) {
         console.log(err);
         throw err; // Re-throw error to handle it in the controller
