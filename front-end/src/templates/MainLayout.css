@@ -4,6 +4,14 @@
   padding: 0;
 }
 
+.header .logincontainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: -12px 77px;
+} 
+
+
 .site-layout-content {
   background: #fff;
   padding: 24px;

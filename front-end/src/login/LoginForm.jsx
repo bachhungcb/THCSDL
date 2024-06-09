@@ -35,6 +35,7 @@ function LoginForm() {
     <MainLayout>
       <div className="login-container">
         <Form className="form-box"
+          layout="vertical"
           name="basic"
           initialValues={{
             remember: true,
