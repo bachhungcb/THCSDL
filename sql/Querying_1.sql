@@ -2,14 +2,12 @@
 CREATE PROCEDURE AnimeInformation
 @anime_id INT
 AS
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes,
+SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.animePoster,
  anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
- informations.popularity, genres.genres
+ informations.popularity
 FROM anime
  JOIN informations ON informations.anime_id = anime.anime_id
  JOIN anime_status ON anime_status.anime_id = anime.anime_id
- JOIN link_genres ON link_genres.anime_id = anime.anime_id
- JOIN genres ON genres.genres_id = link_genres.genres_id
 WHERE anime.anime_id = @anime_id;
 GO
 
@@ -166,3 +164,6 @@ EXEC studioAVGScore 0;
 EXEC getAnimeByType 0, 'OVA';
 EXEC getProducerByAnimeId 0
 SELECT * FROM producersAndTheirAnimes
+
+DROP PROCEDURE AnimeInformation;
+GO

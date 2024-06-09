@@ -87,3 +87,6 @@ CREATE TABLE Users(
 	Avatar VARCHAR(MAX),
 	PhoneNumber VARCHAR(MAX)
 );
+
+ALTER TABLE Users
+DROP COLUMN PhoneNumber;
