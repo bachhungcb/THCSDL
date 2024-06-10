@@ -11,14 +11,21 @@ function RegisterForm() {
 
   const onFinish = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8080/register", data);
-      const { isRegisterSuccessful } = response.data;
-      console.log(response.data);
-      if (isRegisterSuccessful) {
+      // Convert DatePicker value to a string format accepted by the backend
+      const formattedData = {
+        ...data,
+        birthday: data.birthday.format("YYYY-MM-DD"),
+      };
+      
+      const response = await axios.post("http://localhost:8080/register", formattedData);
+      console.log("Success:", response.data);
+      const { success } = response.data;
+
+      if (success===true) {
         alert("Registration successful! Please log in.");
         navigate("/login");
       } else {
-        alert("Registration failed! Please try again.");
+        alert(`Registration failed! ${response.data.error}`);
       }
     } catch (error) {
       console.error("Error:", error);

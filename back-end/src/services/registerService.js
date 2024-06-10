@@ -1,7 +1,6 @@
 const sql = require("mssql");
 const sqlConfig = require("../config/database");
 
-//lấy email, password, fullname, birthday từ client
 const getRegisterInformation = async (email, password, fullname, birthday) => {
   try {
     let pool = await sql.connect(sqlConfig);
@@ -14,10 +13,15 @@ const getRegisterInformation = async (email, password, fullname, birthday) => {
       .query(`INSERT INTO                     
                     Users(FullName, Email, Password, Birthday)
                     VALUES(@FullName, @Email, @Password, @Birthday)`);
-    return result.rowsAffected[0] > 0;
+
+    return { success: true };
   } catch (err) {
-    console.log(err);
-    throw err; // Re-throw error to handle it in the controller
+    if (err.number === 2627) { // Unique constraint error number
+      console.log("Duplicate email error:", err.message);
+      return { success: false, error: "Email already exists" };
+    }
+    console.log("Database error:", err.message);
+    return { success: false, error: "Database error" };
   }
 };
 
