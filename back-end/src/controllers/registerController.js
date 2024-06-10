@@ -8,7 +8,6 @@ app.use(bodyParser.json()); // Add this line to parse JSON request bodies
 
 const postRegisterPage = async (req, res) => {
   const { fullname, email, password, birthday } = req.body;
-
   const result = await getRegisterInformation(
     email,
     password,
@@ -17,9 +16,9 @@ const postRegisterPage = async (req, res) => {
   );
 
   if (result.success) {
-    res.status(201).send("User registered successfully");
+    res.status(201).send(result);
   } else {
-    res.status(500).send(`Registration failed: ${result.error}`);
+    res.status(400).send(`Registration failed: ${result.error}`);
   }
 };
 
