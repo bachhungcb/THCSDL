@@ -46,7 +46,6 @@ function RegisterForm() {
           <h2 className="registertitle">Register</h2>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Name</label>}
               name="fullname"
               rules={[
                 {
@@ -55,12 +54,11 @@ function RegisterForm() {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Name" />
             </Form.Item>
           </div>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Email</label>}
               name="email"
               rules={[
                 {
@@ -70,12 +68,11 @@ function RegisterForm() {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Email" />
             </Form.Item>
           </div>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Password</label>}
               name="password"
               rules={[
                 {
@@ -84,12 +81,11 @@ function RegisterForm() {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="Password" />
             </Form.Item>
           </div>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Confirm Password</label>}
               name="confirmPassword"
               dependencies={['password']}
               hasFeedback
@@ -108,12 +104,11 @@ function RegisterForm() {
                 }),
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="Confirm Password" />
             </Form.Item>
           </div>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Date of Birth</label>}
               name="birthday"
               rules={[
                 {
@@ -122,7 +117,7 @@ function RegisterForm() {
                 },
               ]}
             >
-              <DatePicker />
+              <DatePicker placeholder="Date of Birth" />
             </Form.Item>
           </div>
           <div className="registerbutton">

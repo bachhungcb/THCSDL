@@ -35,7 +35,6 @@ function LoginForm() {
     <MainLayout>
       <div className="login-container">
         <Form className="form-box"
-          layout="vertical"
           name="basic"
           initialValues={{
             remember: true,
@@ -47,7 +46,6 @@ function LoginForm() {
           <h2 className="logintitle">Login</h2>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Email</label>}
               name="email"
               rules={[
                 {
@@ -57,12 +55,11 @@ function LoginForm() {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Username" />
             </Form.Item>
           </div>
           <div className="inputbox">
             <Form.Item
-              label={<label className="custom-label">Password</label>}
               name="password"
               rules={[
                 {
@@ -71,7 +68,7 @@ function LoginForm() {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="Password" />
             </Form.Item>
           </div>
           <div className="remember">
