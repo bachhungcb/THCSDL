@@ -1,4 +1,3 @@
-
 CREATE TABLE anime(
 	anime_id INT NOT NULL PRIMARY KEY,
 	title VARCHAR(100),
@@ -64,6 +63,8 @@ CREATE TABLE genres(
 	genres_id INT IDENTITY(1,1),
 	genres VARCHAR(50)
 );
+
+drop table genres
 
 CREATE TABLE link_genres(
 	anime_id INT, 
@@ -133,3 +134,5 @@ ADD favourite_set_id INT
 
 ALTER TABLE anime
 ADD CONSTRAINT fk_anime2 FOREIGN KEY (favourite_set_id) REFERENCES favourites_set(Id)
+
+drop database prjfinal
