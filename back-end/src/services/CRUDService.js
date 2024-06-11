@@ -17,3 +17,7 @@ const postComment = async (userId, animeId, comment) => {
         throw err;
     }
 };
+
+module.exports = {
+    postComment,
+}
