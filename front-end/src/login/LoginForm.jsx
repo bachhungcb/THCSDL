@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import memcho from "../assets/memcho.png";
-import MainLayout from "../templates/MainLayout";   
+import MainLayout from "../templates/MainLayout";
 import "./LoginForm.css";
 
 function LoginForm() {
-
+  const [login, setLogin] = useState(null);
   const navigate = useNavigate();
 
   const onFinish = async (data) => {
     try {
       const response = await axios.post("http://localhost:8080/login", data);
-      const { isLoginSuccessful } = response.data;
-      if (isLoginSuccessful) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+      console.log("Response data:", response.data); 
+      setLogin(response.data); 
+
+      if (response.data.loginSuccessful) {
+        localStorage.setItem("user", JSON.stringify(response.data.userID));
         navigate("/");
       } else {
         alert("Login failed! Please check your email and password.");
@@ -34,7 +36,8 @@ function LoginForm() {
   return (
     <MainLayout>
       <div className="login-container">
-        <Form className="form-box"
+        <Form
+          className="form-box"
           name="basic"
           initialValues={{
             remember: true,
@@ -55,7 +58,7 @@ function LoginForm() {
                 },
               ]}
             >
-              <Input placeholder="Username" />
+              <Input placeholder="Email" />
             </Form.Item>
           </div>
           <div className="inputbox">
@@ -92,18 +95,24 @@ function LoginForm() {
           </div>
           <div className="register">
             <Form.Item>
-              Doesn't have an account? 
-              <Link to="/register" style={{marginLeft: 8}} className="registertext"> 
+              Don't have an account?
+              <Link
+                to="/register"
+                style={{ marginLeft: 8 }}
+                className="registertext"
+              >
                 Register here
               </Link>{" "}
-              <img
-                src={memcho}
-                alt="Register Icon"
-                style={{ marginLeft: 8 }}
-              />{" "}
+              <img src={memcho} alt="Register Icon" style={{ marginLeft: 8 }} />{" "}
             </Form.Item>
           </div>
         </Form>
+        {login && (
+          <div>
+            <p>Login Successful: {login.loginSuccessful.toString()}</p>
+            <p>User ID: {login.userID}</p>
+          </div>
+        )}
       </div>
     </MainLayout>
   );

@@ -1,6 +1,5 @@
 const sql = require('mssql');
 const sqlConfig = require('../config/database');
-const bcrypt = require('bcrypt');
 
 const getLoginInformation = async (email, inputPassword) => {
     try {
@@ -11,8 +10,8 @@ const getLoginInformation = async (email, inputPassword) => {
             .query(`SELECT Password, Id FROM Users WHERE Email = @email`);
 
         if (user.recordset.length > 0) {
-            const passwordMatch = await bcrypt.compare(inputPassword, user.recordset[0].Password);
-            if (passwordMatch) {
+            const storedPassword = user.recordset[0].Password;
+            if (inputPassword === storedPassword) { // Directly comparing plaintext passwords
                 return { Result: 1, Id: user.recordset[0].Id };
             }
         }

@@ -10,10 +10,10 @@ const postLoginPage = async (req, res) => {
     const { email, password } = req.body;
     try {
         const isLoginSuccessful = await getLoginInformation(email, password);
-        if (isLoginSuccessful) {
-            res.status(200).json({ isLoginSuccessful: true }); // OK with JSON response
+        if (isLoginSuccessful.Result === 1) {
+            res.status(200).json({ loginSuccessful: true, userID: isLoginSuccessful.Id }); // OK with JSON response
         } else {
-            res.status(401).json({ isLoginSuccessful: false }); // Unauthorized with JSON response
+            res.status(401).json({ loginSuccessful: false }); // Unauthorized with JSON response
         }
     } catch (error) {
         console.error('Login error:', error);

@@ -6,7 +6,7 @@ import CharactersCard from "./CharactersCard.jsx";
 import { Layout, Card, ConfigProvider } from "antd";
 import "./AnimeDetail.css";
 
-const { Header, Content, Footer, Sider } = Layout;
+const {Content, Sider } = Layout;
 
 function AnimeDetail() {
   const { animeId } = useParams();

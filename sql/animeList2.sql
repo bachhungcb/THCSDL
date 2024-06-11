@@ -106,6 +106,8 @@ CREATE TABLE User_favourites(
 	CONSTRAINT pk_User_favourites PRIMARY KEY(users_id, anime_id)
 );
 
+
+
 CREATE TABLE comment_set(
 	Id INT PRIMARY KEY, 
 );
@@ -135,4 +137,3 @@ ADD favourite_set_id INT
 ALTER TABLE anime
 ADD CONSTRAINT fk_anime2 FOREIGN KEY (favourite_set_id) REFERENCES favourites_set(Id)
 
-drop database prjfinal
