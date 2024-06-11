@@ -23,10 +23,12 @@ const MainLayout = ({ children, breadcrumbs }) => {
         <div className="logincontainer">
           <LoginButton />
         </div>
+        <div className="nav-bar">
+          <NavBar />
+        </div>
         
-        <NavBar />
       </Header>
-      <Layout>
+      <Layout className="layoutmain">
         {breadcrumbs && <CustomBreadCrumbs breadcrumbs={breadcrumbs} />}
         <Content style={{ padding: "0 50px" }}>
           <div className="site-layout-content">{children}</div>

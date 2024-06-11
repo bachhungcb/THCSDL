@@ -1,4 +1,3 @@
-
 CREATE TABLE anime(
 	anime_id INT NOT NULL PRIMARY KEY,
 	title VARCHAR(100),
@@ -64,6 +63,8 @@ CREATE TABLE genres(
 	genres_id INT IDENTITY(1,1),
 	genres VARCHAR(50)
 );
+
+drop table genres
 
 CREATE TABLE link_genres(
 	anime_id INT, 
