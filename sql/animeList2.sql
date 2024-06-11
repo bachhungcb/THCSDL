@@ -9,9 +9,7 @@ CREATE TABLE anime(
 	animePoster VARCHAR(MAX),
 	nameURL VARCHAR(MAX),
 	comment_set_id INT,
-	favourite_set_id INT,
 	CONSTRAINT fk_anime1 FOREIGN KEY (comment_set_id) REFERENCES comment_set(Id),
-	CONSTRAINT fk_anime2 FOREIGN KEY (favourite_set_id) REFERENCES favourite_set(Id)
 );
 
 CREATE TABLE informations(
@@ -93,22 +91,18 @@ CREATE TABLE Users(
 
 ALTER TABLE Users
 DROP COLUMN PhoneNumber;
-);
+;
 ALTER TABLE Users
 ADD PRIMARY KEY(Id)
 
-CREATE TABLE favourites_set(
-	Id INT PRIMARY KEY
-);
-
 CREATE TABLE User_favourites(
-	Id INT IDENTITY(1,1) PRIMARY KEY,
-	users_id INT,
-	anime_id INT,
+	users_id INT NOT NULL,
+	anime_id INT NOT NULL,
 	added_at DATE,
-	favourites_set_id INT,
-	CONSTRAINT fk_1 FOREIGN KEY (users_id) REFERENCES Users(Id),
-	CONSTRAINT fk_2 FOREIGN KEY (favourites_set_id) REFERENCES favourites_set(Id),
+	add_status INT Default 0,
+	CONSTRAINT fk_User_favourites1 FOREIGN KEY (users_id) REFERENCES Users(Id),
+	CONSTRAINT fk_User_favourites2 FOREIGN KEY (anime_id) REFERENCES anime(anime_id),
+	CONSTRAINT pk_User_favourites PRIMARY KEY(users_id, anime_id)
 );
 
 CREATE TABLE comment_set(

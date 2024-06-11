@@ -205,3 +205,19 @@ WHERE users_id= 1999
 AND anime_id = 0
 
 
+
+CREATE TRIGGER updateStatus
+ON User_favourites
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Update the added_at column to the current date and time where add_status is changed from 0 to 1
+    UPDATE uf
+    SET uf.added_at = GETDATE()
+    FROM User_favourites uf
+    INNER JOIN inserted i ON uf.users_id = i.users_id AND uf.anime_id = i.anime_id
+    INNER JOIN deleted d ON uf.users_id = d.users_id AND uf.anime_id = d.anime_id
+    WHERE i.add_status = 1 AND d.add_status = 0;
+END;
