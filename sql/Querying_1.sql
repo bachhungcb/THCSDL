@@ -221,3 +221,37 @@ BEGIN
     INNER JOIN deleted d ON uf.users_id = d.users_id AND uf.anime_id = d.anime_id
     WHERE i.add_status = 1 AND d.add_status = 0;
 END;
+
+CREATE TRIGGER checkAndUpdateStatus
+ON User_favourites
+INSTEAD OF UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @RowsAffected INT;
+
+    -- Update the add_status to 1 and added_at to the current date and time where add_status is currently 0
+    UPDATE uf
+    SET uf.add_status = 1, uf.added_at = GETDATE()
+    FROM User_favourites uf
+    INNER JOIN inserted i ON uf.users_id = i.users_id AND uf.anime_id = i.anime_id
+    WHERE uf.add_status = 0 AND i.add_status = 1;
+
+    -- Check the number of rows affected by the update
+    SET @RowsAffected = @@ROWCOUNT;
+
+    -- Return 1 if rows were updated, 0 otherwise
+    IF @RowsAffected > 0
+        SELECT 1 AS Result;
+    ELSE
+        SELECT 0 AS Result;
+END;
+
+
+INSERT INTO User_favourites (users_id, anime_id, added_at, add_status)
+VALUES	(2000, 0, '2024-06-11', 0),
+		(1999, 0, '2024-06-11', 1);
+UPDATE User_favourites
+SET add_status = 1
+WHERE users_id = 2000

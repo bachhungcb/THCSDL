@@ -1,29 +1,23 @@
 const sql = require('mssql');
 const sqlConfig = require('../config/database');
+const bcrypt = require('bcrypt');
 
-const getLoginInformation = async (email, password) => {
+const getLoginInformation = async (email, inputPassword) => {
     try {
         let pool = await sql.connect(sqlConfig);
-        let result = await pool
+        let user = await pool
             .request()
             .input('email', sql.NVarChar, email)
-            .input('password', sql.NVarChar, password)
-            .query(`IF EXISTS(SELECT * FROM Users
-                    WHERE Email = @email
-                    AND Password = @password)
-                    BEGIN
-                        SELECT 1 AS Result, Users.Id
-						FROM Users
-						WHERE Email = @email
-						AND Password = @password;
-						
-                    END
-                    ELSE
-                    BEGIN
-                        SELECT 0 AS Result
-                    END`);
-                    console.log(result.recordset);
-        return result.recordset; // Return true if login is successful
+            .query(`SELECT Password, Id FROM Users WHERE Email = @email`);
+
+        if (user.recordset.length > 0) {
+            const passwordMatch = await bcrypt.compare(inputPassword, user.recordset[0].Password);
+            if (passwordMatch) {
+                return { Result: 1, Id: user.recordset[0].Id };
+            }
+        }
+
+        return { Result: 0 };
     } catch (err) {
         console.log(err);
         throw err; // Re-throw error to handle it in the controller
