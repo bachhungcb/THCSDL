@@ -30,6 +30,10 @@ const{
   getUser
 } = require("../controllers/profileController");
 
+const{
+  postCommentController
+} = require("../controllers/userControllers");
+
 const express = require("express");
 const router = express.Router();
 
@@ -51,5 +55,7 @@ router.post("/login", postLoginPage);
 router.post("/register", postRegisterPage);
 
 router.get("/profile/:userId", getUser);
+
+router.post("/comment", postCommentController);
 
 module.exports = router;
