@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Popover } from "antd";
-import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
+import { CaretRightOutlined, CaretLeftOutlined, StarOutlined, StarFilled, HeartFilled } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif"; 
@@ -118,6 +118,12 @@ function AnimeTable() {
               <div>
                 <span className="dark">Premiered: </span>{record.premiered || "N/A"}
               </div>
+            </div>
+            <div className="atf">
+              <Button className="atfbtn" type="primary">Add to favourites
+              <HeartFilled style={{fontSize: '17px', color:'#fff'}} />
+              {/* <HeartFilled style={{fontSize: '17px', color:'#ff69b4'}} /> -> da fav */}
+              </Button>
             </div>
           </div>
         );

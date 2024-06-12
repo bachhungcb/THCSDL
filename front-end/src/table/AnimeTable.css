@@ -96,6 +96,17 @@ table {
   transform: scale(1);
 }
 
+.atf{
+  margin-left: 80px;
+  
+}
+
+.atfbtn{
+  background-color: #1c439b;
+  color: #fff;
+}
+
+  
 
 .hover-info h3{
   background-color: #1c439b;
