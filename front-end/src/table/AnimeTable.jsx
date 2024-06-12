@@ -113,7 +113,7 @@ function AnimeTable() {
                 </span>
               </div>
               <div>
-                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to === "('Unknown')" ? "N/A" : record.aired_to}
+                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to || "N/A"}
               </div>
               <div>
                 <span className="dark">Premiered: </span>{record.premiered || "N/A"}

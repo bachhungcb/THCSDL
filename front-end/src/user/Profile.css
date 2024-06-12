@@ -1,0 +1,14 @@
+.profile-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 800px; /* Điều chỉnh độ rộng tối đa nếu cần */
+}
+
+.profile-card {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 600px !important; /* Điều chỉnh độ rộng tối đa nếu cần */
+}
+

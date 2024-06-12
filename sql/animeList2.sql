@@ -1,4 +1,3 @@
-
 CREATE TABLE anime(
 	anime_id INT NOT NULL PRIMARY KEY,
 	title VARCHAR(100),
@@ -63,6 +62,8 @@ CREATE TABLE genres(
 	genres VARCHAR(50)
 );
 
+drop table genres
+
 CREATE TABLE link_genres(
 	anime_id INT, 
 	genres_id INT
@@ -103,6 +104,10 @@ CREATE TABLE User_favourites(
 	CONSTRAINT pk_User_favourites PRIMARY KEY(users_id, anime_id)
 );
 
+CREATE TABLE comment_set(
+	Id INT PRIMARY KEY, 
+);
+
 CREATE TABLE User_comment(
 	Id INT IDENTITY(1,1) PRIMARY KEY,
 	users_id INT,
@@ -115,5 +120,14 @@ CREATE TABLE User_comment(
 	CONSTRAINT fk_User_comment2 FOREIGN KEY (anime_id) REFERENCES anime(anime_id)
 );
 -----------
-ALTER TABLE User_comment
-ADD CONSTRAINT fk_User_comment2 FOREIGN KEY (anime_id) REFERENCES anime(anime_id)
+ALTER TABLE anime
+ADD comment_set_id INT
+
+ALTER TABLE anime
+ADD CONSTRAINT fk_anime1 FOREIGN KEY (comment_set_id) REFERENCES comment_set(Id)
+
+ALTER TABLE anime
+ADD favourite_set_id INT
+
+ALTER TABLE anime
+ADD CONSTRAINT fk_anime2 FOREIGN KEY (favourite_set_id) REFERENCES favourites_set(Id)

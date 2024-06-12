@@ -6,6 +6,7 @@ import AnimeDetail from "./detail/AnimeDetail.jsx";
 import SearchResult from "./search-result/SearchResult.jsx";
 import LoginForm from "./login/LoginForm.jsx";
 import RegisterForm from "./login/RegisterForm.jsx";
+import Profile from "./user/Profile.jsx";
 import { TitleProvider } from "./templates/TitleContext.jsx";
 import TypeTable from "./table/TypeTable.jsx";
 import "./App.css";
@@ -23,6 +24,7 @@ function App() {
             <Route path="/top-type/:type" element={<TypeTable />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/profile/:userID" element={<Profile />} />
           </Routes>
         </TitleProvider>
       </Router>
