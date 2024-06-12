@@ -216,6 +216,21 @@ BEGIN
     WHERE i.add_status = 1 AND d.add_status = 0;
 END;
 
+CREATE TRIGGER newStatus
+ON User_favourites
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Update the added_at column to the current date and time where add_status is changed from 0 to 1
+    UPDATE uf
+    SET uf.added_at = GETDATE()
+    FROM User_favourites uf
+    INNER JOIN inserted i ON uf.users_id = i.users_id AND uf.anime_id = i.anime_id
+    WHERE i.add_status = 1
+END;
+
 CREATE TRIGGER checkAndUpdateStatus
 ON User_favourites
 INSTEAD OF UPDATE
@@ -251,5 +266,5 @@ AS
 INSERT INTO User_favourites(users_id, anime_id, add_status)
 VALUES(@user_id, @anime_id, 1)
 
-EXEC userFavourite 2020, 0
+EXEC userFavourite 2023, 0
 	
