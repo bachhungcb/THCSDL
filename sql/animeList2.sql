@@ -119,6 +119,7 @@ CREATE TABLE User_comment(
 	CONSTRAINT fk_User_comment1 FOREIGN KEY (users_id) REFERENCES Users(Id),
 	CONSTRAINT fk_User_comment2 FOREIGN KEY (anime_id) REFERENCES anime(anime_id)
 );
+
 -----------
 ALTER TABLE anime
 ADD comment_set_id INT

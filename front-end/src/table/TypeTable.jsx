@@ -5,7 +5,8 @@ import { Table, Button, Popover } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
-import loadingGif from "../assets/loading-screen.gif"; 
+import loadingGif from "../assets/loading-screen.gif";
+import FavouriteButton from "../button/AddFavouriteButton";
 import "./AnimeTable.css";
 
 function TypeTable() {
@@ -117,6 +118,9 @@ function TypeTable() {
               <div>
                 <span className="dark">Premiered: </span>{record.premiered || "N/A"}
               </div>
+            </div>
+            <div className="atf">
+              <FavouriteButton animeId={record.anime_id} />
             </div>
           </div>
         );

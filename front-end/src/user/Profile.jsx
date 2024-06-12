@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Layout, Card, Avatar, Typography, Spin } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
+import FavouriteTable from "../table/FavouriteTable.jsx";
+import "./Profile.css";
 
 const { Title, Text } = Typography;
 
@@ -67,6 +69,10 @@ function Profile() {
             <Text>{new Date(profile.Birthday).toLocaleDateString()}</Text>
           </Card>
         ))}
+        <Card className="favourite-card"
+        title ="Your favourite list">
+        <FavouriteTable userID={userID} />
+        </Card>
       </div>
     </MainLayout>
   );
