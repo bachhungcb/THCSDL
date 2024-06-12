@@ -242,13 +242,14 @@ BEGIN
         SELECT 0 AS Result;
 END;
 
+SELECT * FROM User_favourites
+
 CREATE PROCEDURE userFavourite
 @user_id INT,
 @anime_id INT
 AS
-UPDATE User_favourites
-SET add_status = 1
-WHERE users_id = @user_id
-AND anime_id = @anime_id
+INSERT INTO User_favourites(users_id, anime_id, add_status)
+VALUES(@user_id, @anime_id, 1)
 
+EXEC userFavourite 2020, 0
 	
