@@ -199,12 +199,6 @@ BEGIN
 END
 
 
-UPDATE User_comment
-SET comment = 'anime khong hay'
-WHERE users_id= 1999
-AND anime_id = 0
-
-
 
 CREATE TRIGGER updateStatus
 ON User_favourites
@@ -248,10 +242,3 @@ BEGIN
         SELECT 0 AS Result;
 END;
 
-
-INSERT INTO User_favourites (users_id, anime_id, added_at, add_status)
-VALUES	(2000, 0, '2024-06-11', 0),
-		(1999, 0, '2024-06-11', 1);
-UPDATE User_favourites
-SET add_status = 1
-WHERE users_id = 2000
