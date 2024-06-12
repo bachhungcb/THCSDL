@@ -242,3 +242,13 @@ BEGIN
         SELECT 0 AS Result;
 END;
 
+CREATE PROCEDURE userFavourite
+@user_id INT,
+@anime_id INT
+AS
+UPDATE User_favourites
+SET add_status = 1
+WHERE users_id = @user_id
+AND anime_id = @anime_id
+
+	
