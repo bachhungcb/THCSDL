@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./NavBar.css";
 import SearchBar from "../search-bar/SearchBar";
-import LoginButton from "../login/LoginButton";
 
 function NavBar() {
   const location = useLocation();

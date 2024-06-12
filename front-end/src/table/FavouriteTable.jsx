@@ -1,30 +1,32 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Popover } from "antd";
-import { CaretRightOutlined, CaretLeftOutlined, HeartFilled } from "@ant-design/icons";
+import {
+  CaretRightOutlined,
+  CaretLeftOutlined,
+  HeartFilled,
+} from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
-import loadingGif from "../assets/loading-screen.gif"; 
+import loadingGif from "../assets/loading-screen.gif";
 import FavouriteButton from "../button/AddFavouriteButton";
 import "./AnimeTable.css";
 
-function AnimeTable() {
+function FavouriteTable({ userID }) {
   const { setTitle } = useTitle();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [animesPerPage] = useState(50);
-  const urlWithProxy = "http://localhost:8080/animes";
+  const urlWithProxy = "http://localhost:8080/favourite/";
 
   useEffect(() => {
     getDataFromServer();
-  }, [currentPage]);
+  }, [userID]);
 
   function getDataFromServer() {
     setIsLoading(true); // Set loading to true before fetching data
     axios
-      .get(`${urlWithProxy}?page=${currentPage}`)
+      .get(`${urlWithProxy}${userID}`)
       .then((res) => {
         setData(res.data);
         setIsLoading(false); // Set loading to false after data is fetched
@@ -35,26 +37,7 @@ function AnimeTable() {
       });
   }
 
-  function handleNextPage() {
-    setCurrentPage(currentPage + 1);
-  }
-
-  function handlePrevPage() {
-    setCurrentPage(currentPage - 1);
-  }
-
   const columns = [
-    {
-      title: "Rank",
-      dataIndex: "ranks",
-      key: "ranks",
-      width: "10%",
-      render: (text) => (
-        <span style={{ fontSize: "46px", fontWeight: 800, color: "#888" }}>
-          {text}
-        </span>
-      ),
-    },
     {
       title: "Title",
       dataIndex: "title",
@@ -110,10 +93,13 @@ function AnimeTable() {
                 </span>
               </div>
               <div>
-                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to || "N/A"}
+                <span className="dark">Aired: </span>
+                {record.aired_from}
+                <br /> to {record.aired_to || "N/A"}
               </div>
               <div>
-                <span className="dark">Premiered: </span>{record.premiered || "N/A"}
+                <span className="dark">Premiered: </span>
+                {record.premiered || "N/A"}
               </div>
             </div>
             <div className="atf">
@@ -122,12 +108,6 @@ function AnimeTable() {
           </div>
         );
       },
-    },
-    {
-      title: "Score",
-      dataIndex: "scores",
-      key: "scores",
-      width: "10%",
     },
     {
       title: "Episodes",
@@ -144,41 +124,25 @@ function AnimeTable() {
   ];
 
   return (
-    <MainLayout breadcrumbs={"Home"}>
-      <div className="top-anime-table-container">
-        <h2 className="top-header">Top Anime Series</h2>
-
-        {isLoading ? (
-          <div className="loading-container">
-            <img src={loadingGif} alt="Loading..." className="loading-gif" />
-          </div>
-        ) : (
-          <>
-            <Table
-              dataSource={data}
-              columns={columns}
-              rowKey="anime_id"
-              pagination={false}
-              className="anime-table"
-              size="small"
-            />
-            <div className="pagination-buttons">
-              {currentPage > 1 && (
-                <Button type="primary" onClick={handlePrevPage}>
-                  <CaretLeftOutlined /> Previous
-                </Button>
-              )}
-              {data.length === animesPerPage && (
-                <Button type="primary" onClick={handleNextPage}>
-                  Next <CaretRightOutlined />
-                </Button>
-              )}
-            </div>
-          </>
-        )}
-      </div>
-    </MainLayout>
+    <div className="top-anime-table-container">
+      {isLoading ? (
+        <div className="loading-container">
+          <img src={loadingGif} alt="Loading..." className="loading-gif" />
+        </div>
+      ) : (
+        <>
+          <Table
+            dataSource={data}
+            columns={columns}
+            rowKey="anime_id"
+            pagination={true}
+            className="anime-table"
+            size="small"
+          />
+        </>
+      )}
+    </div>
   );
 }
 
-export default AnimeTable;
+export default FavouriteTable;

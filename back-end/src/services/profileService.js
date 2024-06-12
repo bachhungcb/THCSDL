@@ -42,7 +42,6 @@ class DatabaseQueryError extends Error {
 }
 
 const getUserById = async (userId) => {
-    console.log(userId);
     const query = ` SELECT * FROM Users
                     WHERE Id = @userId;`;
     const param = [{ name: "userId", value: userId }];
