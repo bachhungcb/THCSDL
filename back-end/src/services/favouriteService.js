@@ -64,8 +64,13 @@ const getUserFavouriteById = async (userId) => {
 
   return executeQuery(query, param);
 }
-
+const unFavouriteById = async(userId)=>{
+  const query = 'UPDATE User_favourites SET is_favourite = 0 WHERE users_id = @userId';
+  const param = [{ name: 'userId', value: userId }];
+  return executeQuery(query, param);
+}
 module.exports = {
   userFavourite,
   getUserFavouriteById,
+  unFavouriteById
 };

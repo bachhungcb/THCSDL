@@ -4,6 +4,7 @@ const bodyParser = require("body-parser"); // middleware
 const {
   userFavourite,
   getUserFavouriteById,
+  unFavouriteById
 } = require("../services/favouriteService");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,7 +38,20 @@ const getFavourite = async (req, res) => {
   }
 };
 
+const deleteFavourite = async (req, res) => {
+  const userId = parseInt(req.params.userId);
+  try {
+    const unfavourite = await unFavouriteById(userId);
+    res.status(200).send(unfavourite);
+  } catch (error) {
+    console.error("Unfavourite error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+
+}
+
 module.exports = {
   postFavourite,
   getFavourite,
+  deleteFavourite
 };
