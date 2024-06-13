@@ -30,6 +30,12 @@ const{
   getUser
 } = require("../controllers/profileController");
 
+const {
+  postFavourite,
+  getFavourite
+} = require("../controllers/favouriteController");
+
+
 const{
   postCommentController
 } = require("../controllers/userControllers");
@@ -57,5 +63,8 @@ router.post("/register", postRegisterPage);
 router.get("/profile/:userId", getUser);
 
 router.post("/comment", postCommentController);
+
+router.post("/favourite", postFavourite);
+router.get("/favourite/:userId", getFavourite);
 
 module.exports = router;

@@ -146,6 +146,9 @@ function AnimeDetail() {
             Content
           </div>
           </Content>
+          <Content className="comment">
+
+          </Content>
         </Layout>
       ))}
     </MainLayout>

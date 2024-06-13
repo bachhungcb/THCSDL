@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Layout, Button } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Layout } from "antd";
 import NavBar from "../nav-bar/NavBar";
 import CustomBreadCrumbs from "./BreadCrumbs.jsx";
-import LoginButton from "../login/LoginButton.jsx";
+import LoginButton from "../button/LoginButton.jsx";
 import "./MainLayout.css";
 
 const { Header, Content, Footer } = Layout;
 
 const MainLayout = ({ children, breadcrumbs }) => {
-  const navigate = useNavigate();
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header
@@ -26,7 +24,6 @@ const MainLayout = ({ children, breadcrumbs }) => {
         <div className="nav-bar">
           <NavBar />
         </div>
-        
       </Header>
       <Layout className="layoutmain">
         {breadcrumbs && <CustomBreadCrumbs breadcrumbs={breadcrumbs} />}

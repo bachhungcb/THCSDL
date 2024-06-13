@@ -266,5 +266,6 @@ AS
 INSERT INTO User_favourites(users_id, anime_id, add_status)
 VALUES(@user_id, @anime_id, 1)
 
+
 EXEC userFavourite 2023, 0
 SELECT * FROM User_comment
