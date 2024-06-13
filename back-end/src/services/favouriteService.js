@@ -10,7 +10,7 @@ const executeQuery = async (query, params) => {
       request.input(param.name, param.value);
     }
     const result = await request.query(query);
-    return result.recordset;
+    return{ Result: 1, Recordset: result.recordset };
   } catch (error) {
     console.error("Database query error:", error);
     throw new DatabaseQueryError(error, query);
@@ -57,18 +57,21 @@ const userFavourite = async (userId, animeId) => {
 };
 
 const getUserFavouriteById = async (userId) => {
-  const query = ` SELECT * FROM anime a
+  const query = ` SELECT a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered, u.add_status 
+                  FROM anime a 
                   JOIN User_favourites u ON a.anime_id = u.anime_id
-                  WHERE u.users_id= @userId;`;
+                  JOIN anime_status s ON a.anime_id = s.anime_id
+                  JOIN informations i ON a.anime_id = i.anime_id
+                  WHERE u.users_id= @userId AND u.add_status = 1`;
   const param = [{ name: "userId", value: userId }];
 
   return executeQuery(query, param);
 }
-const unFavouriteById = async(userId)=>{
-  const query = 'UPDATE User_favourites SET is_favourite = 0 WHERE users_id = @userId';
-  const param = [{ name: 'userId', value: userId }];
+const unFavouriteById = async (userId, animeId) => {
+  const query = 'DELETE FROM User_favourites WHERE users_id = @userId AND anime_id = @animeId;';
+  const param = [{ name: 'userId', value: userId }, { name: 'animeId', value: animeId }];
   return executeQuery(query, param);
-}
+};
 module.exports = {
   userFavourite,
   getUserFavouriteById,
