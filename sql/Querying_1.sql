@@ -257,7 +257,7 @@ BEGIN
         SELECT 0 AS Result;
 END;
 
-SELECT * FROM User_favourites
+SELECT * FROM User_comment
 
 CREATE PROCEDURE userFavourite
 @user_id INT,
@@ -267,5 +267,24 @@ INSERT INTO User_favourites(users_id, anime_id, add_status)
 VALUES(@user_id, @anime_id, 1)
 
 
-EXEC userFavourite 2023, 0
-SELECT * FROM User_comment
+CREATE PROCEDURE updateUserComment
+@user_id INT,
+@anime_id INT,
+@new_comment VARCHAR(250)
+AS
+BEGIN
+---------Kiểm tra xem đã có userid nhập vào có ở trong bảng comment hay chưa
+IF EXISTS(SELECT 1 FROM User_comment WHERE Id = @user_id AND anime_id = @anime_id)
+	BEGIN
+		UPDATE User_comment
+		SET comment = @new_comment
+		WHERE Id = @user_id AND anime_id = @anime_id
+		SELECT 1 AS Result
+	END
+ELSE 
+	BEGIN
+		SELECT 0 AS Result
+	END
+END;
+
+EXEC updateUserComment 1,0, 'anime  hay'
