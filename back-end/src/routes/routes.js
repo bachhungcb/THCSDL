@@ -32,7 +32,8 @@ const{
 
 const {
   postFavourite,
-  getFavourite
+  getFavourite,
+  deleteFavourite
 } = require("../controllers/favouriteController");
 
 
@@ -66,5 +67,6 @@ router.post("/comment", postCommentController);
 
 router.post("/favourite", postFavourite);
 router.get("/favourite/:userId", getFavourite);
+router.delete("/unfavourite", deleteFavourite);
 
 module.exports = router;
