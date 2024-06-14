@@ -49,6 +49,35 @@ const getUserById = async (userId) => {
     return executeQuery(query, param);
 }
 
+const changeAvatar = async (userId, avatar) => {
+    const query = `UPDATE Users
+                    SET Avatar = @avatar
+                    WHERE Id = @userId;`;
+    const param = [{ name: "userId", value: userId }, { name: "avatar", value: avatar }];
+
+    return executeQuery(query, param);
+}
+const changeFullName = async (userId, fullName) => {
+    const query = `UPDATE Users
+                    SET FullName = @fullName
+                    WHERE Id = @userId;`;
+    const param = [{ name: "userId", value: userId }, { name: "fullName", value: fullName }];
+
+    return executeQuery(query, param);
+}
+
+const changeBirthday = async (userId, birthday) => {
+    const query = `UPDATE Users
+                    SET Birthday = @birthday
+                    WHERE Id = @userId;`;
+    const param = [{ name: "userId", value: userId }, { name: "birthday", value: birthday }];
+
+    return executeQuery(query, param);
+}
+
 module.exports = {
-    getUserById
+    getUserById,
+    changeAvatar,
+    changeFullName,
+    changeBirthday
 }

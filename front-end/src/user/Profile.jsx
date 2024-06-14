@@ -24,7 +24,7 @@ function Profile() {
     }
 
     fetchData();
-  }, [userID]); // Add userID to the dependency array to trigger re-fetch on ID change
+  }, [userID]); 
 
   if (!profile) {
     return (
