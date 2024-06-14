@@ -97,8 +97,7 @@ ADD PRIMARY KEY(Id)
 CREATE TABLE User_favourites(
 	users_id INT NOT NULL,
 	anime_id INT NOT NULL,
-	added_at DATE,
-	add_status INT Default 0,
+	added_at DATETIME,
 	CONSTRAINT fk_User_favourites1 FOREIGN KEY (users_id) REFERENCES Users(Id),
 	CONSTRAINT fk_User_favourites2 FOREIGN KEY (anime_id) REFERENCES anime(anime_id),
 	CONSTRAINT pk_User_favourites PRIMARY KEY(users_id, anime_id)

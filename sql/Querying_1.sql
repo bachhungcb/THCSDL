@@ -202,63 +202,6 @@ END
 
 
 
-CREATE TRIGGER updateStatus
-ON User_favourites
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Update the added_at column to the current date and time where add_status is changed from 0 to 1
-    UPDATE uf
-    SET uf.added_at = GETDATE()
-    FROM User_favourites uf
-    INNER JOIN inserted i ON uf.users_id = i.users_id AND uf.anime_id = i.anime_id
-    INNER JOIN deleted d ON uf.users_id = d.users_id AND uf.anime_id = d.anime_id
-    WHERE i.add_status = 1 AND d.add_status = 0;
-END;
-
-CREATE TRIGGER newStatus
-ON User_favourites
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Update the added_at column to the current date and time where add_status is changed from 0 to 1
-    UPDATE uf
-    SET uf.added_at = GETDATE()
-    FROM User_favourites uf
-    INNER JOIN inserted i ON uf.users_id = i.users_id AND uf.anime_id = i.anime_id
-    WHERE i.add_status = 1
-END;
-
-CREATE TRIGGER checkAndUpdateStatus
-ON User_favourites
-INSTEAD OF UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @RowsAffected INT;
-
-    -- Update the add_status to 1 and added_at to the current date and time where add_status is currently 0
-    UPDATE uf
-    SET uf.add_status = 1, uf.added_at = GETDATE()
-    FROM User_favourites uf
-    INNER JOIN inserted i ON uf.users_id = i.users_id AND uf.anime_id = i.anime_id
-    WHERE uf.add_status = 0 AND i.add_status = 1;
-
-    -- Check the number of rows affected by the update
-    SET @RowsAffected = @@ROWCOUNT;
-
-    -- Return 1 if rows were updated, 0 otherwise
-    IF @RowsAffected > 0
-        SELECT 1 AS Result;
-    ELSE
-        SELECT 0 AS Result;
-END;
-
 SELECT * FROM User_comment
 
 CREATE PROCEDURE userFavourite
@@ -290,3 +233,16 @@ ELSE
 END;
 
 EXEC updateUserComment 1,0, 'anime  hay'
+
+CREATE TRIGGER trg_getTime
+ON User_favourites
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_favourites
+	SET User_favourites.added_at = GETDATE()
+	FROM User_favourites
+	JOIN inserted ON inserted.users_id = User_favourites.users_id
+END
