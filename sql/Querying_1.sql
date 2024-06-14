@@ -96,13 +96,15 @@ WHERE anime.title LIKE '%Hen%'
 
 --Tìm kiếm nhân vật thông qua tên
 CREATE INDEX ix_characters_name ON new_character(Name)
-SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile, new_character.Id
+SELECT DISTINCT TOP 10 new_character.Name, anime.title, new_character.Profile, new_character.Id, link_character.Roles
         FROM new_character  
+		JOIN link_character ON link_character.character_id = new_character.Id
+		JOIN anime ON link_character.anime_id = anime.anime_id
         WHERE new_character.Name LIKE '%Edogawa%'
         ORDER BY new_character.Name;
 
 --Tìm kiếm nhân vật thông qua anime_id
-SELECT new_character.Name, new_character.Roles, anime.title
+SELECT new_character.Name, link_character.Roles, anime.title
 FROM new_character
 JOIN link_character ON link_character.character_id = new_character.Id
 JOIN anime ON anime.anime_id = link_character.anime_id
