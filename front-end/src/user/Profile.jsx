@@ -10,7 +10,6 @@ const { Title, Text } = Typography;
 
 function Profile() {
   const { userID } = useParams();
-  console.log(userID);
   const [profile, setProfile] = useState(null);
   const url = `http://localhost:8080/profile/`;
 
@@ -25,7 +24,7 @@ function Profile() {
     }
 
     fetchData();
-  }, [userID]); // Add userID to the dependency array to trigger re-fetch on ID change
+  }, [userID]); 
 
   if (!profile) {
     return (

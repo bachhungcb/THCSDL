@@ -31,7 +31,7 @@ const getFavourite = async (req, res) => {
   const userId = parseInt(req.params.userId);
   try {
     const favourite = await getUserFavouriteById(userId);
-    res.status(200).send(favourite);
+    res.status(200).send(favourite.Recordset);
   } catch (error) {
     console.error("Get favourite error:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -39,16 +39,15 @@ const getFavourite = async (req, res) => {
 };
 
 const deleteFavourite = async (req, res) => {
-  const userId = parseInt(req.params.userId);
+  const { userId, animeId } = req.body;
   try {
-    const unfavourite = await unFavouriteById(userId);
-    res.status(200).send(unfavourite);
+    const unfavourite = await unFavouriteById(userId, animeId);
+    res.status(200).send({ success: unfavourite.Result });
   } catch (error) {
     console.error("Unfavourite error:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-
-}
+};
 
 module.exports = {
   postFavourite,

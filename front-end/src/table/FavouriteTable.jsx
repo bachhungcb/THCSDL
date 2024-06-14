@@ -1,16 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Table, Button, Popover } from "antd";
-import {
-  CaretRightOutlined,
-  CaretLeftOutlined,
-  HeartFilled,
-} from "@ant-design/icons";
-import MainLayout from "../templates/MainLayout";
+import { Table, Popover } from "antd";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif";
-import FavouriteButton from "../button/AddFavouriteButton";
+import RemoveFavouriteButton from "../button/RemoveFavouriteButton";
+import nah from "../assets/nah.png";
 import "./AnimeTable.css";
 
 function FavouriteTable({ userID }) {
@@ -23,19 +18,26 @@ function FavouriteTable({ userID }) {
     getDataFromServer();
   }, [userID]);
 
-  function getDataFromServer() {
+  const getDataFromServer = () => {
     setIsLoading(true); // Set loading to true before fetching data
     axios
       .get(`${urlWithProxy}${userID}`)
       .then((res) => {
-        setData(res.data);
+        // Kiểm tra dữ liệu nhận được
+        if (Array.isArray(res.data)) {
+          setData(res.data);
+        } else {
+          console.error("Expected an array but got", res.data);
+          setData([]); // Sử dụng mảng rỗng nếu dữ liệu không phải là mảng
+        }
         setIsLoading(false); // Set loading to false after data is fetched
       })
       .catch((err) => {
         console.error(err);
         setIsLoading(false); // Set loading to false even if there is an error
+        setData([]); // Sử dụng mảng rỗng khi có lỗi
       });
-  }
+  };
 
   const columns = [
     {
@@ -103,7 +105,11 @@ function FavouriteTable({ userID }) {
               </div>
             </div>
             <div className="atf">
-              <FavouriteButton animeId={record.anime_id} />
+              <RemoveFavouriteButton
+                animeId={record.anime_id}
+                userId={userID}
+                setData={setData}
+              />
             </div>
           </div>
         );
@@ -131,14 +137,21 @@ function FavouriteTable({ userID }) {
         </div>
       ) : (
         <>
-          <Table
-            dataSource={data}
-            columns={columns}
-            rowKey="anime_id"
-            pagination={true}
-            className="anime-table"
-            size="small"
-          />
+          {data.length === 0 ? (
+            <div className="empty-message">
+              <h2>But you haven't added anything in your list !!!</h2>
+              <img src={nah} alt="Nah" className="nah" sizes="75%" />
+            </div>
+          ) : (
+            <Table
+              dataSource={data}
+              columns={columns}
+              rowKey="anime_id"
+              pagination={true}
+              className="anime-table"
+              size="small"
+            />
+          )}
         </>
       )}
     </div>

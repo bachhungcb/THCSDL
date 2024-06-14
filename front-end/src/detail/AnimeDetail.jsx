@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
 import CharactersCard from "./CharactersCard.jsx";
+import CommentBox from "../comment-box/CommentBox.jsx";
 import { Layout, Card, ConfigProvider } from "antd";
+
 import "./AnimeDetail.css";
 
-const {Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 function AnimeDetail() {
   const { animeId } = useParams();
@@ -75,7 +77,9 @@ function AnimeDetail() {
                 <h1>Producers</h1>
                 <ul>
                   {producers.map((producer) => (
-                    <li key={producer.Id} className="anime-producers">{producer.producers}</li>
+                    <li key={producer.Id} className="anime-producers">
+                      {producer.producers}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -108,7 +112,8 @@ function AnimeDetail() {
                   </div>
                   <div className="detail">
                     <span className="dark">Aired: </span>
-                    {anime.aired_from} to {anime.aired_to === "('Unknown')" ? "N/A" : anime.aired_to}
+                    {anime.aired_from} to{" "}
+                    {anime.aired_to === "('Unknown')" ? "N/A" : anime.aired_to}
                   </div>
                   <div className="detail">
                     <span className="dark">Premiered: </span>
@@ -132,22 +137,12 @@ function AnimeDetail() {
                 </div>
               </Card>
               <CharactersCard animeId={animeId} />
+              <Card title = "User comments">
+              <div className="comment-box">
+                <CommentBox animeId={animeId} />
+              </div>
+              </Card>
             </ConfigProvider>
-          </Content>
-          <Content>
-          <div
-            style={{
-              background: colorBgContainer,
-              minHeight: 280,
-              padding: 24,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            Content
-          </div>
-          </Content>
-          <Content className="comment">
-
           </Content>
         </Layout>
       ))}
