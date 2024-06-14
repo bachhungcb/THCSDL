@@ -27,7 +27,10 @@ const{
 
 //this is controller for getting profile information
 const{
-  getUser
+  getUser,
+  changeAvatarController,
+  changeBirthdayController,
+  changeFullNameController
 } = require("../controllers/profileController");
 
 const {
@@ -36,11 +39,12 @@ const {
   deleteFavourite
 } = require("../controllers/favouriteController");
 
-
 const{
-  postCommentController
-} = require("../controllers/userControllers");
-
+  getCommentsController,
+  postCommentController,
+  editCommentController,
+  deleteCommentController
+}= require("../controllers/userControllers");
 const express = require("express");
 const router = express.Router();
 
@@ -62,11 +66,19 @@ router.post("/login", postLoginPage);
 router.post("/register", postRegisterPage);
 
 router.get("/profile/:userId", getUser);
+router.put("/profile/avatar", changeAvatarController);
+router.put("/profile/birthday", changeBirthdayController);
+router.put("/profile/fullname", changeFullNameController);
 
 router.post("/comment", postCommentController);
 
 router.post("/favourite", postFavourite);
 router.get("/favourite/:userId", getFavourite);
 router.delete("/unfavourite", deleteFavourite);
+
+router.get("/comments/:animeId", getCommentsController);
+router.post("/comments", postCommentController);
+router.put("/comments", editCommentController);
+router.delete("/comments", deleteCommentController);
 
 module.exports = router;
