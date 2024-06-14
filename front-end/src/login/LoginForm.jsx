@@ -17,7 +17,8 @@ function LoginForm() {
       setLogin(response.data); 
 
       if (response.data.loginSuccessful) {
-        localStorage.setItem("user", JSON.stringify(response.data.userID));
+        sessionStorage.setItem("userID", JSON.stringify(response.data.userID));
+        sessionStorage.setItem("userRole", JSON.stringify(response.data.userRole));
         navigate("/");
       } else {
         alert("Login failed! Please check your email and password.");

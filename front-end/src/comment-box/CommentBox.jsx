@@ -27,6 +27,10 @@ function CommentBox({ animeId }) {
         }
     };
 
+    const getUserRole = () => {
+        return sessionStorage.getItem('userRole');
+    };
+
     const handlePostComment = async () => {
         if (!newComment) {
             message.error('Please enter a comment.');
@@ -76,6 +80,9 @@ function CommentBox({ animeId }) {
         }
     };
 
+    const userId = parseInt(localStorage.getItem('user'));
+    const userRole = getUserRole();
+
     return (
         <div>
             {comments.length > 0 ? (
@@ -85,8 +92,8 @@ function CommentBox({ animeId }) {
                     dataSource={comments}
                     renderItem={item => (
                         <List.Item
-                            key={item.Id}
-                            actions={item.users_id === parseInt(localStorage.getItem('user')) ? [
+                            key={`${item.Id}-${item.users_id}`}
+                            actions={(item.users_id === userId || userRole === 'admin') ? [
                                 <Button onClick={() => handleEditComment(item)}>Edit</Button>,
                                 <Button onClick={() => handleDeleteComment(item.Id, item.users_id)}>Delete</Button>
                             ] : []}

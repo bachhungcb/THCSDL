@@ -11,7 +11,7 @@ const postLoginPage = async (req, res) => {
     try {
         const isLoginSuccessful = await getLoginInformation(email, password);
         if (isLoginSuccessful.Result === 1) {
-            res.status(200).json({ loginSuccessful: true, userID: isLoginSuccessful.Id }); // OK with JSON response
+            res.status(200).json({ loginSuccessful: true, userID: isLoginSuccessful.Id, userRole: isLoginSuccessful.Role }); // OK with JSON response
         } else {
             res.status(401).json({ loginSuccessful: false }); // Unauthorized with JSON response
         }

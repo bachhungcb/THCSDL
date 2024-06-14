@@ -2,13 +2,11 @@
 CREATE PROCEDURE AnimeInformation
 @anime_id INT
 AS
-SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.animePoster,
- anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
- informations.popularity
-FROM anime
- JOIN informations ON informations.anime_id = anime.anime_id
- JOIN anime_status ON anime_status.anime_id = anime.anime_id
-WHERE anime.anime_id = @anime_id;
+SELECT a.*, i.*, s.*
+FROM anime a
+ JOIN informations i ON i.anime_id = a.anime_id
+ JOIN anime_status s ON s.anime_id = a.anime_id
+WHERE a.anime_id = @anime_id;
 GO
 
 SELECT * FROM anime

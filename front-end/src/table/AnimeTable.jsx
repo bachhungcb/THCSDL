@@ -1,13 +1,15 @@
-import { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Table, Button, Popover } from "antd";
-import { CaretRightOutlined, CaretLeftOutlined, HeartFilled } from "@ant-design/icons";
+import { Table, Button, Popover, Typography } from "antd";
+import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
-import loadingGif from "../assets/loading-screen.gif"; 
+import loadingGif from "../assets/loading-screen.gif";
 import FavouriteButton from "../button/AddFavouriteButton";
 import "./AnimeTable.css";
+
+const { Text } = Typography;
 
 function AnimeTable() {
   const { setTitle } = useTitle();
@@ -16,8 +18,13 @@ function AnimeTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [animesPerPage] = useState(50);
   const urlWithProxy = "http://localhost:8080/animes";
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
+    // Get user role from sessionStorage (simulate)
+    const role = sessionStorage.getItem("userRole");
+    setUserRole(role);
+
     getDataFromServer();
   }, [currentPage]);
 
@@ -110,10 +117,12 @@ function AnimeTable() {
                 </span>
               </div>
               <div>
-                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to || "N/A"}
+                <span className="dark">Aired: </span>
+                {record.aired_from} to {record.aired_to || "N/A"}
               </div>
               <div>
-                <span className="dark">Premiered: </span>{record.premiered || "N/A"}
+                <span className="dark">Premiered: </span>
+                {record.premiered || "N/A"}
               </div>
             </div>
             <div className="atf">
@@ -143,14 +152,32 @@ function AnimeTable() {
     },
   ];
 
+  if (userRole === "banned") {
+    return (
+      <MainLayout breadcrumbs={["Home"]}>
+        <div className="banned-message">
+          <Typography.Title level={2}>Access Denied</Typography.Title>
+          <Typography.Paragraph>
+            Your account has been banned. You do not have access to view this
+            content.
+          </Typography.Paragraph>
+        </div>
+      </MainLayout>
+    );
+  }
+
   return (
-    <MainLayout breadcrumbs={"Home"}>
+    <MainLayout breadcrumbs={["Home"]}>
       <div className="top-anime-table-container">
         <h2 className="top-header">Top Anime Series</h2>
 
         {isLoading ? (
           <div className="loading-container">
-            <img src={loadingGif} alt="Loading..." className="loading-gif" />
+            <img
+              src={loadingGif}
+              alt="Loading..."
+              className="loading-gif"
+            />
           </div>
         ) : (
           <>

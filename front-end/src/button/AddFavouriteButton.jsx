@@ -6,13 +6,12 @@ import "./FavouriteButton.css";
 
 const FavouriteButton = ({ animeId }) => {
   const handleAddFavourite = async () => {
-    const userId = localStorage.getItem("user");
-
+    const userId = sessionStorage.getItem("userID");
+    const userRole = sessionStorage.getItem("userRole");
     if (!userId) {
       message.error("You must be logged in to add to favourites.");
       return;
     }
-
     try {
       const response = await axios.post("http://localhost:8080/favourite", {
         userId,

@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
 import CharactersCard from "./CharactersCard.jsx";
 import CommentBox from "../comment-box/CommentBox.jsx";
-import { Layout, Card, ConfigProvider } from "antd";
+import { Layout, Card, ConfigProvider, Typography } from "antd";
 
 import "./AnimeDetail.css";
 
 const { Content, Sider } = Layout;
+const { Title } = Typography;
 
 function AnimeDetail() {
   const { animeId } = useParams();
@@ -16,6 +17,7 @@ function AnimeDetail() {
   const [producers, setProducers] = useState([]);
   const [genres, setGenres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -41,10 +43,25 @@ function AnimeDetail() {
     }
 
     fetchData();
+
+    // Simulate getting user role from sessionStorage
+    const role = sessionStorage.getItem("userRole");
+    setUserRole(role);
   }, [animeId]);
 
+  if (userRole === "banned") {
+    return (
+      <MainLayout breadcrumbs={["Home", "Top Anime Series"]}>
+        <div className="banned-message">
+          <Title level={2}>Access Denied</Title>
+          <p>Your account has been banned. You do not have access to view this content.</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
   return (
-    <MainLayout breadcrumbs={[`Home`, `Top Anime Series`]}>
+    <MainLayout breadcrumbs={["Home", "Top Anime Series"]}>
       {animeDetail.map((anime) => (
         <Layout key={anime.anime_id}>
           <Sider className="left-side">
@@ -137,10 +154,10 @@ function AnimeDetail() {
                 </div>
               </Card>
               <CharactersCard animeId={animeId} />
-              <Card title = "User comments">
-              <div className="comment-box">
-                <CommentBox animeId={animeId} />
-              </div>
+              <Card title="User comments">
+                <div className="comment-box">
+                  <CommentBox animeId={animeId} />
+                </div>
               </Card>
             </ConfigProvider>
           </Content>

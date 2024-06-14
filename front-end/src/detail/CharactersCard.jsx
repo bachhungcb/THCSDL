@@ -26,7 +26,7 @@ function CharactersCard({ animeId }) {
     theme ={{
       components: {
         Avatar: {
-          containerSize: 'large',
+          containerSize: 50,
         }
       }
     }}>

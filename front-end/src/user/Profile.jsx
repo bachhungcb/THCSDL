@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Layout, Card, Avatar, Typography, Spin } from "antd";
+import { Layout, Card, Avatar, Typography, Spin, Tabs } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
 import FavouriteTable from "../table/FavouriteTable.jsx";
+import UsersTable from "./UsersTable.jsx";
 import "./Profile.css";
 
 const { Title, Text } = Typography;
+const { TabPane } = Tabs;
 
 function Profile() {
   const { userID } = useParams();
   const [profile, setProfile] = useState(null);
   const url = `http://localhost:8080/profile/`;
+  const userRole = sessionStorage.getItem("userRole");
 
   useEffect(() => {
     async function fetchData() {
@@ -24,7 +27,7 @@ function Profile() {
     }
 
     fetchData();
-  }, [userID]); 
+  }, [userID]);
 
   if (!profile) {
     return (
@@ -46,32 +49,47 @@ function Profile() {
   return (
     <MainLayout>
       <div className="profile-container">
-        {profile.map((profile) => (
-          <Card
-            className="profile-card"
-            key={profile.UserID}
-            cover={
-              <Avatar
-                size={150}
-                src={profile.avatar}
-                alt="User Avatar"
-                style={{ margin: "16px auto" }}
-              />
-            }
-          >
-            <Title level={2} style={{ textAlign: "center" }}>
-              {profile.FullName}
-            </Title>
-            <Text strong>Email:</Text> <Text>{profile.Email}</Text>
-            <br />
-            <Text strong>Birthday:</Text>{" "}
-            <Text>{new Date(profile.Birthday).toLocaleDateString()}</Text>
-          </Card>
-        ))}
-        <Card className="favourite-card"
-        title ="Your favourite list">
-        <FavouriteTable userID={userID} />
-        </Card>
+        <Tabs defaultActiveKey="profile" className="profile-tabs">
+          <TabPane tab="Profile" key="profile">
+            {profile.map((profileItem) => (
+              <Card
+                className="profile-card"
+                key={profileItem.Id}
+                cover={
+                  <Avatar
+                    size={150}
+                    src={profileItem.avatar}
+                    alt="User Avatar"
+                    style={{ margin: "16px auto" }}
+                  />
+                }
+              >
+                <Title level={2} style={{ textAlign: "center" }}>
+                  {profileItem.FullName}
+                </Title>
+                <div className="profile-details">
+                  <div className="profile-item">
+                    <Text strong>Email:</Text> <Text>{profileItem.Email}</Text>
+                  </div>
+                  <div className="profile-item">
+                    <Text strong>Birthday:</Text>{" "}
+                    <Text>
+                      {new Date(profileItem.Birthday).toLocaleDateString()}
+                    </Text>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </TabPane>
+          <TabPane tab="Your favourite list" key="favourite">
+            <FavouriteTable userID={userID} />
+          </TabPane>
+          {userRole === "admin" && (
+            <TabPane tab="Current user list" key="userlist">
+              <UsersTable />
+            </TabPane>
+          )}
+        </Tabs>
       </div>
     </MainLayout>
   );

@@ -12,39 +12,38 @@ const {
   getType,
   getNumberOfAnimeByProducers,
   getProducerByProducersId,
-  getCharacterPage
+  getCharacterPage,
 } = require("../controllers/controllers");
 
 //This is controller for getting login information
-const{
-  postLoginPage
-} = require("../controllers/loginController");
+const { postLoginPage } = require("../controllers/loginController");
 
 //this is controller for getting register information
-const{
-  postRegisterPage
-} = require("../controllers/registerController");
+const { postRegisterPage } = require("../controllers/registerController");
 
 //this is controller for getting profile information
-const{
+const {
   getUser,
   changeAvatarController,
   changeBirthdayController,
-  changeFullNameController
+  changeFullNameController,
 } = require("../controllers/profileController");
 
 const {
   postFavourite,
   getFavourite,
-  deleteFavourite
+  deleteFavourite,
 } = require("../controllers/favouriteController");
 
-const{
+const {
   getCommentsController,
   postCommentController,
   editCommentController,
-  deleteCommentController
-}= require("../controllers/userControllers");
+  deleteCommentController,
+  getUserListController,
+  banUserController,
+  unbanUserController
+} = require("../controllers/userControllers");
 const express = require("express");
 const router = express.Router();
 
@@ -60,7 +59,7 @@ router.get("/animes/genres_names/:animeId", getGenres);
 router.get("/animes/types/:type", getType);
 router.get("/producers/anime/:offset", getNumberOfAnimeByProducers);
 router.get("/producers/:producers_id", getProducerByProducersId);
-router.get("/characters/",getCharacterPage);
+router.get("/characters/", getCharacterPage);
 
 router.post("/login", postLoginPage);
 router.post("/register", postRegisterPage);
@@ -80,5 +79,8 @@ router.get("/comments/:animeId", getCommentsController);
 router.post("/comments", postCommentController);
 router.put("/comments", editCommentController);
 router.delete("/comments", deleteCommentController);
+router.get("/users", getUserListController);
+router.put("/ban", banUserController);
+router.put("/unban", unbanUserController);
 
 module.exports = router;

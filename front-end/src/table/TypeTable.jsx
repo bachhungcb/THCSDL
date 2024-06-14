@@ -1,13 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { Table, Button, Popover } from "antd";
+import { Table, Button, Popover, Typography } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif";
 import FavouriteButton from "../button/AddFavouriteButton";
 import "./AnimeTable.css";
+
+const { Text } = Typography;
 
 function TypeTable() {
   const { type } = useParams();
@@ -17,14 +19,20 @@ function TypeTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [animesPerPage] = useState(50);
   const urlWithProxy = "http://localhost:8080/animes/types/";
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    setCurrentPage(1);
+    // Get user role from sessionStorage (simulated)
+    const role = sessionStorage.getItem("userRole");
+    setUserRole(role);
+
+    setCurrentPage(1); // Reset currentPage whenever type changes
   }, [type]);
 
   useEffect(() => {
     getDataFromServer();
   }, [type, currentPage]);
+
   function getDataFromServer() {
     axios
       .get(`${urlWithProxy}${type}?page=${currentPage}`)
@@ -113,10 +121,13 @@ function TypeTable() {
                 </span>
               </div>
               <div>
-                <span className="dark">Aired: </span>{record.aired_from}<br/> to {record.aired_to === "('Unknown')" ? "N/A" : record.aired_to}
+                <span className="dark">Aired: </span>
+                {record.aired_from} to{" "}
+                {record.aired_to === "('Unknown')" ? "N/A" : record.aired_to}
               </div>
               <div>
-                <span className="dark">Premiered: </span>{record.premiered || "N/A"}
+                <span className="dark">Premiered: </span>
+                {record.premiered || "N/A"}
               </div>
             </div>
             <div className="atf">
@@ -146,6 +157,20 @@ function TypeTable() {
     },
   ];
 
+  if (userRole === "banned") {
+    return (
+      <MainLayout breadcrumbs={["Home"]}>
+        <div className="banned-message">
+          <Typography.Title level={2}>Access Denied</Typography.Title>
+          <Typography.Paragraph>
+            Your account has been banned. You do not have access to view this
+            content.
+          </Typography.Paragraph>
+        </div>
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout>
       <div className="top-anime-table-container">
@@ -164,20 +189,20 @@ function TypeTable() {
               className="anime-table"
               size="small"
             />
+            <div className="pagination-buttons">
+              {currentPage > 1 && (
+                <Button type="primary" onClick={handlePrevPage}>
+                  <CaretLeftOutlined /> Previous
+                </Button>
+              )}
+              {!isLoading && data.length === animesPerPage && (
+                <Button type="primary" onClick={handleNextPage}>
+                  Next <CaretRightOutlined />
+                </Button>
+              )}
+            </div>
           </>
         )}
-        <div className="pagination-buttons">
-          {currentPage > 1 && (
-            <Button type="primary" onClick={handlePrevPage}>
-              <CaretLeftOutlined /> Previous
-            </Button>
-          )}
-          {!isLoading && data.length === animesPerPage && (
-            <Button type="primary" onClick={handleNextPage}>
-              Next <CaretRightOutlined />
-            </Button>
-          )}
-        </div>
       </div>
     </MainLayout>
   );

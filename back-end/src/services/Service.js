@@ -72,10 +72,10 @@ const getAnimeByType = async (offset, animeType) => {
 };
 
 const getCharacterByAnimeId = async (animeId) => {
-  const query = `SELECT * 
-                FROM new_character 
-                JOIN link_character ON link_character.character_id = new_character.Id
-                WHERE link_character.anime_id = @anime_id`;
+  const query = `SELECT n.Name, n.Profile, l.Roles 
+                FROM new_character n 
+                JOIN link_character l ON l.character_id = n.Id
+                WHERE l.anime_id = @anime_id`;
   return executeQuery(query, [{ name: "anime_id", value: animeId }]);
 };
 
@@ -86,7 +86,7 @@ const getProducerByAnimeId = async (animeId) => {
 };
 
 const getAnimeByGenres = async (anime_genres) => {
-  const query = `SELECT DISTINCT TOP 10 anime.title, genres.genres, informations.scores
+  const query = `SELECT DISTINCT TOP 10 anime.* , informations.scores, genres.*
                 FROM anime 
                 JOIN informations ON informations.anime_id = anime.anime_id 
                 JOIN link_genres ON link_genres.anime_id = anime.anime_id
@@ -97,9 +97,8 @@ const getAnimeByGenres = async (anime_genres) => {
 };
 
 const getAnimeByName = async (anime_name) => {
-  const query = `SELECT anime.title, informations.scores, informations.ranks, anime.episodes, anime.synopsis, 
-                anime_status.aired_from, anime_status.aired_to, informations.favourite, informations.popularity
-                FROM anime WITH (INDEX(idx_title))
+  const query = `SELECT anime.*, informations.*, anime_status.*
+                FROM anime WITH (INDEX(ix_anime_title))
                 INNER JOIN informations ON informations.anime_id = anime.anime_id
                 INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
                 WHERE anime.title LIKE '%'+@anime_name+'%'`;
@@ -107,7 +106,7 @@ const getAnimeByName = async (anime_name) => {
 };
 
 const getCharacterByName = async (character_name) => {
-  const query = `SELECT DISTINCT TOP 10 new_character.Name, new_character.Profile
+  const query = `SELECT DISTINCT TOP 10 *
   FROM new_character  
   WHERE new_character.Name LIKE '%' + @character_name + '%'
   ORDER BY new_character.Name;`;
