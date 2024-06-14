@@ -41,13 +41,13 @@ function SearchResult() {
   } else
     switch (userChoice) {
       case "names":
-        return <AnimeResults results={searchValue} />;
+        return <AnimeResults userChoice={userChoice} searchValue={searchValue} />;
       case "genres":
-        return <AnimeResults results={searchValue} />;
+        return <AnimeResults userChoice={userChoice} searchValue={searchValue} />;
       case "producers_names":
         return <ProducerResults userChoice={userChoice} searchValue={searchValue} />;
       case "characters_names":
-        return <CharacterResults characters={searchValue} />;
+        return <CharacterResults userChoice={userChoice} searchValue={searchValue} />;
     }
 }
 

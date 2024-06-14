@@ -7,12 +7,12 @@ const getLoginInformation = async (email, inputPassword) => {
         let user = await pool
             .request()
             .input('email', sql.NVarChar, email)
-            .query(`SELECT Password, Id FROM Users WHERE Email = @email`);
+            .query(`SELECT Role,Password, Id FROM Users WHERE Email = @email`);
 
         if (user.recordset.length > 0) {
             const storedPassword = user.recordset[0].Password;
             if (inputPassword === storedPassword) { // Directly comparing plaintext passwords
-                return { Result: 1, Id: user.recordset[0].Id };
+                return { Result: 1, Id: user.recordset[0].Id, Role: user.recordset[0].Role };
             }
         }
 
