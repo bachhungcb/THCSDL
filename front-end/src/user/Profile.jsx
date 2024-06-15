@@ -56,15 +56,14 @@ function Profile() {
                 className="profile-card"
                 key={profileItem.Id}
                 cover={
-                  <Avatar
+                  <Avatar className="useravatar"
                     size={150}
                     src={profileItem.avatar}
                     alt="User Avatar"
-                    style={{ margin: "16px auto" }}
                   />
                 }
               >
-                <Title level={2} style={{ textAlign: "center" }}>
+                <Title level={2} style={{ textAlign: "center" }} className="username">
                   {profileItem.FullName}
                 </Title>
                 <div className="profile-details">

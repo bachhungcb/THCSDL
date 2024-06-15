@@ -34,10 +34,11 @@ function LoginButton() {
             type="primary"
             style={{ marginRight: 8 }}
             onClick={() => navigate(`/profile/${userId}`)}
+            className="profilebtn"
           >
             Profile
           </Button>
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button onClick={handleLogout} className="logoutbtn">Logout</Button>
         </>
       ) : (
         <>
