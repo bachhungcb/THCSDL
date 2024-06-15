@@ -9,18 +9,18 @@ function LoginButton() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Kiểm tra nếu user đã đăng nhập từ localStorage
-    const user = localStorage.getItem("user");
+    const user = sessionStorage.getItem("userID");
     if (user) {
       const parsedUser = JSON.parse(user);
 
       setIsLoggedIn(true);
-      setUserId(parsedUser); // Assuming parsedUser is directly userID
+      setUserId(parsedUser);
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("userID");
+    sessionStorage.removeItem("userRole");
     setIsLoggedIn(false);
     setUserId(null);
     navigate("/login");
@@ -34,10 +34,11 @@ function LoginButton() {
             type="primary"
             style={{ marginRight: 8 }}
             onClick={() => navigate(`/profile/${userId}`)}
+            className="profilebtn"
           >
             Profile
           </Button>
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button onClick={handleLogout} className="logoutbtn">Logout</Button>
         </>
       ) : (
         <>

@@ -94,9 +94,54 @@ const deleteComment = async (userId, animeId, commentId) => {
     throw err;
   }
 };
+
+const getUserList = async () => {
+  try {
+    let pool = await sql.connect(sqlConfig);
+    let result = await pool.request().query(`SELECT * FROM Users`);
+
+    return result.recordset;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const banUser = async (userId, role) => {
+  try {
+    let pool = await sql.connect(sqlConfig);
+    let result = await pool
+      .request()
+      .input("userId", sql.Int, userId)
+      .query(`UPDATE Users SET Role = banned WHERE Id = @userId`);
+
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const unbanUser = async (userId) => {
+  try {
+    let pool = await sql.connect(sqlConfig);
+    let result = await pool
+      .request()
+      .input("userId", sql.Int, userId)
+      .query(`UPDATE Users SET Role = user WHERE Id = @userId`);
+
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
 module.exports = {
   getComments,
   postComment,
   editComment,
   deleteComment,
+  getUserList,
+  banUser,
+  unbanUser
 };
