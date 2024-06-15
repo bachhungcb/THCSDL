@@ -246,3 +246,15 @@ BEGIN
 	FROM User_favourites
 	JOIN inserted ON inserted.users_id = User_favourites.users_id
 END
+
+
+CREATE PROCEDURE banned
+@user_id INT
+AS
+BEGIN
+	UPDATE Users
+	SET Role = 'banned'
+	WHERE Id = @user_id
+END
+
+EXEC banned 2000
