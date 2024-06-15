@@ -13,6 +13,8 @@ const {
   getNumberOfAnimeByProducers,
   getProducerByProducersId,
   getCharacterPage,
+  getCharacterDetail,
+  getAnimeByCharacter 
 } = require("../controllers/controllers");
 
 //This is controller for getting login information
@@ -44,9 +46,11 @@ const {
   banUserController,
   unbanUserController
 } = require("../controllers/userControllers");
+
 const express = require("express");
 const router = express.Router();
 
+//This is the route for getting anime information
 router.get("/animes", getAnimes);
 router.get("/animes/:animeId", getAnimeId);
 router.get("/animes/characters/:animeId", getCharacterById);
@@ -60,21 +64,26 @@ router.get("/animes/types/:type", getType);
 router.get("/producers/anime/:offset", getNumberOfAnimeByProducers);
 router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/", getCharacterPage);
+router.get("/characters/:characterId", getCharacterDetail);
+router.get("/characters/anime/:characterId", getAnimeByCharacter);
 
+//This is the route for getting login and register information
 router.post("/login", postLoginPage);
 router.post("/register", postRegisterPage);
 
+
+//This is the route for getting profile information
 router.get("/profile/:userId", getUser);
 router.put("/profile/avatar", changeAvatarController);
 router.put("/profile/birthday", changeBirthdayController);
 router.put("/profile/fullname", changeFullNameController);
 
-router.post("/comment", postCommentController);
-
+//This is the route for getting favourite information
 router.post("/favourite", postFavourite);
 router.get("/favourite/:userId", getFavourite);
 router.delete("/unfavourite", deleteFavourite);
 
+//This is the route for CRUD APIs
 router.get("/comments/:animeId", getCommentsController);
 router.post("/comments", postCommentController);
 router.put("/comments", editCommentController);

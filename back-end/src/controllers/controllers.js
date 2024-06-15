@@ -11,7 +11,9 @@ const {
   getAnimeByType,
   getNumberOfAnime,
   ProducersById,
-  getDataCharacterPage
+  getDataCharacterPage,
+  getCharacterByCharacterId,
+  getAnimeByCharacterId,
 } = require("../services/Service");
 
 
@@ -95,6 +97,19 @@ const getCharacterPage = async (req, res) => {
   res.status(200).send(characters);
 };
 
+const getCharacterDetail = async (req, res) => {
+  const characterId = parseInt(req.params.characterId);
+  const character = await getCharacterByCharacterId(characterId);
+  res.status(200).send(character);
+};
+
+const getAnimeByCharacter = async (req, res) => {
+  const characterId = parseInt(req.params.characterId);
+  const anime = await getAnimeByCharacterId(characterId);
+  res.status(200).send(anime);
+};
+
+
 //export fuction getAnimes to be used in routes.js
 module.exports = {
   getAnimes,
@@ -109,5 +124,7 @@ module.exports = {
   getType,
   getNumberOfAnimeByProducers,
   getProducerByProducersId,
-  getCharacterPage
+  getCharacterPage,
+  getCharacterDetail,
+  getAnimeByCharacter,
 };

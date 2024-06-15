@@ -149,8 +149,20 @@ table {
   font-size: 18px;
   color: #666;
 }
-.nah{
-  size: 75%
+.empty-message {
+  text-align: center; 
+}
+
+.empty-message h2 {
+  margin-bottom: 30px; 
+}
+
+.empty-message .nah {
+  display: block; 
+  margin: 0 auto; 
+  width: 200px; 
+  height: auto; 
+  scale: 1.2;
 }
 
 

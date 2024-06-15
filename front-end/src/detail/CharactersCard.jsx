@@ -10,6 +10,7 @@ function CharactersCard({ animeId }) {
       .get(`http://localhost:8080/animes/characters/${animeId}`)
       .then((res) => {
         setCharacters(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.error(err);

@@ -1,11 +1,30 @@
 const sql = require("mssql");
 const sqlConfig = require("../config/database");
 
+const executeProcedure = async (procedure, params) => {
+  try {
+    const pool = await createPool;
+    const request = pool.request();
+    for (const param of params) {
+      request.input(param.name, param.value);
+    }
+    const result = await request.execute(procedure);
+    return { Result: 1, Recordset: result.recordset };
+  } catch (err) {
+    console.error("Database query error:", err);
+    if (err.number === 2627) {
+      // Primary Key Violation error number
+      return { Result: 0, Error: "Duplicate key error" };
+    }
+    return { Result: 0, Error: "Database query error" };
+  }
+};
+
 const getComments = async (animeId) => {
   try {
     let pool = await sql.connect(sqlConfig);
     let result = await pool.request().input("animeId", sql.Int, animeId)
-      .query(`SELECT c.*, u.FullName FROM User_comment c 
+      .query(`SELECT c.*, u.FullName, u.Avatar FROM User_comment c 
                     JOIN Users u ON u.Id = c.users_id
                     WHERE c.anime_id = @animeId`);
 
@@ -20,7 +39,6 @@ const postComment = async (userId, animeId, comment) => {
   try {
     let pool = await sql.connect(sqlConfig);
 
-    // Check if userId exists in Users table
     const userExists = await pool
       .request()
       .input("userId", sql.Int, userId)
@@ -30,7 +48,6 @@ const postComment = async (userId, animeId, comment) => {
       throw new Error(`User with ID ${userId} does not exist.`);
     }
 
-    // Check if animeId exists in anime table
     const animeExists = await pool
       .request()
       .input("animeId", sql.Int, animeId)

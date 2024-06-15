@@ -9,6 +9,8 @@ import RegisterForm from "./login/RegisterForm.jsx";
 import Profile from "./user/Profile.jsx";
 import { TitleProvider } from "./templates/TitleContext.jsx";
 import TypeTable from "./table/TypeTable.jsx";
+import CharacterTable from "./table/CharacterTable.jsx";
+import CharacterDetail from "./detail/CharacterDetail.jsx";
 import "./App.css";
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/profile/:userID" element={<Profile />} />
+            <Route path="/characters" element={<CharacterTable />} />
+            <Route path="/character/:characterId" element={<CharacterDetail />} />
           </Routes>
         </TitleProvider>
       </Router>
