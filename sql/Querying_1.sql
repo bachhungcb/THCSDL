@@ -256,3 +256,14 @@ BEGIN
 END
 
 EXEC banned 2000
+
+CREATE PROCEDURE unban
+@user_id INT
+AS
+BEGIN
+	UPDATE Users
+	SET Role = 'user'
+	WHERE Id = @user_id
+END
+
+EXEC banned 2000
