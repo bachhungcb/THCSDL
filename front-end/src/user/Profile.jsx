@@ -15,6 +15,7 @@ function Profile() {
   const [profile, setProfile] = useState(null);
   const url = `http://localhost:8080/profile/`;
   const userRole = sessionStorage.getItem("userRole");
+  console.log(userRole);
 
   useEffect(() => {
     async function fetchData() {
@@ -58,7 +59,7 @@ function Profile() {
                 cover={
                   <Avatar className="useravatar"
                     size={150}
-                    src={profileItem.avatar}
+                    src={profileItem.Avatar}
                     alt="User Avatar"
                   />
                 }
@@ -83,7 +84,7 @@ function Profile() {
           <TabPane tab="Your favourite list" key="favourite">
             <FavouriteTable userID={userID} />
           </TabPane>
-          {userRole === "admin" && (
+          {userRole === `"admin"` && (
             <TabPane tab="Current user list" key="userlist">
               <UsersTable />
             </TabPane>

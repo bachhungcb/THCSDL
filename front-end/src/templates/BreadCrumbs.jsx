@@ -5,6 +5,8 @@ import { useTitle } from "./TitleContext";
 const pathNameMapping = {
   "top-anime-series": "Top Anime Series",
   "search-results": "Search Results",
+  "character": "Character",
+  "top-type": "Top Type",
 };
 
 function CustomBreadcrumbs() {

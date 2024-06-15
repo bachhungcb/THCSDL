@@ -37,7 +37,7 @@ function CommentBox({ animeId }) {
             return;
         }
         try {
-            const userId = localStorage.getItem('user');
+            const userId = sessionStorage.getItem('userID');
             await axios.post('http://localhost:8080/comments', { userId, animeId, comment: newComment });
             message.success('Comment posted successfully.');
             setNewComment('');
@@ -69,19 +69,21 @@ function CommentBox({ animeId }) {
 
     const handleDeleteComment = async (commentId, userId) => {
         try {
-            await axios.delete('http://localhost:8080/comments', {
-                data: { userId, animeId, commentId }
+            await axios.delete(`http://localhost:8080/comments`, {
+                data: {commentId, userId, animeId }
             });
             message.success('Comment deleted successfully.');
-            fetchComments();
+            // Update local state to remove the deleted comment
+            setComments(comments.filter(comment => comment.Id !== commentId));
         } catch (error) {
             console.error('Error deleting comment:', error);
             message.error('Failed to delete comment.');
         }
     };
 
-    const userId = parseInt(localStorage.getItem('user'));
+    const userId = parseInt(sessionStorage.getItem('userID'));
     const userRole = getUserRole();
+    console.log('userRole:', userRole);
 
     return (
         <div>
@@ -93,13 +95,13 @@ function CommentBox({ animeId }) {
                     renderItem={item => (
                         <List.Item
                             key={`${item.Id}-${item.users_id}`}
-                            actions={(item.users_id === userId || userRole === 'admin') ? [
-                                <Button onClick={() => handleEditComment(item)}>Edit</Button>,
-                                <Button onClick={() => handleDeleteComment(item.Id, item.users_id)}>Delete</Button>
-                            ] : []}
+                            actions={[
+                                ...(item.users_id === userId ? [<Button onClick={() => handleEditComment(item)}>Edit</Button>] : []),
+                                ...(item.users_id === userId || userRole === `"admin"` ? [<Button onClick={() => handleDeleteComment(item.Id, item.users_id)}>Delete</Button>] : [])
+                            ]}
                         >
                             <List.Item.Meta
-                                avatar={<Avatar src={item.avatar} />}
+                                avatar={<Avatar src={item.Avatar} />}
                                 title={item.FullName}
                                 description={editingComment && editingComment.Id === item.Id ? (
                                     <div>

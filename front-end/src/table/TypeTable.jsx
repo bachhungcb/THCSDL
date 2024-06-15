@@ -22,11 +22,9 @@ function TypeTable() {
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    // Get user role from sessionStorage (simulated)
     const role = sessionStorage.getItem("userRole");
     setUserRole(role);
-
-    setCurrentPage(1); // Reset currentPage whenever type changes
+    setCurrentPage(1); 
   }, [type]);
 
   useEffect(() => {
@@ -157,7 +155,7 @@ function TypeTable() {
     },
   ];
 
-  if (userRole === "banned") {
+  if (userRole === `"banned"`) {
     return (
       <MainLayout breadcrumbs={["Home"]}>
         <div className="banned-message">

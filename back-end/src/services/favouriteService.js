@@ -57,12 +57,12 @@ const userFavourite = async (userId, animeId) => {
 };
 
 const getUserFavouriteById = async (userId) => {
-  const query = ` SELECT a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered, u.add_status 
+  const query = ` SELECT a.*, s.stat, i.scores, i.ranks, i.favourite, i.popularity, s.aired_from, s.aired_to, s.premiered 
                   FROM anime a 
                   JOIN User_favourites u ON a.anime_id = u.anime_id
                   JOIN anime_status s ON a.anime_id = s.anime_id
                   JOIN informations i ON a.anime_id = i.anime_id
-                  WHERE u.users_id= @userId AND u.add_status = 1`;
+                  WHERE u.users_id= @userId `;
   const param = [{ name: "userId", value: userId }];
 
   return executeQuery(query, param);

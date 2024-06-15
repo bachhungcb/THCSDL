@@ -72,7 +72,7 @@ const getAnimeByType = async (offset, animeType) => {
 };
 
 const getCharacterByAnimeId = async (animeId) => {
-  const query = `SELECT n.Name, n.Profile, l.Roles 
+  const query = `SELECT n.*, l.Roles 
                 FROM new_character n 
                 JOIN link_character l ON l.character_id = n.Id
                 WHERE l.anime_id = @anime_id`;
@@ -115,15 +115,32 @@ const getCharacterByName = async (character_name) => {
   ]);
 };
 
+const getCharacterByCharacterId = async (characterId) => {
+  const query = `SELECT new_character.*, link_character.Roles
+  FROM new_character
+  JOIN link_character ON link_character.character_id = new_character.Id
+  WHERE new_character.Id = @characterId`;
+  return executeQuery(query, [{ name: "characterId", value: characterId }]);
+
+}
+const getAnimeByCharacterId = async (characterId) => {
+  const query = `SELECT anime.*
+  FROM anime
+  JOIN link_character ON link_character.anime_id = anime.anime_id
+  WHERE link_character.character_id = @characterId`;
+  return executeQuery(query, [{ name: "characterId", value: characterId }]);
+
+}
+
 const getDataCharacterPage = async (offset) => {
-  const query = `SELECT TOP 50 new_character.Name, new_character.Profile
+  const query = `SELECT TOP 50 new_character.Name, new_character.Profile, new_character.Id
   FROM new_character
   WHERE new_character.Id NOT IN (
       SELECT TOP (@offset) Id 
       FROM new_character 
       ORDER BY Id
   )
-  ORDER BY new_character.Name;`;
+  ORDER BY new_character.Id;`;
   return executeQuery(query, [{ name: "offset", value: offset }]);
 };
 
@@ -180,4 +197,6 @@ module.exports = {
   getNumberOfAnime,
   ProducersById,
   getDataCharacterPage,
+  getCharacterByCharacterId,
+  getAnimeByCharacterId
 };

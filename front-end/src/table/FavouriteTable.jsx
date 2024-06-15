@@ -140,7 +140,7 @@ function FavouriteTable({ userID }) {
           {data.length === 0 ? (
             <div className="empty-message">
               <h2>But you haven't added anything in your list !!!</h2>
-              <img src={nah} alt="Nah" className="nah" sizes="75%" />
+              <img src={nah} alt="Nah" className="nah" />
             </div>
           ) : (
             <Table

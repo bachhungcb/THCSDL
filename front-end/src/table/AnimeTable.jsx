@@ -21,24 +21,22 @@ function AnimeTable() {
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    // Get user role from sessionStorage (simulate)
     const role = sessionStorage.getItem("userRole");
     setUserRole(role);
-
     getDataFromServer();
   }, [currentPage]);
 
   function getDataFromServer() {
-    setIsLoading(true); // Set loading to true before fetching data
+    setIsLoading(true); 
     axios
       .get(`${urlWithProxy}?page=${currentPage}`)
       .then((res) => {
         setData(res.data);
-        setIsLoading(false); // Set loading to false after data is fetched
+        setIsLoading(false); 
       })
       .catch((err) => {
         console.error(err);
-        setIsLoading(false); // Set loading to false even if there is an error
+        setIsLoading(false); 
       });
   }
 
@@ -152,7 +150,7 @@ function AnimeTable() {
     },
   ];
 
-  if (userRole === "banned") {
+  if (userRole === `"banned"`) {
     return (
       <MainLayout breadcrumbs={["Home"]}>
         <div className="banned-message">
