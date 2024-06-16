@@ -13,13 +13,17 @@
 
 
 .site-layout-content {
-  background: #fff;
+  background: url('../assets/TOPANIMELIST.png')no-repeat;
+  object-fit: cover;
   padding: 24px;
   min-height: 280px;
   display: flex;
   flex-direction: column; /* Dọc */
   justify-content: flex-start; /* Đẩy lên đầu */
   align-items: left; /* Stretch tất cả phần tử con theo chiều dọc */
+  background-size: cover;
+  height: 100vh;
+  background-position: center;
 }
 
 .sider {
