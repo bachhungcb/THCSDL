@@ -49,16 +49,36 @@ function CharacterTable() {
       title: "Number",
       key: "number",
       render: (text, record, index) => (
-        <span>{(currentPage - 1) * charsPerPage + index + 1}</span>
+        <span style={{ fontSize: "46px", fontWeight: 800, color: "#888" }}>{(currentPage - 1) * charsPerPage + index + 1}</span>
       ),
     },
     {
       title: "Name",
       dataIndex: "Name",
       key: "name",
+      width: "60%",
+
       render: (text, record) => (
-        <div>
-          <h3>
+        <div className="body-title">
+          <div className="body-poster">
+            <Popover
+              content={
+                <img
+                  src={record.Profile}
+                  alt={record.Name}
+                  style={{width: 150}}
+                />
+              }
+            >
+              <img
+                src={record.Profile}
+                alt={record.Name}
+                className="body-poster-img"
+              />
+            </Popover>
+          </div>
+          <div className="char-body-title-text">
+          <h3 className="anime-name">
             <Link
               to={`/character/${record.Id}`}
               onClick={() => setTitle(record.Name)}
@@ -66,31 +86,8 @@ function CharacterTable() {
               {record.Name}
             </Link>
           </h3>
-        </div>
-      ),
-    },
-    {
-      title: "Profile",
-      dataIndex: "Profile",
-      key: "profile",
-      render: (text, record) => (
-        <div>
-          <Popover
-            content={
-              <img
-                src={record.Profile}
-                alt={record.Name}
-                style={{ width: 200 }}
-              />
-            }
-          >
-            <img
-              src={record.Profile}
-              alt={record.Name}
-              className="body-poster-img"
-              style={{ width: 100 }}
-            />
-          </Popover>
+          </div>
+          
         </div>
       ),
     },
@@ -98,7 +95,7 @@ function CharacterTable() {
 
   return (
     <MainLayout>
-      <div className="top-anime-table-container">
+      <div className="top-char-table-container">
         <h2 className="top-header">Character List</h2>
 
         {isLoading ? (
