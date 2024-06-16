@@ -44,7 +44,7 @@ function FavouriteCharacterTable({ userID }) {
         title: "Name",
         dataIndex: "Name",
         key: "name",
-        width: "60%",
+        width: "100%",
   
         render: (text, record) => (
           <div className="body-title">
@@ -74,22 +74,21 @@ function FavouriteCharacterTable({ userID }) {
                 {record.Name}
               </Link>
             </h3>
+            </div>
             <div className="atf">
             <RemoveFavouriteButton
                 characterId={record.Id}
                 userId={userID}
                 setData={setData}
               />
-              </div>
             </div>
-            
           </div>
         ),
       },
   ];
 
   return (
-    <div className="fav-anime-table-container">
+    <div className="fav-char-table-container">
       {isLoading ? (
         <div className="loading-container">
           <img src={loadingGif} alt="Loading..." className="loading-gif" />
@@ -106,7 +105,8 @@ function FavouriteCharacterTable({ userID }) {
               dataSource={data}
               columns={columns}
               rowKey="anime_id"
-              pagination={true}
+              pagination={{ pageSize: 5 }}
+              
               className="fav-table"
               size="small"
             />

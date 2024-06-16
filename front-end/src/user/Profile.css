@@ -3,7 +3,7 @@
     margin-right: auto;
     width: 100%;
     max-width: 800px; /* Điều chỉnh độ rộng tối đa nếu cần */
-    height: 500px;
+    max-height: 1200px;
 }
 
 .profile-tabs{
