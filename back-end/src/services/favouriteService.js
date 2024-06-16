@@ -72,6 +72,8 @@ const unFavouriteById = async (userId, animeId) => {
   const param = [{ name: 'userId', value: userId }, { name: 'animeId', value: animeId }];
   return executeQuery(query, param);
 };
+
+
 module.exports = {
   userFavourite,
   getUserFavouriteById,
