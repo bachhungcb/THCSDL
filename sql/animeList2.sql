@@ -103,9 +103,6 @@ CREATE TABLE User_favourites(
 	CONSTRAINT pk_User_favourites PRIMARY KEY(users_id, anime_id)
 );
 
-CREATE TABLE comment_set(
-	Id INT PRIMARY KEY, 
-);
 
 CREATE TABLE User_comment(
 	Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -113,12 +110,30 @@ CREATE TABLE User_comment(
 	anime_id INT,
 	comment VARCHAR(MAX),
 	added_at DATE,
-	deleted_at DATE,
 	edited_at DATE,
 	CONSTRAINT fk_User_comment1 FOREIGN KEY (users_id) REFERENCES Users(Id),
 	CONSTRAINT fk_User_comment2 FOREIGN KEY (anime_id) REFERENCES anime(anime_id)
 );
 
+CREATE TABLE User_favourite_character(
+	users_id INT NOT NULL,
+	character_id INT NOT NULL,
+	added_at DATETIME,
+	CONSTRAINT fk_User_favourite_character1 FOREIGN KEY (users_id) REFERENCES Users(Id),
+	CONSTRAINT fk_User_favourite_character2 FOREIGN KEY (character_id) REFERENCES new_character(Id),
+	CONSTRAINT pk_User_favourite_character PRIMARY KEY(users_id, character_id)
+);
+
+CREATE TABLE User_comment_character(
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	users_id INT,
+	character_id INT,
+	comment VARCHAR(MAX),
+	added_at DATETIME,
+	edited_at DATETIME,
+	CONSTRAINT fk_User_comment_character1 FOREIGN KEY (users_id) REFERENCES Users(Id),
+	CONSTRAINT fk_User_comment_character2 FOREIGN KEY (character_id) REFERENCES new_character(Id)
+);
 -----------
 ALTER TABLE anime
 ADD comment_set_id INT

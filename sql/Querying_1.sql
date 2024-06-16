@@ -149,7 +149,7 @@ WHERE link_character.anime_id = 0
 --Đưa ra thông tin về User dựa trên userid
 SELECT * FROM Users
 WHERE Id = 1999;
-
+--Tạo trigger mới, tự động thêm role user cho các user mới tạo
 CREATE TRIGGER trg_insert ON Users
 AFTER INSERT
 AS
@@ -171,7 +171,7 @@ SELECT * FROM User_comment
 
 INSERT INTO User_comment(users_id, anime_id, comment)
 VALUES('1999','0','anime rat la hay')
-
+--tạo trigger mới, tự động cập nhật ngày khi user comment
 CREATE TRIGGER trg_setAddedDate
 ON User_comment
 AFTER INSERT
@@ -184,7 +184,7 @@ BEGIN
 	FROM User_comment uc
 	INNER JOIN inserted i ON uc.Id = i.Id
 END
-
+--tạo trigger với, tự động cập ngày khi user sửa comment
 CREATE TRIGGER trg_setEditedDate
 ON User_comment
 AFTER UPDATE
@@ -201,7 +201,7 @@ END
 
 
 SELECT * FROM User_comment
-
+--tạo proc thêm mới vào user favourite list
 CREATE PROCEDURE userFavourite
 @user_id INT,
 @anime_id INT
@@ -209,7 +209,7 @@ AS
 INSERT INTO User_favourites(users_id, anime_id, add_status)
 VALUES(@user_id, @anime_id, 1)
 
-
+--tạo proc, chỉ cho phép người dùng sửa comment của chính mình
 CREATE PROCEDURE updateUserComment
 @user_id INT,
 @anime_id INT,
@@ -231,7 +231,7 @@ ELSE
 END;
 
 EXEC updateUserComment 1,0, 'anime  hay'
-
+--tạo trigger mới, tự động thêm thời gian khi người dùng cho anime vào favourite list
 CREATE TRIGGER trg_getTime
 ON User_favourites
 AFTER INSERT
@@ -245,7 +245,7 @@ BEGIN
 	JOIN inserted ON inserted.users_id = User_favourites.users_id
 END
 
-
+--tạo proc mới để ban user
 CREATE PROCEDURE banned
 @user_id INT
 AS
@@ -256,7 +256,7 @@ BEGIN
 END
 
 EXEC banned 2000
-
+--tạo proc mới để unban user
 CREATE PROCEDURE unban
 @user_id INT
 AS
@@ -266,4 +266,4 @@ BEGIN
 	WHERE Id = @user_id
 END
 
-EXEC banned 2000
+EXEC unban 2000
