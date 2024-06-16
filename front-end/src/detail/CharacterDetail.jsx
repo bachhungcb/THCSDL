@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "../templates/MainLayout.jsx";
 import AnimeCard from "./AnimeCard.jsx";
-import CommentBox from "../comment-box/CommentBox.jsx";
+import CommentBoxCharacter from "../comment-box/CommentBoxCharacter.jsx";
 import { Layout, Card, ConfigProvider, Typography } from "antd";
 
 import "./CharacterDetail.css";
@@ -14,7 +14,7 @@ const { Title } = Typography;
 function CharacterDetail() {
   const { characterId } = useParams();
   const [characterDetail, setCharacterDetail] = useState([]);
-  const [animes, setAnimes] = useState([]);
+  const [roleDetail, setRoleDetail] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userRole, setUserRole] = useState("");
 
@@ -24,13 +24,11 @@ function CharacterDetail() {
         const characterResponse = await axios.get(
           `http://localhost:8080/characters/${characterId}`
         );
-
-        const animeResponse = await axios.get(
-          `http://localhost:8080/characters/anime/${characterId}`
-        );
-
         setCharacterDetail(characterResponse.data);
-        setAnimes(animeResponse.data);
+        const roleResponse = await axios.get(
+          `http://localhost:8080/characters/role/${characterId}`
+        );
+        setRoleDetail(roleResponse.data);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -71,6 +69,17 @@ function CharacterDetail() {
                   <span className="rank">ID: #{character.Id}</span>
               </div>
             </Card>
+            <Card >
+            <h1>Roles</h1>
+            <ul>
+                  {roleDetail.map((role) => (
+                    <li key={role.anime_id} className="anime-producers">
+                      {role.title +" :"}<br />
+                      {role.Roles}
+                    </li>
+                  ))}
+                </ul>
+            </Card>
           </Sider>
           <Content className="content">
             <ConfigProvider
@@ -82,15 +91,6 @@ function CharacterDetail() {
                 },
               }}
             >
-              {/* <Card title={character.Name}>
-                <div className="infomations">
-                  <h3 className="detail1">Character Detail</h3>
-                  <div className="detail">
-                    <span className="dark">ID: </span>
-                    {character.Id}
-                  </div>
-                </div>
-              </Card> */}
               <Card>
               <div className="description">
                 <h1 className="detail1">Description</h1>
@@ -106,7 +106,7 @@ function CharacterDetail() {
             
               <Card title="User comments">
                 <div className="comment-box">
-                  <CommentBox characterId={characterId} />
+                  <CommentBoxCharacter characterId={characterId} />
                 </div>
               </Card>
             </ConfigProvider>

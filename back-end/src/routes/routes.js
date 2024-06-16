@@ -14,7 +14,9 @@ const {
   getProducerByProducersId,
   getCharacterPage,
   getCharacterDetail,
-  getAnimeByCharacter 
+  getAnimeByCharacter,
+  getRoleByCharacter,
+  getRandomAnimeByGenre 
 } = require("../controllers/controllers");
 
 //This is controller for getting login information
@@ -35,6 +37,9 @@ const {
   postFavourite,
   getFavourite,
   deleteFavourite,
+  postFavouriteCharacter,
+  getFavouriteCharacter,
+  deleteFavouriteCharacter
 } = require("../controllers/favouriteController");
 
 const {
@@ -42,6 +47,10 @@ const {
   postCommentController,
   editCommentController,
   deleteCommentController,
+  postCommentForCharacterController,
+  getCommentsForCharacterController,
+  editCommentForCharacterController,
+  deleteCommentForCharacterController,
   getUserListController,
   banUserController,
   unbanUserController
@@ -66,6 +75,8 @@ router.get("/producers/:producers_id", getProducerByProducersId);
 router.get("/characters/", getCharacterPage);
 router.get("/characters/:characterId", getCharacterDetail);
 router.get("/characters/anime/:characterId", getAnimeByCharacter);
+router.get("/characters/role/:characterId", getRoleByCharacter);
+router.get("/random/animes", getRandomAnimeByGenre);
 
 //This is the route for getting login and register information
 router.post("/login", postLoginPage);
@@ -82,12 +93,20 @@ router.put("/profile/fullname", changeFullNameController);
 router.post("/favourite", postFavourite);
 router.get("/favourite/:userId", getFavourite);
 router.delete("/unfavourite", deleteFavourite);
+router.post("/favourite/characters", postFavouriteCharacter);
+router.get("/favourite/characters/:userId", getFavouriteCharacter);
+router.delete("/unfavourite/characters", deleteFavouriteCharacter);
+
 
 //This is the route for CRUD APIs
-router.get("/comments/:animeId", getCommentsController);
-router.post("/comments", postCommentController);
-router.put("/comments", editCommentController);
-router.delete("/comments", deleteCommentController);
+router.get("/comments/animes/:animeId", getCommentsController);
+router.post("/comments/animes", postCommentController);
+router.put("/comments/animes", editCommentController);
+router.delete("/comments/animes", deleteCommentController);
+router.get("/comments/characters/:characterId", getCommentsForCharacterController);
+router.post("/comments/characters", postCommentForCharacterController);
+router.put("/comments/characters", editCommentForCharacterController);
+router.delete("/comments/characters", deleteCommentForCharacterController);
 router.get("/users", getUserListController);
 router.put("/ban", banUserController);
 router.put("/unban", unbanUserController);

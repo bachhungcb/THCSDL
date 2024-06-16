@@ -10,6 +10,9 @@ function NavBar() {
   return (
     <nav className="nav-bar">
       <ul className="menu">
+        <li className={pathname === "/" ? "active" : ""}>
+          <Link to="/">Home</Link>
+        </li>
         <li className={pathname === "/top-anime-series" ? "active" : ""}>
           <Link to="/top-anime-series">All Anime</Link>
         </li>

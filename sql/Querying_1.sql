@@ -206,8 +206,15 @@ CREATE PROCEDURE userFavourite
 @user_id INT,
 @anime_id INT
 AS
-INSERT INTO User_favourites(users_id, anime_id, add_status)
-VALUES(@user_id, @anime_id, 1)
+INSERT INTO User_favourites(users_id, anime_id)
+VALUES(@user_id, @anime_id)
+
+CREATE PROCEDURE userFavouriteCharacter
+@user_id INT,
+@character_id INT
+AS
+INSERT INTO User_favourite_character(users_id, character_id)
+VALUES(@user_id, @character_id)
 
 --tạo proc, chỉ cho phép người dùng sửa comment của chính mình
 CREATE PROCEDURE updateUserComment
@@ -243,6 +250,45 @@ BEGIN
 	SET User_favourites.added_at = GETDATE()
 	FROM User_favourites
 	JOIN inserted ON inserted.users_id = User_favourites.users_id
+END
+
+CREATE TRIGGER trg_getTime_character
+ON User_favourite_character
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_favourite_character
+	SET User_favourite_character.added_at = GETDATE()
+	FROM User_favourite_character
+	JOIN inserted ON inserted.users_id = User_favourite_character.users_id
+END
+
+CREATE TRIGGER trg_setAddedDate_character
+ON User_comment_character
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_comment_character
+	SET added_at = GETDATE()
+	FROM User_comment_character uc
+	INNER JOIN inserted i ON uc.Id = i.Id
+END
+--tạo trigger với, tự động cập ngày khi user sửa comment
+CREATE TRIGGER trg_setEditedDate_character
+ON User_comment_character
+AFTER UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	UPDATE User_comment_character
+	SET edited_at = GETDATE()
+	FROM User_comment_character uc
+	INNER JOIN inserted i ON uc.Id = i.Id
 END
 
 --tạo proc mới để ban user

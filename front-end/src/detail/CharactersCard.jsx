@@ -2,8 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, Row, Col, List, Avatar, ConfigProvider } from "antd";
+import { useTitle } from "../templates/TitleContext";
 
 function CharactersCard({ animeId }) {
+  const { setTitle } = useTitle();
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
     axios
@@ -40,7 +42,8 @@ function CharactersCard({ animeId }) {
               <List.Item key={item.Id}>
                 <List.Item.Meta
                   avatar={<Avatar shape="square" src={item.Profile} />}
-                  title={<Link to={`/character/${item.Id}`}>{item.Name}</Link>}
+                  title={<Link to={`/character/${item.Id}`}
+                  onClick={() => setTitle(item.Name)} >{item.Name}</Link>}
                   description={item.Roles}
                 />
               </List.Item>

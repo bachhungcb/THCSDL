@@ -73,9 +73,37 @@ const unFavouriteById = async (userId, animeId) => {
   return executeQuery(query, param);
 };
 
+const addFavouriteCharacter = async (userId, characterId) => {
+  const procedure = 'userFavouriteCharacter';
+  const params = [
+    { name: 'user_id', value: userId },
+    { name: 'character_id', value: characterId },
+  ];
+  return executeProcedure(procedure, params);
+
+}
+
+const unFavouriteCharacter = async (userId, characterId) => {
+  const query = 'DELETE FROM User_favourite_character WHERE users_id = @userId AND character_id = @characterId;';
+  const param = [{ name: 'userId', value: userId }, { name: 'characterId', value: characterId }];
+  return executeQuery(query, param);
+};
+
+const getUserFavouriteCharacterById = async (userId) => {
+  const query = `SELECT n.*, l.Roles FROM User_favourite_character c
+                  JOIN Users u ON u.Id = c.users_id
+                  JOIN link_character l ON l.character_id = c.character_id
+                  JOIN new_character n ON n.Id = c.character_id
+                  WHERE c.users_id = @userId`;
+  const param = [{ name: 'userId', value: userId }];
+  return executeQuery(query, param);
+}
 
 module.exports = {
   userFavourite,
   getUserFavouriteById,
-  unFavouriteById
+  unFavouriteById,
+  addFavouriteCharacter,
+  unFavouriteCharacter,
+  getUserFavouriteCharacterById
 };
