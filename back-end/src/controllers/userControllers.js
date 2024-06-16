@@ -4,6 +4,10 @@ const {
   editComment,
   deleteComment,
   getUserList,
+  getCommentsForCharacter,
+  postCommentForCharacter,
+  editCommentForCharacter,
+  deleteCommentForCharacter,
   banUser,
   unbanUser
 } = require("../services/CRUDService");
@@ -48,6 +52,49 @@ const deleteCommentController = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const postCommentForCharacterController = async (req, res) => {
+  const { userId, characterId, comment } = req.body;
+  try {
+    const result = await postCommentForCharacter(userId, characterId, comment);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Post character comment error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getCommentsForCharacterController = async (req, res) => {
+  const { characterId } = req.params;
+  try {
+    const result = await getCommentsForCharacter(characterId);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Get character comment error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const editCommentForCharacterController = async (req, res) => {
+  const { userId, characterId, commentId, comment } = req.body;
+  try {
+    const result = await editCommentForCharacter(userId, characterId, commentId, comment);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Edit character comment error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const deleteCommentForCharacterController = async (req, res) => {
+  const { userId, characterId, commentId } = req.body;
+  try {
+    const result = await deleteCommentForCharacter(userId, characterId, commentId);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Delete character comment error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 const banUserController = async (req, res) => {
   const { userId } = req.body;
@@ -87,6 +134,10 @@ module.exports = {
   editCommentController,
   deleteCommentController,
   getUserListController,
+  postCommentForCharacterController,
+  getCommentsForCharacterController,
+  editCommentForCharacterController,
+  deleteCommentForCharacterController,
   banUserController,
   unbanUserController
 };

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Card, Row, Col, ConfigProvider } from "antd";
-
+import { useTitle } from "../templates/TitleContext";
 const { Meta } = Card;
 
 function AnimesCard({ characterId }) {
   const [animes, setAnimes] = useState([]);
+  const { setTitle } = useTitle();
 
   useEffect(() => {
     axios
@@ -29,8 +31,8 @@ function AnimesCard({ characterId }) {
       }}
     >
       <Row gutter={[16, 16]}>
-        {animes.map(anime => (
-          <Col key={anime.id} span={8}>
+        {animes.map((anime) => (
+          <Col key={anime.anime_id} span={8}>
             <Card
               hoverable
               style={{
@@ -38,7 +40,17 @@ function AnimesCard({ characterId }) {
               }}
               cover={<img alt={anime.title} src={anime.animePoster} />}
             >
-              <Meta title={anime.title} description={anime.type} />
+              <Meta
+                title={
+                  <Link
+                    to={`/top-anime-series/${anime.anime_id}`}
+                    onClick={() => setTitle(anime.title)}
+                  >
+                    {anime.title}
+                  </Link>
+                }
+                description={anime.type}
+              />
             </Card>
           </Col>
         ))}

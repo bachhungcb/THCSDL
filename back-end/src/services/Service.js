@@ -116,7 +116,7 @@ const getCharacterByName = async (character_name) => {
 };
 
 const getCharacterByCharacterId = async (characterId) => {
-  const query = `SELECT new_character.*, link_character.Roles
+  const query = `SELECT DISTINCT new_character.*
   FROM new_character
   JOIN link_character ON link_character.character_id = new_character.Id
   WHERE new_character.Id = @characterId`;
@@ -183,6 +183,21 @@ const ProducersById = async (producers_id) => {
   return executeQuery(query, [{ name: "producers_id", value: producers_id }]);
 };
 
+const getRoleByCharacterId = async (characterId) => {
+  const query = `SELECT l.Roles, a.title, a.anime_id
+  FROM link_character l
+  JOIN anime a ON l.anime_id = a.anime_id
+  WHERE l.character_id = @characterId`;
+  return executeQuery(query, [{ name: "characterId", value: characterId }]);
+};
+
+const getRandomGenre = async () => {
+  const query = `SELECT TOP 1 genres.genres
+  FROM genres
+  ORDER BY NEWID();`;
+  return executeQuery(query, []);
+};
+
 module.exports = {
   getDataForHomepage,
   getAnimeById,
@@ -198,5 +213,7 @@ module.exports = {
   ProducersById,
   getDataCharacterPage,
   getCharacterByCharacterId,
-  getAnimeByCharacterId
+  getAnimeByCharacterId,
+  getRoleByCharacterId,
+  getRandomGenre,
 };

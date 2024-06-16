@@ -14,6 +14,8 @@ const {
   getDataCharacterPage,
   getCharacterByCharacterId,
   getAnimeByCharacterId,
+  getRoleByCharacterId,
+  getRandomGenre,
 } = require("../services/Service");
 
 
@@ -109,6 +111,18 @@ const getAnimeByCharacter = async (req, res) => {
   res.status(200).send(anime);
 };
 
+const getRoleByCharacter = async (req, res) => {
+  const characterId = parseInt(req.params.characterId);
+  const role = await getRoleByCharacterId(characterId);
+  res.status(200).send(role);
+
+}
+
+const getRandomAnimeByGenre = async (req, res) => {
+  const genre = await getRandomGenre();
+  const anime = await getAnimeFromGenres(genre);
+  res.status(200).send(anime);
+};
 
 //export fuction getAnimes to be used in routes.js
 module.exports = {
@@ -127,4 +141,6 @@ module.exports = {
   getCharacterPage,
   getCharacterDetail,
   getAnimeByCharacter,
+  getRoleByCharacter,
+  getRandomAnimeByGenre,
 };

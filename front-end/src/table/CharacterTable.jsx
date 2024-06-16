@@ -6,6 +6,7 @@ import axios from "axios";
 import MainLayout from "../templates/MainLayout";
 import loadingGif from "../assets/loading-screen.gif";
 import { useTitle } from "../templates/TitleContext";
+import FavouriteButton from "../button/AddFavouriteCharacterButton";
 import "./AnimeTable.css";
 
 const { Text } = Typography;
@@ -86,6 +87,9 @@ function CharacterTable() {
               {record.Name}
             </Link>
           </h3>
+          <div className="atf">
+              <FavouriteButton characterId={record.Id} />
+            </div>
           </div>
           
         </div>

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Breadcrumb } from "antd";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useTitle } from "./TitleContext";
+
 const pathNameMapping = {
   "top-anime-series": "Top Anime Series",
   "search-results": "Search Results",
-  "character": "Character",
+  "character": "Characters",
   "top-type": "Top Type",
 };
 
@@ -21,14 +22,16 @@ function CustomBreadcrumbs() {
     </Breadcrumb.Item>,
   ];
 
-  pathSnippets.forEach((_, index) => {
+  pathSnippets.forEach((snippet, index) => {
     const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-    let breadcrumbLabel = pathSnippets[index].replace(/-/g, " ");
+    let breadcrumbLabel = snippet.replace(/-/g, " ");
 
-    if (pathSnippets[index] in pathNameMapping) {
-      breadcrumbLabel = pathNameMapping[pathSnippets[index]];
+    if (snippet in pathNameMapping) {
+      breadcrumbLabel = pathNameMapping[snippet];
     } else if (params.animeId && index === pathSnippets.length - 1) {
       breadcrumbLabel = title;
+    } else if (params.characterId && snippet === params.characterId) {
+      breadcrumbLabel = title || params.characterId;
     }
 
     breadcrumbItems.push(

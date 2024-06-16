@@ -4,6 +4,7 @@ import axios from "axios";
 import { Layout, Card, Avatar, Typography, Spin, Tabs } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
 import FavouriteTable from "../table/FavouriteTable.jsx";
+import FavouriteCharacterTable from "../table/FavouriteCharactersTable.jsx";
 import UsersTable from "./UsersTable.jsx";
 import "./Profile.css";
 
@@ -83,6 +84,9 @@ function Profile() {
           </TabPane>
           <TabPane tab="Your favourite list" key="favourite">
             <FavouriteTable userID={userID} />
+          </TabPane>
+          <TabPane tab="Your favourite characters" key="favourite-characters">
+            <FavouriteCharacterTable userID={userID} />
           </TabPane>
           {userRole === `"admin"` && (
             <TabPane tab="Current user list" key="userlist">

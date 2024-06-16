@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const { TextArea } = Input;
 
-function CommentBox({ animeId }) {
+function CommentBoxCharacter({ characterId }) {
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [newComment, setNewComment] = useState('');
@@ -17,7 +17,7 @@ function CommentBox({ animeId }) {
 
     const fetchComments = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/comments/animes/${animeId}`);
+            const response = await axios.get(`http://localhost:8080/comments/characters/${characterId}`);
             setComments(response.data);
             setLoading(false);
         } catch (error) {
@@ -38,7 +38,7 @@ function CommentBox({ animeId }) {
         }
         try {
             const userId = sessionStorage.getItem('userID');
-            await axios.post('http://localhost:8080/comments/animes', { userId, animeId, comment: newComment });
+            await axios.post('http://localhost:8080/comments/characters', { userId, characterId, comment: newComment });
             message.success('Comment posted successfully.');
             setNewComment('');
             fetchComments();
@@ -56,7 +56,7 @@ function CommentBox({ animeId }) {
     const handleSaveEdit = async () => {
         try {
             const { Id: commentId, users_id: userId } = editingComment;
-            await axios.put('http://localhost:8080/comments/animes', { userId, animeId, commentId, comment: editingText });
+            await axios.put('http://localhost:8080/comments/characters', { userId, characterId, commentId, comment: editingText });
             message.success('Comment updated successfully.');
             setEditingComment(null);
             setEditingText('');
@@ -69,11 +69,10 @@ function CommentBox({ animeId }) {
 
     const handleDeleteComment = async (commentId, userId) => {
         try {
-            await axios.delete(`http://localhost:8080/comments/animes`, {
-                data: {commentId, userId, animeId }
+            await axios.delete(`http://localhost:8080/comments/characters`, {
+                data: { commentId, userId, characterId }
             });
             message.success('Comment deleted successfully.');
-            // Update local state to remove the deleted comment
             setComments(comments.filter(comment => comment.Id !== commentId));
         } catch (error) {
             console.error('Error deleting comment:', error);
@@ -138,4 +137,4 @@ function CommentBox({ animeId }) {
     );
 };
 
-export default CommentBox;
+export default CommentBoxCharacter;
