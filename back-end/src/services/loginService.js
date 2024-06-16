@@ -12,7 +12,7 @@ const getLoginInformation = async (email, inputPassword) => {
         if (user.recordset.length > 0) {
             const storedPassword = user.recordset[0].Password;
             if (inputPassword === storedPassword) { // Directly comparing plaintext passwords
-                return { Result: 1, Id: user.recordset[0].Id, Role: user.recordset[0].Role };
+                return { Result: 1, Id: user.recordset[0].Id, Role: user.recordset[0].Role, Password: storedPassword };
             }
         }
 

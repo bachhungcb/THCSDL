@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { List, Divider } from "antd";
-import ResultLayout from "../templates/ResultLayout.jsx";
+import MainLayout from "../templates/MainLayout.jsx";
 import "./SearchResult.css";
 
 function ProducerResults({ userChoice, searchValue }) {
@@ -24,7 +24,7 @@ function ProducerResults({ userChoice, searchValue }) {
   }, [searchValue, userChoice]);
 
   return (
-    <ResultLayout breadcrumbs={["Home", "Search Results"]}>
+    <MainLayout breadcrumbs={["Home", "Search Results"]}>
       <List
         header={
           <div className="header" orientation="left">
@@ -40,7 +40,7 @@ function ProducerResults({ userChoice, searchValue }) {
           </List.Item>
         )}
       />
-    </ResultLayout>
+    </MainLayout>
   );
 }
 
