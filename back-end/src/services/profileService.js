@@ -75,9 +75,19 @@ const changeBirthday = async (userId, birthday) => {
     return executeQuery(query, param);
 }
 
+const changePassword = async (userId, newPassword) => {
+  const query = `UPDATE Users
+                  SET Password = @newPassword
+                  WHERE Id = @userId;`;
+  const param = [{ name: "userId", value: userId }, { name: "newPassword", value: newPassword }];
+
+  return executeQuery(query, param);
+}
+
 module.exports = {
     getUserById,
     changeAvatar,
     changeFullName,
-    changeBirthday
+    changeBirthday,
+    changePassword
 }

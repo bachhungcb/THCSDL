@@ -6,6 +6,7 @@ const {
   changeAvatar,
   changeBirthday,
   changeFullName,
+  changePassword,
 } = require("../services/profileService");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,10 +52,22 @@ const changeFullNameController = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+const changePasswordController = async (req, res) => {
+  const { userId, newPassword } = req.body;
+  console.log(userId, newPassword);
+  try {
+    const result = await changePassword(userId, newPassword);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Change password error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 module.exports = {
   getUser,
   changeAvatarController,
   changeBirthdayController,
   changeFullNameController,
+  changePasswordController,
 };

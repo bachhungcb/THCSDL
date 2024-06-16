@@ -13,12 +13,12 @@ function LoginForm() {
   const onFinish = async (data) => {
     try {
       const response = await axios.post("http://localhost:8080/login", data);
-      console.log("Response data:", response.data); 
       setLogin(response.data); 
 
       if (response.data.loginSuccessful) {
         sessionStorage.setItem("userID", JSON.stringify(response.data.userID));
         sessionStorage.setItem("userRole", JSON.stringify(response.data.userRole));
+        sessionStorage.setItem("password", JSON.stringify(response.data.userPassword));
         navigate("/");
       } else {
         alert("Login failed! Please check your email and password.");

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { List, Divider } from "antd";
-import ResultLayout from "../templates/ResultLayout.jsx";
+import MainLayout from "../templates/MainLayout.jsx";
 import "./SearchResult.css";
 import MainLayout from "../templates/MainLayout.jsx";
 

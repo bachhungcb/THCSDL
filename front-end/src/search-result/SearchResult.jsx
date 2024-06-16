@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import AnimeResults from "./AnimeResults";
 import ProducerResults from "./ProducerResults";
 import CharacterResults from "./CharacterResults";
+import MainLayout from "../templates/MainLayout";
 import NavBar from "../nav-bar/NavBar";
 import "./SearchResult.css";
 const { Header, Content, Footer } = Layout;
@@ -19,24 +20,10 @@ function SearchResult() {
   } = theme.useToken();
   if (searchValue === null) {
     return (
-      <Layout>
-        <Header className="header">
-          <NavBar />
-          <br></br>
-        </Header>
-        <Content className="content">
-          <Breadcrumb className="breadcrumb" separator=">">
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>Top Anime Series</Breadcrumb.Item>
-            <Breadcrumb.Item>Search</Breadcrumb.Item>
-          </Breadcrumb>
+      <MainLayout>
           <br></br>
           <h1>No search results found</h1>
-        </Content>
-        <Layout>
-          <Footer className="footer">Footer</Footer>
-        </Layout>
-      </Layout>
+      </MainLayout>
     );
   } else
     switch (userChoice) {

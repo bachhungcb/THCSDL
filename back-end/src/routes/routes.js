@@ -31,6 +31,7 @@ const {
   changeAvatarController,
   changeBirthdayController,
   changeFullNameController,
+  changePasswordController
 } = require("../controllers/profileController");
 
 const {
@@ -88,6 +89,7 @@ router.get("/profile/:userId", getUser);
 router.put("/profile/avatar", changeAvatarController);
 router.put("/profile/birthday", changeBirthdayController);
 router.put("/profile/fullname", changeFullNameController);
+router.put("/profile/password", changePasswordController);
 
 //This is the route for getting favourite information
 router.post("/favourite", postFavourite);
