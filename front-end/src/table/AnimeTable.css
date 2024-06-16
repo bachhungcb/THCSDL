@@ -177,5 +177,17 @@ table {
   margin-top: -5px;
 }
 
+.top-char-table-container .ant-table-container{
+  width: 400px;
+}
+
+.char-body-title-text{
+  width: 200px;
+  height: auto;
+  text-align: left;
+  line-height: normal;
+  margin-top: -5px;
+}
+
 
 

@@ -66,6 +66,11 @@ function CharacterDetail() {
                 alt={character.Name}
               />
             </div>
+            <Card>
+              <div className="charID">
+                  <span className="rank">ID: #{character.Id}</span>
+              </div>
+            </Card>
           </Sider>
           <Content className="content">
             <ConfigProvider
@@ -77,7 +82,7 @@ function CharacterDetail() {
                 },
               }}
             >
-              <Card title={character.Name}>
+              {/* <Card title={character.Name}>
                 <div className="infomations">
                   <h3 className="detail1">Character Detail</h3>
                   <div className="detail">
@@ -85,14 +90,20 @@ function CharacterDetail() {
                     {character.Id}
                   </div>
                 </div>
-              </Card>
+              </Card> */}
               <Card>
               <div className="description">
-                <h1>Description</h1>
+                <h1 className="detail1">Description</h1>
                 <p>{character.Description}</p>
               </div>
             </Card>
-              <AnimeCard characterId={characterId} />
+            <Card>
+              <h1 className="detail1">Animeography</h1>
+              <div className="Animeography">
+                <AnimeCard characterId={characterId} />
+              </div>
+            </Card>
+            
               <Card title="User comments">
                 <div className="comment-box">
                   <CommentBox characterId={characterId} />
