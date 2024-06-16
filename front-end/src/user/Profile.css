@@ -39,3 +39,12 @@
     text-align: left;
 }
 
+.userlist .ant-table-container{
+    width: 800px;
+}
+
+.useravatar2{
+    border: 2px solid #2e51a2;
+    width: 50px;
+    height: 50px;
+}

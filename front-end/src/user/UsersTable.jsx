@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, message, Avatar } from "antd";
 import axios from "axios";
-
+import "./Profile.css";
 function UserList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,7 +49,7 @@ function UserList() {
       title: "Avatar",
       dataIndex: "Avatar",
       key: "avatar",
-      render: (text) => <Avatar src={text} />,
+      render: (text) => <Avatar className="useravatar2" src={text} />,
     },
     {
       title: "Full Name",
@@ -82,13 +82,16 @@ function UserList() {
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={users}
-      rowKey="Id"
-      loading={loading}
-      pagination={{ pageSize: 10 }}
-    />
+    <div className="userlist">
+      <Table
+        columns={columns}
+        dataSource={users}
+        rowKey="Id"
+        loading={loading}
+        pagination={{ pageSize: 10 }}
+      />
+    </div>
+    
   );
 }
 
