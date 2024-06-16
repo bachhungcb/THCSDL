@@ -165,9 +165,17 @@ table {
   scale: 1.2;
 }
 
+.fav-anime-table-container .ant-table-container{
+  width: 800px;
+}
 
-
-
+.fav-body-title-text {
+  width: 350px;
+  height: auto;
+  text-align: left;
+  line-height: normal;
+  margin-top: -5px;
+}
 
 
 

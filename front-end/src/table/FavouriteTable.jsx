@@ -44,7 +44,7 @@ function FavouriteTable({ userID }) {
       title: "Title",
       dataIndex: "title",
       key: "title",
-      width: "70%",
+      width: "50%",
       render: (text, record) => {
         const content = (
           <div className="hover-info">
@@ -83,7 +83,7 @@ function FavouriteTable({ userID }) {
                 </Popover>
               )}
             </div>
-            <div className="body-title-text">
+            <div className="fav-body-title-text">
               <div>
                 <span className="anime-name">
                   <Link
@@ -130,7 +130,7 @@ function FavouriteTable({ userID }) {
   ];
 
   return (
-    <div className="top-anime-table-container">
+    <div className="fav-anime-table-container">
       {isLoading ? (
         <div className="loading-container">
           <img src={loadingGif} alt="Loading..." className="loading-gif" />
@@ -148,7 +148,7 @@ function FavouriteTable({ userID }) {
               columns={columns}
               rowKey="anime_id"
               pagination={true}
-              className="anime-table"
+              className="fav-table"
               size="small"
             />
           )}

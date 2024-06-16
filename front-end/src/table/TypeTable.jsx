@@ -120,9 +120,8 @@ function TypeTable() {
               </div>
               <div>
                 <span className="dark">Aired: </span>
-                {record.aired_from} to{" "}
-                {record.aired_to === "('Unknown')" ? "N/A" : record.aired_to}
-              </div>
+                {record.aired_from} <br /> to {record.aired_to || "N/A"}
+                          </div>
               <div>
                 <span className="dark">Premiered: </span>
                 {record.premiered || "N/A"}
