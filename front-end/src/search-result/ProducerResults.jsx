@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { List, Divider } from "antd";
 import ResultLayout from "../templates/ResultLayout.jsx";
 import "./SearchResult.css";
+import MainLayout from "../templates/MainLayout.jsx";
 
 function ProducerResults({ userChoice, searchValue }) {
   const location = useLocation();
@@ -24,10 +25,10 @@ function ProducerResults({ userChoice, searchValue }) {
   }, [searchValue, userChoice]);
 
   return (
-    <ResultLayout breadcrumbs={["Home", "Search Results"]}>
+    <MainLayout breadcrumbs={["Home", "Search Results"]}>
       <List
         header={
-          <div className="header" orientation="left">
+          <div className="searchheader" orientation="left">
             Search Results for "{searchValue}"
           </div>
         }
@@ -40,7 +41,7 @@ function ProducerResults({ userChoice, searchValue }) {
           </List.Item>
         )}
       />
-    </ResultLayout>
+    </MainLayout>
   );
 }
 

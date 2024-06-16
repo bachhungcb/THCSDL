@@ -178,15 +178,20 @@ table {
 }
 
 .top-char-table-container .ant-table-container{
-  width: 400px;
+  width: 500px;
 }
 
 .char-body-title-text{
-  width: 200px;
+  width: 150px;
   height: auto;
   text-align: left;
   line-height: normal;
   margin-top: -5px;
+}
+
+.fav-char-table-container .ant-table-container{
+  width: 500px;
+  margin: 0 auto;
 }
 
 

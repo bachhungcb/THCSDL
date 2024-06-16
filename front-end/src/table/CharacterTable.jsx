@@ -58,7 +58,6 @@ function CharacterTable() {
       dataIndex: "Name",
       key: "name",
       width: "60%",
-
       render: (text, record) => (
         <div className="body-title">
           <div className="body-poster">
@@ -87,11 +86,10 @@ function CharacterTable() {
               {record.Name}
             </Link>
           </h3>
-          <div className="atf">
-              <FavouriteButton characterId={record.Id} />
-            </div>
           </div>
-          
+          <div className="atf">
+            <FavouriteButton characterId={record.Id} />
+          </div>
         </div>
       ),
     },

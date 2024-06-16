@@ -27,7 +27,7 @@ function CharacterResults({ userChoice, searchValue }) {
     <ResultLayout breadcrumbs={["Home", "Search Results"]}>
       <List
         header={
-          <div className="header" orientation="left">
+          <div className="searchheader" orientation="left">
             Search Results for "{searchValue}"
           </div>
         }

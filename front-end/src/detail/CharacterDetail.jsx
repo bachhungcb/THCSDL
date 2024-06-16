@@ -65,6 +65,9 @@ function CharacterDetail() {
               />
             </div>
             <Card>
+              <div className="char-name">
+                <h1>{character.Name}</h1>
+              </div>
               <div className="charID">
                   <span className="rank">ID: #{character.Id}</span>
               </div>
