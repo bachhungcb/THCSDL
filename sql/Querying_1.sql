@@ -8,10 +8,14 @@ FROM anime a
  JOIN anime_status s ON s.anime_id = a.anime_id
 WHERE a.anime_id = @anime_id;
 GO
+EXEC AnimeInformation 10050;
+SELECT a.*, i.*, s.*
+FROM anime a
+ JOIN informations i ON i.anime_id = a.anime_id
+ JOIN anime_status s ON s.anime_id = a.anime_id
+WHERE a.anime_id = 10050;
 
-SELECT * FROM anime
-
-SELECT * FROM anime
+SELECT * FROM new_character
 
 --Chọn ra top 3 anime có điểm thấp nhất--
 CREATE VIEW TOP3Anime AS
@@ -98,7 +102,7 @@ SELECT DISTINCT TOP 10 new_character.Name, anime.title, new_character.Profile, n
         FROM new_character  
 		JOIN link_character ON link_character.character_id = new_character.Id
 		JOIN anime ON link_character.anime_id = anime.anime_id
-        WHERE new_character.Name LIKE '%Edogawa%'
+        WHERE new_character.Name LIKE '%Dam Thanh Bach%'
         ORDER BY new_character.Name;
 
 --Tìm kiếm nhân vật thông qua anime_id

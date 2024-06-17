@@ -1,5 +1,5 @@
 CREATE TABLE anime(
-	anime_id INT NOT NULL PRIMARY KEY,
+	anime_id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	title VARCHAR(100),
 	synopsis VARCHAR(MAX),
 	age_requirement VARCHAR(100),
