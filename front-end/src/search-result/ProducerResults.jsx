@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { List, Divider } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
 import "./SearchResult.css";
-import MainLayout from "../templates/MainLayout.jsx";
 
 function ProducerResults({ userChoice, searchValue }) {
   const location = useLocation();
