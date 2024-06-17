@@ -108,3 +108,5 @@ BEGIN
     DELETE FROM anime
     WHERE anime_id = @anime_id;
 END
+
+EXEC DeleteAnime 10050;
