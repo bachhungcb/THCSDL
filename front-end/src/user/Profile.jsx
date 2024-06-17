@@ -194,9 +194,7 @@ function Profile() {
                     </span>
                   </div>
                 </div>
-              </Card>
-            ))}
-            <div style={{ marginTop: "-20px" }}>
+                <div style={{ marginTop: "20px" }}>
               {!changePasswordVisible && (
                 <Button type="primary" onClick={() => setChangePasswordVisible(true)} className="changepassbtn">
                   Change Password
@@ -269,6 +267,9 @@ function Profile() {
                 </Form>
               )}
             </div>
+              </Card>
+            ))}
+            
           </TabPane>
           <TabPane tab="Your favourite list" key="favourite">
             <FavouriteTable userID={userID} />
