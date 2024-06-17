@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { List, Avatar } from "antd";
+import { Table, Avatar } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
+import { useTitle } from "../templates/TitleContext.jsx";
 import "./SearchResult.css";
 
 function CharacterResults({ userChoice, searchValue }) {
+  const setTitle = useTitle();
   const location = useLocation();
   const path = location.pathname.split("/");
   const [searchData, setSearchData] = useState([]);
@@ -23,24 +25,41 @@ function CharacterResults({ userChoice, searchValue }) {
     }
   }, [searchValue, userChoice]);
 
+  const columns = [
+    {
+      title: "Profile",
+      dataIndex: "Profile",
+      key: "Profile",
+      render: (text) => <Avatar src={text} />,
+    },
+    {
+      title: "Name",
+      dataIndex: "Name",
+      key: "Name",
+      render: (text, record) => (
+        <Link
+          to={`/character/${record.Id}`}
+          onClick={() => setTitle(record.Name)}
+        >
+          {text}
+        </Link>
+      ),
+    },
+    {
+      title: "Roles",
+      dataIndex: "Roles",
+      key: "Roles",
+    },
+  ];
+
   return (
     <MainLayout breadcrumbs={["Home", "Search Results"]}>
-      <List
-        header={
-          <div className="searchheader" orientation="left">
-            Search Results for "{searchValue}"
-          </div>
-        }
+      <div className="searchheader">Search Results for "{searchValue}"</div>
+      <Table
+        columns={columns}
         dataSource={searchData}
-        renderItem={(item) => (
-          <List.Item key={item.Id}>
-            <List.Item.Meta
-              avatar={<Avatar src={item.Profile} />}
-              title={<Link to={`/character/${item.Id}`}>{item.Name}</Link>}
-              description={item.Roles}
-            />
-          </List.Item>
-        )}
+        rowKey="Id"
+        pagination={false}
       />
     </MainLayout>
   );
