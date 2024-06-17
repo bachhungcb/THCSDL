@@ -108,7 +108,7 @@ function Profile() {
                 className="profile-card"
                 key={profileItem.Id}
                 cover={
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center" }} className="useravatarcontainer">
                     <Avatar
                       className="useravatar"
                       size={150}
@@ -116,12 +116,12 @@ function Profile() {
                       alt="User Avatar"
                     />
                     {showAvatarInput && (
-                      <div style={{ marginTop: 10 }}>
+                      <div style={{ marginTop: 10 }} className="avtinput">
                         <Input
                           placeholder="Enter avatar link"
                           value={avatarLink}
                           onChange={(e) => setAvatarLink(e.target.value)}
-                          style={{ width: "80%" }}
+                          style={{ width: "250px", marginTop: "20px" }}
                         />
                         <Button
                           type="primary"
@@ -129,7 +129,7 @@ function Profile() {
                             updateProfile("avatar", avatarLink);
                             setShowAvatarInput(false);
                           }}
-                          style={{ marginTop: 10 }}
+                          className="cofbtn"
                         >
                           Confirm
                         </Button>
@@ -139,7 +139,7 @@ function Profile() {
                       <Button
                         type="primary"
                         onClick={() => setShowAvatarInput(true)}
-                        style={{ marginTop: 10 }}
+                        className="changeavtbtn"
                       >
                         Change Avatar
                       </Button>
@@ -147,6 +147,7 @@ function Profile() {
                   </div>
                 }
               >
+              
                 <Title level={2} style={{ textAlign: "center" }} className="username">
                   {editingName ? (
                     <Input
@@ -156,6 +157,7 @@ function Profile() {
                         setEditingName(false);
                       }}
                       autoFocus
+                      style={{width: "200px", marginBottom: "10px"}}
                     />
                   ) : (
                     <Paragraph
@@ -167,10 +169,11 @@ function Profile() {
                 </Title>
                 <div className="profile-details">
                   <div className="profile-item">
-                    <Text strong>Email:</Text> <Text>{profileItem.Email}</Text>
+                    <Text strong>Email:</Text><br /> <Text>{profileItem.Email}</Text>
                   </div>
                   <div className="profile-item">
-                    <Text strong>Birthday:</Text>{" "}
+                    <span className="dark">Birthday: </span>
+                    <span style={{width: "100px"}}>
                     {editingBirthday ? (
                       <Input
                         type="date"
@@ -188,13 +191,14 @@ function Profile() {
                         {new Date(profileItem.Birthday).toLocaleDateString()}
                       </Paragraph>
                     )}
+                    </span>
                   </div>
                 </div>
               </Card>
             ))}
-            <div style={{ marginTop: 20 }}>
+            <div style={{ marginTop: "-20px" }}>
               {!changePasswordVisible && (
-                <Button type="primary" onClick={() => setChangePasswordVisible(true)}>
+                <Button type="primary" onClick={() => setChangePasswordVisible(true)} className="changepassbtn">
                   Change Password
                 </Button>
               )}
@@ -209,6 +213,7 @@ function Profile() {
                     rules={[
                       { required: true, message: "Please input your current password!" }
                     ]}
+                    style={{ width: "300px", margin: "20px auto"}}
                   >
                     <Input.Password
                       placeholder="Current Password"
@@ -222,6 +227,7 @@ function Profile() {
                       { required: true, message: "Please input your new password!" },
                       { min: 6, message: "Password must be at least 6 characters" }
                     ]}
+                    style={{ width: "300px", margin: "20px auto"}}
                   >
                     <Input.Password
                       placeholder="New Password"
@@ -247,6 +253,7 @@ function Profile() {
                         },
                       }),
                     ]}
+                    style={{ width: "300px", margin: "20px auto"}}
                   >
                     <Input.Password
                       placeholder="Confirm New Password"
@@ -255,7 +262,7 @@ function Profile() {
                     />
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" className="changepassbtn">
                       Change Password
                     </Button>
                   </Form.Item>
