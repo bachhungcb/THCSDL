@@ -1,13 +1,16 @@
 # THCSDL
-
-1.Back end sử dụng các thư viện : mssql, express, nodemon, dotenv </br>
-    -nodemon: thư viện theo dõi sự thay đổi của code, cho phép anh em vừa chạy chương trình vừa code được </br>
-    -mssql: hỗ trợ connect tới database của sql-server, cần install thêm msnodesqlv8 </br>
-    -dotenv: cho phép anh em dùng các config bên trong file env </br>
-    -express: framework mà chúng ta sẽ làm việc trên
-  Anh em có thể install thư viện bằng lệnh: npm i --save ~tên thư viện~ </br>
-2.Khởi chạy chương trình bằng cách chạy lệnh: npm run start. </br>
-Lưu ý: +Tuyệt đối không push module lên git, trong khi làm btl thì không có vấn đề nhưng đi làm bị tế sống là cái chắc. </br>
-       +Anh em muốn chạy back end hay front end thì phải vào hẳn folder của nó để chạy, nếu không chắc chắn sẽ lỗi </br>
-Chúc anh em code vui vẻ, nhóm mình sẽ làm theo kiểu CSR(Client side rendering) để moị người có thể tìm hiểu thêm cả thư viện ReactJS nữa.</br>
-P/S: Đã cập nhật cách connect mới bằng mssql dễ dàng hơn, anh em có thể vào để đọc thử.</br>
+# Project TopAnimeList
+Back end sử dụng các thư viện: mssql, express, nodemon, dotenv  
+### 1, Mục đích chức năng của Web: Cung cấp các dịch vụ và tính năng giúp người dùng quản lý, đánh giá và thảo luận về các bộ Anime yêu thích của họ.
+### Các chức năng chính: 
+### Admin:  
+1. Quản lý các bộ Anime có sẵn
+2. Quản lí người dùng
+3. Quản lí hệ thống
+Ngoài ra role admin đương nhiên cũng có đầy đủ các chức năng như một user bình thường
+### User:  
+1. Thêm các bộ Anime vào danh sách riêng với các trạng thái khác nhau 
+2. Viết nhận xét và bình luận công khai cho các bộ Anime 
+3. Tìm kiếm Anime theo nhiều tiêu chí khác nhau 
+4. Thêm các bộ Anime yêu thích của mình vaò List
+### 2, Demo: Link Slide thuyết trình về sản phẩm: https://www.canva.com/design/DAGIYo3RP3I/8J_x3PEzNy9ZL7zRSb4_BQ/edit?utm_content=DAGIYo3RP3I&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
