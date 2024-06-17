@@ -1,4 +1,4 @@
-INSERT INTO anime (anime_id, title, synopsis, age_requirement, anime_type, episodes)
+﻿INSERT INTO anime (anime_id, title, synopsis, age_requirement, anime_type, episodes)
 VALUES
   (10050, 'THCSDL','La hoc phan thuc hanh cua hoc phan LT CSDL','R18','anime','120')
 
@@ -27,7 +27,7 @@ INSERT INTO link_genres(anime_id, genres_id)
 VALUES(10050,(SELECT DISTINCT link_genres.genres_id FROM link_genres
 JOIN genres ON genres.genres_id = link_genres.genres_id
 WHERE genres.genres = 'Action'))
-
+--tạo proc để thêm mới anime
 CREATE PROCEDURE InsertAnimeData
 @anime_id INT,
 @char_id INT,
@@ -76,4 +76,35 @@ BEGIN
 	VALUES(@anime_id,(SELECT DISTINCT link_genres.genres_id FROM link_genres
 	JOIN genres ON genres.genres_id = link_genres.genres_id
 	WHERE genres.genres = @genres))
+END
+--tạo proc để xóa anime
+CREATE PROCEDURE DeleteAnime
+    @anime_id INT
+AS
+BEGIN
+    -- Delete from the link_genres table
+    DELETE FROM link_genres
+    WHERE anime_id = @anime_id;
+
+    -- Delete from the link_character table
+    DELETE FROM link_character
+    WHERE anime_id = @anime_id;
+
+    -- Delete from the new_character table
+    DELETE nc
+    FROM new_character nc
+    INNER JOIN link_character lc ON nc.Id = lc.character_id
+    WHERE lc.anime_id = @anime_id;
+
+    -- Delete from the anime_status table
+    DELETE FROM anime_status
+    WHERE anime_id = @anime_id;
+
+    -- Delete from the informations table
+    DELETE FROM informations
+    WHERE anime_id = @anime_id;
+
+    -- Delete from the anime table
+    DELETE FROM anime
+    WHERE anime_id = @anime_id;
 END
