@@ -1,0 +1,15 @@
+.anime-poster {
+    max-width: 300px; /* Đặt chiều rộng tối đa */
+    max-height: 450px; /* Đặt chiều cao tối đa */
+    width: auto;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.home img{
+  width: 1000px;
+  height: auto;
+}
+  

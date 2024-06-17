@@ -120,7 +120,7 @@ const getRoleByCharacter = async (req, res) => {
 
 const getRandomAnimeByGenre = async (req, res) => {
   const genre = await getRandomGenre();
-  const anime = await getAnimeFromGenres(genre);
+  const anime = await getAnimeByGenres(genre);
   res.status(200).send(anime);
 };
 

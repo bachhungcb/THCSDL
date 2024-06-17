@@ -1,16 +1,15 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { List, Avatar } from "antd";
+import { Table, Avatar } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
 import "./SearchResult.css";
+import { useTitle } from "../templates/TitleContext.jsx";
 
-function CharacterResults({ userChoice, searchValue }) {
+function AnimeResults({ userChoice, searchValue }) {
   const location = useLocation();
-
-  const path = location.pathname.split("/");
   const [searchData, setSearchData] = useState([]);
-
+  const { setTitle } = useTitle();
   useEffect(() => {
     if (searchValue) {
       axios
@@ -24,27 +23,46 @@ function CharacterResults({ userChoice, searchValue }) {
     }
   }, [searchValue, userChoice]);
 
+  const columns = [
+    {
+      title: "Poster",
+      dataIndex: "animePoster",
+      key: "animePoster",
+      render: (text) => <Avatar src={text} shape="square" size="large" />,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      render: (text, record) => (
+        <Link
+          to={`top-anime-series/${record.anime_id}`}
+          onClick={() => setTitle(record.title)}
+        >
+          {text}
+        </Link>
+      ),
+    },
+    {
+      title: "Synopsis",
+      dataIndex: "synopsis",
+      key: "synopsis",
+    },
+  ];
+
   return (
     <MainLayout breadcrumbs={["Home", "Search Results"]}>
-      <List
-        header={
-          <div className="searchheader" orientation="left">
-            Search Results for "{searchValue}"
-          </div>
-        }
+      <div className="searchheader" orientation="left">
+        Search Results for "{searchValue}"
+      </div>
+      <Table
+        columns={columns}
         dataSource={searchData}
-        renderItem={(item) => (
-          <List.Item key={item.anime_id}>
-            <List.Item.Meta
-              avatar={<Avatar src={item.animePoster} shape="square" />}
-              title={<Link to={`top/${item.anime_id}`}>{item.title}</Link>}
-              description={item.synopsis}
-            />
-          </List.Item>
-        )}
+        rowKey="anime_id"
+        pagination={false}
       />
     </MainLayout>
   );
 }
 
-export default CharacterResults;
+export default AnimeResults;

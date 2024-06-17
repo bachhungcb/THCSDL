@@ -195,8 +195,10 @@ const getRandomGenre = async () => {
   const query = `SELECT TOP 1 genres.genres
   FROM genres
   ORDER BY NEWID();`;
-  return executeQuery(query, []);
+  const result = await executeQuery(query, []);
+  return result[0]?.genres; 
 };
+
 
 module.exports = {
   getDataForHomepage,

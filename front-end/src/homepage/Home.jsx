@@ -1,13 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import NavBar from "../nav-bar/NavBar.jsx";
 import MainLayout from "../templates/MainLayout.jsx";
-
+import TOPANIMELIST from "../assets/TOPANIMELIST.png";
+import RandomAnimeByGenres from "./RandomAnimeByGenres.jsx";
 function Home() {
   return (
 
     <div className="App">
       <MainLayout>
+        <div className="home">
+          <img src={TOPANIMELIST} alt="Top Anime List" />
+        </div>
+        <br/>
+        <RandomAnimeByGenres />
       </MainLayout>
     </div>
   );
