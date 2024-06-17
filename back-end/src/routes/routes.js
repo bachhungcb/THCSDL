@@ -16,7 +16,7 @@ const {
   getCharacterDetail,
   getAnimeByCharacter,
   getRoleByCharacter,
-  getRandomAnimeByGenre 
+  getRandomAnimeByGenre,
 } = require("../controllers/controllers");
 
 //This is controller for getting login information
@@ -31,7 +31,7 @@ const {
   changeAvatarController,
   changeBirthdayController,
   changeFullNameController,
-  changePasswordController
+  changePasswordController,
 } = require("../controllers/profileController");
 
 const {
@@ -40,7 +40,7 @@ const {
   deleteFavourite,
   postFavouriteCharacter,
   getFavouriteCharacter,
-  deleteFavouriteCharacter
+  deleteFavouriteCharacter,
 } = require("../controllers/favouriteController");
 
 const {
@@ -54,9 +54,16 @@ const {
   deleteCommentForCharacterController,
   getUserListController,
   banUserController,
-  unbanUserController
+  unbanUserController,
 } = require("../controllers/userControllers");
 
+const {
+  getGenre,
+  insertGenre,
+  insertCharacter,
+  insertAnime,
+  deleteAnime
+} = require("../controllers/dashboardController");
 const express = require("express");
 const router = express.Router();
 
@@ -83,7 +90,6 @@ router.get("/random/animes", getRandomAnimeByGenre);
 router.post("/login", postLoginPage);
 router.post("/register", postRegisterPage);
 
-
 //This is the route for getting profile information
 router.get("/profile/:userId", getUser);
 router.put("/profile/avatar", changeAvatarController);
@@ -99,18 +105,27 @@ router.post("/favourite/characters", postFavouriteCharacter);
 router.get("/favourite/characters/:userId", getFavouriteCharacter);
 router.delete("/unfavourite/characters", deleteFavouriteCharacter);
 
-
 //This is the route for CRUD APIs
 router.get("/comments/animes/:animeId", getCommentsController);
 router.post("/comments/animes", postCommentController);
 router.put("/comments/animes", editCommentController);
 router.delete("/comments/animes", deleteCommentController);
-router.get("/comments/characters/:characterId", getCommentsForCharacterController);
+router.get(
+  "/comments/characters/:characterId",
+  getCommentsForCharacterController
+);
 router.post("/comments/characters", postCommentForCharacterController);
 router.put("/comments/characters", editCommentForCharacterController);
 router.delete("/comments/characters", deleteCommentForCharacterController);
 router.get("/users", getUserListController);
 router.put("/ban", banUserController);
 router.put("/unban", unbanUserController);
+
+//This is the route for getting dashboard information
+router.get("/dashboard/genres", getGenre);
+router.post("/dashboard/insertGenres", insertGenre);
+router.post("/dashboard/insertCharacters", insertCharacter);
+router.post("/dashboard/insertAnime", insertAnime);
+router.delete("/dashboard/deleteAnime", deleteAnime);
 
 module.exports = router;
