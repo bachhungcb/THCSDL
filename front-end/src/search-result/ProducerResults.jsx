@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { List, Divider } from "antd";
+import { Table, Divider } from "antd";
 import MainLayout from "../templates/MainLayout.jsx";
 import "./SearchResult.css";
 
@@ -23,22 +23,31 @@ function ProducerResults({ userChoice, searchValue }) {
     }
   }, [searchValue, userChoice]);
 
+  const columns = [
+    {
+      title: 'Producer ID',
+      dataIndex: 'producers_id',
+      key: 'producers_id',
+    },
+    {
+      title: 'Producer Name',
+      dataIndex: 'producers_name',
+      key: 'producers_name',
+      render: (text, record) => (
+        <Link to={`/producer/${record.producers_id}`}>
+          {text}
+        </Link>
+      ),
+    },
+  ];
+
   return (
     <MainLayout breadcrumbs={["Home", "Search Results"]}>
-      <List
-        header={
-          <div className="searchheader" orientation="left">
-            Search Results for "{searchValue}"
-          </div>
-        }
+      <Divider orientation="left">Search Results for "{searchValue}"</Divider>
+      <Table
+        columns={columns}
         dataSource={searchData}
-        renderItem={(item) => (
-          <List.Item key={item.producers_id}>
-            <Link to={`/producer/${item.producers_id}`}>
-              {item.producers_name}
-            </Link>
-          </List.Item>
-        )}
+        rowKey="producers_id"
       />
     </MainLayout>
   );
