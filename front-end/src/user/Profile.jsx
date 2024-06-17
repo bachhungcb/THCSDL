@@ -6,6 +6,7 @@ import MainLayout from "../templates/MainLayout.jsx";
 import FavouriteTable from "../table/FavouriteTable.jsx";
 import FavouriteCharacterTable from "../table/FavouriteCharactersTable.jsx";
 import UsersTable from "./UsersTable.jsx";
+import { Link } from "react-router-dom";
 import "./Profile.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -279,8 +280,10 @@ function Profile() {
           </TabPane>
           {userRole === `"admin"` && (
             <TabPane tab="Current user list" key="userlist">
+              <Link to="/dashboard">Go to Dashboard</Link>
               <UsersTable />
             </TabPane>
+            
           )}
         </Tabs>
       </div>

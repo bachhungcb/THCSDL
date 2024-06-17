@@ -11,6 +11,7 @@ import { TitleProvider } from "./templates/TitleContext.jsx";
 import TypeTable from "./table/TypeTable.jsx";
 import CharacterTable from "./table/CharacterTable.jsx";
 import CharacterDetail from "./detail/CharacterDetail.jsx";
+import Dashboard from "./dashboard/DashBoard.jsx";
 import "./App.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/profile/:userID" element={<Profile />} />
             <Route path="/characters" element={<CharacterTable />} />
             <Route path="/character/:characterId" element={<CharacterDetail />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </TitleProvider>
       </Router>
