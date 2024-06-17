@@ -6,6 +6,10 @@
     max-height: 1200px !important;
 }
 
+.profile-container .ant-table-content-holder{
+    max-height: 1200px;
+}
+
 .profile-tabs{
     margin-top: 20px;
 }

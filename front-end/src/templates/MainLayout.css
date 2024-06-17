@@ -15,13 +15,14 @@
 .site-layout-content {
   object-fit: cover;
   padding: 24px;
+  background-color: #fff;
   min-height: 280px;
   display: flex;
   flex-direction: column; /* Dọc */
   justify-content: flex-start; /* Đẩy lên đầu */
   align-items: left; /* Stretch tất cả phần tử con theo chiều dọc */
   background-size: cover;
-  height: 100vh;
+  max-height: 8000px;
   background-position: center;
 }
 
