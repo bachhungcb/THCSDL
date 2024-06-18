@@ -36,7 +36,7 @@ function AnimeResults({ userChoice, searchValue }) {
       key: "title",
       render: (text, record) => (
         <Link
-          to={`top-anime-series/${record.anime_id}`}
+          to={`/top-anime-series/${record.anime_id}`}
           onClick={() => setTitle(record.title)}
         >
           {text}

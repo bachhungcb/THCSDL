@@ -97,12 +97,15 @@ const getAnimeByGenres = async (anime_genres) => {
 };
 
 const getAnimeByName = async (anime_name) => {
-  const query = `SELECT anime.*, informations.*, anime_status.*
-                FROM anime WITH (INDEX(ix_anime_title))
-                INNER JOIN informations ON informations.anime_id = anime.anime_id
-                INNER JOIN anime_status ON anime_status.anime_id = anime.anime_id
+  const query = `SELECT anime.anime_id, anime.title, informations.scores, informations.ranks, anime.episodes, anime.animePoster,
+                  anime.synopsis, anime_status.aired_from,anime_status.aired_to, informations.favourite,
+                  informations.popularity, anime_status.stat, anime_status.premiered, anime.anime_type
+                  FROM anime
+                  JOIN informations ON informations.anime_id = anime.anime_id
+                  JOIN anime_status ON anime_status.anime_id = anime.anime_id
                 WHERE anime.title LIKE '%'+@anime_name+'%'`;
   return executeQuery(query, [{ name: "anime_name", value: anime_name }]);
+  
 };
 
 const getCharacterByName = async (character_name) => {
