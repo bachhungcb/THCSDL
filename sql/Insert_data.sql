@@ -110,3 +110,24 @@ BEGIN
 END
 
 EXEC DeleteAnime 10050;
+
+
+EXEC InsertAnimeData
+    @title = 'THCTDl',
+    @synopsis = 'THCTDL la hoc phan TH cua HP CTDL&GT',
+    @age_requirement = 'R18',
+    @anime_type = 'TV',
+    @episodes = '220',
+    @animePoster = 'https://example.com/naruto.jpg',
+    @nameURL = 'https://example.com/naruto',
+    @scores = '6.5',
+    @ranks = 10051,
+    @popularity = 0,
+    @stat = 'Finished Airing',
+    @aired_from = '2002-10-03',
+    @aired_to = '2007-02-08',
+    @premiered = 'Fall 2002',
+    @name = 'Bach',
+    @description = 'hehehehehehe',
+    @role = 'Main',
+    @genres = 'Action';
