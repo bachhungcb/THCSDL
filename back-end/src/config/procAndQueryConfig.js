@@ -1,33 +1,7 @@
-//Thiết lập các kết nối đến database
-require("dotenv").config();
-const { request } = require("express");
+const createPool = require(`../config/database`);
 const sql = require("mssql");
 
-var dbConfig = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  server: process.env.DB_HOST,
-  options: {
-    encrypt: false,
-    trustedConnection: true,
-    instancename: process.env.DB_INSTANCE,
-    requestTimeout: 60000,
-  },
- 
-};
-
-async function createPool() {
-  try {
-    const pool = await sql.connect(dbConfig);
-    console.log("Connected to database");
-    return pool;
-  } catch (error) {
-    console.error("Failed to connect:", error);
-    throw error; // Ném lỗi để báo lỗi cho phần gọi
-  }
-}
-
+// Common function to execute queries
 const executeQuery = async (query, params) => {
   try {
     const pool = await createPool;
@@ -39,7 +13,7 @@ const executeQuery = async (query, params) => {
     return result.recordset;
   } catch (error) {
     console.error("Database query error:", error);
-    throw new DatabaseQueryError(error, query);
+    //throw new DatabaseQueryError(error, query);
   }
 };
 
@@ -55,7 +29,7 @@ const executeProcedure = async (procedure, params) => {
     return result.recordset;
   } catch (err) {
     console.error("Database query error:", err);
-    throw new DatabaseQueryError(err, procedure);
+    //throw new DatabaseQueryError(err, procedure);
   }
 };
 
@@ -66,5 +40,5 @@ class DatabaseQueryError extends Error {
     this.originalError = originalError;
   }
 }
-//export config to use in other files
-module.exports = createPool();
+
+module.exports = {executeProcedure, executeQuery};
