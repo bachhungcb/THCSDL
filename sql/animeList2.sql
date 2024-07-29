@@ -58,11 +58,12 @@ ADD FOREIGN KEY (anime_id) REFERENCES anime(anime_id);
 
 
 CREATE TABLE genres(
-	genres_id INT IDENTITY(1,1),
+	genres_id INT IDENTITY(1,1) PRIMARY KEY,
 	genres VARCHAR(50)
 );
 
-drop table genres
+ALTER TABLE genres
+ADD PRIMARY KEY(genres_id)
 
 CREATE TABLE link_genres(
 	anime_id INT, 

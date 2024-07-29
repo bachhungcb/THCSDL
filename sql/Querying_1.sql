@@ -8,7 +8,7 @@ FROM anime a
  JOIN anime_status s ON s.anime_id = a.anime_id
 WHERE a.anime_id = @anime_id;
 GO
-EXEC AnimeInformation 10050;
+EXEC AnimeInformation 0;
 SELECT a.*, i.*, s.*
 FROM anime a
  JOIN informations i ON i.anime_id = a.anime_id
@@ -70,7 +70,7 @@ SELECT DISTINCT TOP 10 anime.title, genres.genres, informations.scores
 FROM anime 
 JOIN informations ON informations.anime_id = anime.anime_id 
 JOIN link_genres ON link_genres.anime_id = anime.anime_id
-JOIN genres ON genres.Id = link_genres.genres_id
+JOIN genres ON genres.genres_id = link_genres.genres_id
 WHERE genres.genres LIKE '%Historical%' 
 ORDER BY informations.scores DESC;
 
@@ -110,7 +110,7 @@ SELECT new_character.Name, link_character.Roles, anime.title
 FROM new_character
 JOIN link_character ON link_character.character_id = new_character.Id
 JOIN anime ON anime.anime_id = link_character.anime_id
-WHERE anime.anime_id = 604;
+WHERE anime.anime_id = 0;
 
 
 --Lấy ra producers và tổng số bộ anime mà họ đã sản xuất
