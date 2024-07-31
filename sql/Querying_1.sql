@@ -102,7 +102,7 @@ SELECT DISTINCT TOP 10 new_character.Name, anime.title, new_character.Profile, n
         FROM new_character  
 		JOIN link_character ON link_character.character_id = new_character.Id
 		JOIN anime ON link_character.anime_id = anime.anime_id
-        WHERE new_character.Name LIKE '%Dam Thanh Bach%'
+        WHERE new_character.Name LIKE '%Conan%'
         ORDER BY new_character.Name;
 
 --Tìm kiếm nhân vật thông qua anime_id
@@ -110,7 +110,7 @@ SELECT new_character.Name, link_character.Roles, anime.title
 FROM new_character
 JOIN link_character ON link_character.character_id = new_character.Id
 JOIN anime ON anime.anime_id = link_character.anime_id
-WHERE anime.anime_id = 0;
+WHERE anime.anime_id = 56;
 
 
 --Lấy ra producers và tổng số bộ anime mà họ đã sản xuất
