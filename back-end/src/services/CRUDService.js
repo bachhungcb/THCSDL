@@ -1,6 +1,5 @@
 const sql = require("mssql");
 const sqlConfig = require("../config/database");
-const createPool = require(`../config/database`);
 const {executeProcedure, executeQuery} = require(`../config/procAndQueryConfig.js`);
 
 
@@ -39,7 +38,6 @@ const postComment = async (userId, animeId, comment) => {
                                 {name: "animeId", value: animeId}, 
                                 {name: "comment", value: comment}, 
                                 {name: "addedAt", value: new Date()}]);
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
@@ -49,35 +47,30 @@ const postComment = async (userId, animeId, comment) => {
 
 const editComment = async (userId, animeId, commentId, comment) => {
   try {
-    let pool = await sql.connect(sqlConfig);
-    let result = await pool
-      .request()
-      .input("userId", sql.Int, userId)
-      .input("animeId", sql.Int, animeId)
-      .input("commentId", sql.Int, commentId)
-      .input("comment", sql.NVarChar, comment)
-      .query(
-        `UPDATE User_comment SET comment = @comment WHERE users_id = @userId AND anime_id = @animeId AND Id = @commentId`
-      );
-
+    const result = executeQuery(` UPDATE User_comment SET comment = @comment 
+                                  WHERE users_id = @userId AND anime_id = @animeId AND Id = @commentId`,
+                                [{name: "userId", value: userId},
+                                {name: "animeId", value: animeId},
+                                {name: "commentId", value: commentId},
+                                {name: "comment", value: comment}]
+    );
     return result;
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
+
 const deleteComment = async (userId, animeId, commentId) => {
   try {
-    let pool = await sql.connect(sqlConfig);
-    let result = await pool
-      .request()
-      .input("userId", sql.Int, userId)
-      .input("animeId", sql.Int, animeId)
-      .input("commentId", sql.Int, commentId)
-      .query(
-        `DELETE FROM User_comment WHERE users_id = @userId AND anime_id = @animeId AND Id = @commentId`
-      );
-
+    const result = executeQuery(` DELETE FROM User_comment 
+                                  WHERE users_id = @userId 
+                                  AND anime_id = @animeId 
+                                  AND Id = @commentId`,
+                                  [ {name: "userId", value: userId},
+                                    {name: "animeId", value: animeId},
+                                    {name: "commentId", value: commentId}        
+    ]);
     return result;
   } catch (err) {
     console.log(err);
@@ -207,6 +200,7 @@ const unbanUser = async (userId) => {
   ];
   return executeProcedure(procedure, params);
 };
+
 module.exports = {
   getComments,
   postComment,
