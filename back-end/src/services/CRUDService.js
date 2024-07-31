@@ -21,7 +21,7 @@ const postComment = async (userId, animeId, comment) => {
 
     const userExists = await executeQuery(`SELECT Id FROM Users WHERE Id = @userId`,
                                      [{ name: "userId", value: userId }]);
-    console.log(userExists.length);
+    
     if (userExists.length === 0) {
       throw new Error(`User with ID ${userId} does not exist.`);
     }
@@ -80,13 +80,13 @@ const deleteComment = async (userId, animeId, commentId) => {
 
 const getCommentsForCharacter = async (characterId) => {
   try {
-    let pool = await sql.connect(sqlConfig);
-    let result = await pool.request().input("characterId", sql.Int, characterId)
-      .query(`SELECT c.*, u.FullName, u.Avatar FROM User_comment_character c 
-              JOIN Users u ON u.Id = c.users_id
-              WHERE c.character_id = @characterId`);
-
-    return result.recordset;
+    const result = await executeQuery(` SELECT c.*, u.FullName, u.Avatar 
+                                        FROM User_comment_character c 
+                                        JOIN Users u ON u.Id = c.users_id
+                                        WHERE c.character_id = @characterId`,
+                                      [{name: "characterId", value: characterId},
+    ]);
+    return result;
   } catch (err) {
     console.log(err);
     throw err;
@@ -95,36 +95,27 @@ const getCommentsForCharacter = async (characterId) => {
 
 const postCommentForCharacter = async (userId, characterId, comment) => {
   try {
-    let pool = await sql.connect(sqlConfig);
-
-    const userExists = await pool
-      .request()
-      .input("userId", sql.Int, userId)
-      .query("SELECT Id FROM Users WHERE Id = @userId");
-
-    if (userExists.recordset.length === 0) {
+    const userExists = await executeQuery(`SELECT Id FROM Users WHERE Id = @userId`,
+                                      [{ name: "userId", value: userId }
+                                      ]);
+    if (userExists.length === 0) {
       throw new Error(`User with ID ${userId} does not exist.`);
     }
 
-    const characterExists = await pool
-      .request()
-      .input("characterId", sql.Int, characterId)
-      .query("SELECT Id FROM new_character WHERE Id = @characterId");
-
-    if (characterExists.recordset.length === 0) {
+    const characterExists = await executeQuery(`SELECT Id FROM new_character WHERE Id = @characterId`,
+                                              [{ name: "characterId", value: characterId }
+    ]);
+    if (characterExists.length === 0) {
       throw new Error(`Character with ID ${characterId} does not exist.`);
     }
-
-    // Proceed with inserting comment
-    let result = await pool
-      .request()
-      .input("userId", sql.Int, userId)
-      .input("characterId", sql.Int, characterId)
-      .input("comment", sql.NVarChar, comment)
-      .input("addedAt", sql.Date, new Date())
-      .query(`INSERT INTO User_comment_character (users_id, character_id, comment, added_at) 
-              VALUES (@userId, @characterId, @comment, @addedAt)`);
-
+    
+    const result = await executeQuery(` INSERT INTO User_comment_character (users_id, character_id, comment, added_at) 
+                                        VALUES (@userId, @characterId, @comment, @addedAt)`,[
+                                          {name: "userId", value: userId},
+                                          {name:"characterId", value: characterId},
+                                          {name: "comment", value: comment},
+                                          {name: "addedAt", value: new Date()}
+                                        ]);
     return result;
   } catch (err) {
     console.log(err);
