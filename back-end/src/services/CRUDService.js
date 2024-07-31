@@ -5,18 +5,6 @@ const {executeProcedure, executeQuery} = require(`../config/procAndQueryConfig.j
 
 
 const getComments = async (animeId) => {
-  // try {
-  //   let pool = await sql.connect(sqlConfig);
-  //   let result = await pool.request().input("animeId", sql.Int, animeId)
-  //     .query(`SELECT c.*, u.FullName, u.Avatar FROM User_comment c 
-  //                   JOIN Users u ON u.Id = c.users_id
-  //                   WHERE c.anime_id = @animeId`);
-
-  //   return result.recordset;
-  // } catch (err) {
-  //   console.log(err);
-  //   throw err;
-  // }
   try{
     const query =     `SELECT c.*, u.FullName, u.Avatar FROM User_comment c 
                       JOIN Users u ON u.Id = c.users_id
@@ -31,7 +19,7 @@ const getComments = async (animeId) => {
 
 const postComment = async (userId, animeId, comment) => {
   try {
-    
+
     const userExists = await executeQuery(`SELECT Id FROM Users WHERE Id = @userId`,
                                      [{ name: "userId", value: userId }]);
     console.log(userExists.length);
