@@ -1,0 +1,98 @@
+.profile-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 800px; /* Điều chỉnh độ rộng tối đa nếu cần */
+    max-height: 1200px !important;
+}
+
+.profile-container .ant-table-content-holder{
+    max-height: 1200px;
+}
+
+.profile-tabs{
+    margin-top: 20px;
+}
+
+.profile-card {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 600px !important; /* Điều chỉnh độ rộng tối đa nếu cần */
+}
+
+.useravatarcontainer{
+    max-width: 500px !important;
+    max-height: 500px !important;
+    margin: 0 auto !important;
+}
+
+.useravatar{
+    border: 2px solid #2e51a2;
+    margin: 0 auto;
+    margin-top: 16px;
+    margin-bottom: -20px;
+}
+
+.changeavtbtn {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    display: none;
+    font-size: 12px;
+}
+
+.useravatarcontainer:hover .changeavtbtn {
+    display: block;
+}
+
+.changeavtbtn:hover{
+    background-color: transparent !important;
+    color: grey !important;
+}
+
+.avtinput{
+    width: 300px !important;
+    height: 30px !important;
+    margin: 20px auto !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.changepassbtn{
+    border: 2px solid #2e51a2;
+    background-color: #2e51a2;
+}
+
+.cofbtn{
+    margin-top: 10px;
+    background-color: #2e51a2;
+    border: 2px solid #2e51a2;
+}
+
+.username::after{
+    content: " ";
+    display: block;
+    width: 250px;
+    height: 2px;
+    background-color: rgba(15, 19, 19, 0.514);
+    margin: 0 auto;
+}
+
+.profile-details{
+    margin: 0 auto;
+    width: 200px;
+    text-align: left;
+}
+
+.userlist .ant-table-container{
+    width: 800px;
+}
+
+.useravatar2{
+    border: 2px solid #2e51a2;
+    width: 50px;
+    height: 50px;
+}

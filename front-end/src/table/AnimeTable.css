@@ -1,0 +1,198 @@
+#root {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+
+/*----------main container----------*/
+.ant-table-container{
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.top-header{
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/*-------------thead--------------*/
+.ant-table-thead{
+  text-align: center !important;
+}
+
+.ant-table-cell{
+  text-align: center;
+}
+
+/*-------------tbody--------------*/
+.body-title {
+  display: flex;
+  align-items: center;
+}
+
+.body-poster {
+  width: 80px;
+  height: auto;
+}
+
+.body-title-text {
+  width: 350px;
+  height: auto;
+  text-align: left;
+  line-height: normal;
+  margin-top: -5px;
+}
+
+.anime-name{
+  font-size: 120%;
+}
+
+.body-poster-img{
+  margin-top: 5px;
+  width: 55px;
+  height: 75px;
+  transform: scale(1);
+}
+
+.atf{
+  margin-left: 80px;
+  
+}
+
+.atfbtn{
+  background-color: #1c439b;
+  color: #fff;
+}
+
+  
+
+.hover-info h3{
+  background-color: #1c439b;
+  font-size: 16px;
+  color: white;
+  padding-left: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.hover-info p{
+  padding-left: 3px;
+  padding-right: 3px;
+  line-height: 3px;
+  font-size: 14px;
+  color: black;
+}
+
+.anime-name{
+  color: #1c439b;
+  font-weight: 500;
+}
+
+.anime-name:hover {
+  text-decoration: underline;
+}
+
+.small{
+  font-size: 12px;
+}
+
+.pagination-buttons{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+}
+.empty-message {
+  text-align: center; 
+}
+
+.empty-message h2 {
+  margin-bottom: 30px; 
+}
+
+.empty-message .nah {
+  display: block; 
+  margin: 0 auto; 
+  width: 200px; 
+  height: auto; 
+  scale: 1.2;
+}
+
+.fav-anime-table-container .ant-table-container{
+  width: 800px;
+}
+
+.fav-body-title-text {
+  width: 350px;
+  height: auto;
+  text-align: left;
+  line-height: normal;
+  margin-top: -5px;
+}
+
+.top-char-table-container .ant-table-container{
+  width: 500px;
+}
+
+.char-body-title-text{
+  width: 150px;
+  height: auto;
+  text-align: left;
+  line-height: normal;
+  margin-top: -5px;
+}
+
+.fav-char-table-container .ant-table-container{
+  width: 500px;
+  margin: 0 auto;
+}
+
+
+

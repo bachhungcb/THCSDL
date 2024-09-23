@@ -1,0 +1,53 @@
+/* MainLayout.css */
+.header {
+  background: #001529;
+  padding: 0;
+}
+
+.header .logincontainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: -12px 77px;
+} 
+
+
+.site-layout-content {
+  object-fit: cover;
+  padding: 24px;
+  background-color: #fff;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column; /* Dọc */
+  justify-content: flex-start; /* Đẩy lên đầu */
+  align-items: left; /* Stretch tất cả phần tử con theo chiều dọc */
+  background-size: cover;
+  max-height: 8000px;
+  background-position: center;
+}
+
+.sider {
+  background: #f5f5f5;
+  padding: 24px;
+}
+
+.breadcrumb {
+  margin: 16px 0;
+}
+
+.rank,
+.dark {
+  font-weight: bold;
+}
+
+.container {
+  text-align: center;
+}
+
+.anime-poster {
+  max-width: 100%;
+}
+
+.statics {
+  margin-top: 16px;
+}
