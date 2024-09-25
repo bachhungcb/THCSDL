@@ -5,7 +5,7 @@ import { Table, Button, Popover, Typography } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif";
-import FavouriteButton from "../button/AddFavouriteButton";
+import FavouriteButton from "../shared/components/button/AddFavouriteButton";
 import "./AnimeTable.css";
 import { getAnimes } from "../services/Api";
 

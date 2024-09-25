@@ -5,7 +5,7 @@ import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
 import loadingGif from "../assets/loading-screen.gif";
 import { useTitle } from "../templates/TitleContext";
-import FavouriteButton from "../button/AddFavouriteCharacterButton";
+import FavouriteButton from "../shared/components/button/AddFavouriteCharacterButton";
 import "./AnimeTable.css";
 
 const { Text } = Typography;

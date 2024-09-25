@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import CharactersCard from "./CharactersCard.jsx";
-import CommentBox from "../../comment-box/CommentBox.jsx";
+import CommentBox from "../../shared/components/comment-box";
 import { Layout, Card, ConfigProvider, Typography } from "antd";
 
 import "./AnimeDetail.css";
