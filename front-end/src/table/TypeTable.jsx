@@ -3,10 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Popover, Typography } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
-import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif";
-import FavouriteButton from "../button/AddFavouriteButton";
+import FavouriteButton from "../shared/components/button/AddFavouriteButton";
 import "./AnimeTable.css";
 
 const { Text } = Typography;
@@ -156,7 +155,7 @@ function TypeTable() {
 
   if (userRole === `"banned"`) {
     return (
-      <MainLayout breadcrumbs={["Home"]}>
+      <>
         <div className="banned-message">
           <Typography.Title level={2}>Access Denied</Typography.Title>
           <Typography.Paragraph>
@@ -164,12 +163,11 @@ function TypeTable() {
             content.
           </Typography.Paragraph>
         </div>
-      </MainLayout>
+      </>
     );
   }
 
   return (
-    <MainLayout>
       <div className="top-anime-table-container">
         <h2 className="top-header">Top Anime {type}</h2>
         {isLoading ? (
@@ -201,7 +199,6 @@ function TypeTable() {
           </>
         )}
       </div>
-    </MainLayout>
   );
 }
 

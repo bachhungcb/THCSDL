@@ -1,0 +1,36 @@
+.loginbtn {
+    border-radius: 25px;
+    background: #fff;
+    color: #2e51a2;
+    width: 100px;
+    border: 2px solid #2e51a2;
+    line-height: 1;
+    margin-right: 5px;
+} 
+.signupbtn {
+    border-radius: 25px;
+    background: #2e51a2;
+    color: #fff;
+    width: 100px;
+    border: 2px solid #2e51a2;
+    line-height: 1;
+} 
+  
+.logoutbtn{
+    border-radius: 25px;
+    background: #fff;
+    color: #2e51a2;
+    width: 100px;
+    border: 2px solid #2e51a2;
+    line-height: 1;
+}
+
+.profilebtn{
+    border-radius: 25px;
+    background: #2e51a2;
+    color: #fff;
+    width: 100px;
+    border: 2px solid #2e51a2;
+    line-height: 1;
+    margin-right: 5px;
+}

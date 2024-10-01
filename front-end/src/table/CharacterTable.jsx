@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { Table, Button, Popover, Typography } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
-import MainLayout from "../templates/MainLayout";
 import loadingGif from "../assets/loading-screen.gif";
 import { useTitle } from "../templates/TitleContext";
-import FavouriteButton from "../button/AddFavouriteCharacterButton";
+import FavouriteButton from "../shared/components/button/AddFavouriteCharacterButton";
 import "./AnimeTable.css";
 
 const { Text } = Typography;
@@ -96,7 +95,6 @@ function CharacterTable() {
   ];
 
   return (
-    <MainLayout>
       <div className="top-char-table-container">
         <h2 className="top-header">Character List</h2>
 
@@ -129,7 +127,6 @@ function CharacterTable() {
           </>
         )}
       </div>
-    </MainLayout>
   );
 }
 
