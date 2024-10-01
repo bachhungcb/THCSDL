@@ -1,0 +1,18 @@
+
+.Animeography .ant-card-cover{
+    width: 240px;
+    height: auto;
+}
+
+.charID{
+    text-align: center;
+}
+
+.character-profile{
+    width: 200px;
+    margin: 0 auto;
+    border: 2px solid #2e51a2;
+    transition: all .7s;
+}
+
+

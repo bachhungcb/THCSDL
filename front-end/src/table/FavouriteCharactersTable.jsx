@@ -4,7 +4,7 @@ import axios from "axios";
 import { Table, Popover } from "antd";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif";
-import RemoveFavouriteButton from "../button/RemoveFavouriteCharacterButton";
+import RemoveFavouriteButton from "../shared/components/button/RemoveFavouriteCharacterButton";
 import nah from "../assets/nah.png";
 import "./AnimeTable.css";
 

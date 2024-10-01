@@ -1,9 +1,9 @@
 import React from "react";
 import { Layout } from "antd";
-import NavBar from "../nav-bar/NavBar";
+import NavBar from "../shared/components/nav-bar/NavBar.jsx";
 import CustomBreadCrumbs from "./BreadCrumbs.jsx";
-import LoginButton from "../button/LoginButton.jsx";
 import "./MainLayout.css";
+import LoginButton from "../shared/components/button/LoginButton.jsx";
 
 const { Header, Content, Footer } = Layout;
 

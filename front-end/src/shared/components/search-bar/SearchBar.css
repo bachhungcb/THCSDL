@@ -1,0 +1,18 @@
+.searching-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .searching-bar form {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* .searching-bar select {
+    margin-right: 10px;
+  }
+  
+  .searching-bar button {
+    margin-left: 10px; 
+  } */

@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Table, Button, Popover, Typography } from "antd";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
-import MainLayout from "../templates/MainLayout";
 import { useTitle } from "../templates/TitleContext";
 import loadingGif from "../assets/loading-screen.gif";
-import FavouriteButton from "../button/AddFavouriteButton";
+import FavouriteButton from "../shared/components/button/AddFavouriteButton";
 import "./AnimeTable.css";
+import { getAnimes } from "../services/Api";
 
-const { Text } = Typography;
 
 function AnimeTable() {
   const { setTitle } = useTitle();
@@ -17,19 +16,17 @@ function AnimeTable() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [animesPerPage] = useState(50);
-  const urlWithProxy = "http://localhost:8080/animes";
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const role = sessionStorage.getItem("userRole");
     setUserRole(role);
-    getDataFromServer();
-  }, [currentPage]);
-
-  function getDataFromServer() {
     setIsLoading(true); 
-    axios
-      .get(`${urlWithProxy}?page=${currentPage}`)
+    getAnimes({
+      params: {
+        page: currentPage
+      }
+    })
       .then((res) => {
         setData(res.data);
         setIsLoading(false); 
@@ -38,7 +35,7 @@ function AnimeTable() {
         console.error(err);
         setIsLoading(false); 
       });
-  }
+  }, [currentPage]);
 
   function handleNextPage() {
     setCurrentPage(currentPage + 1);
@@ -152,7 +149,6 @@ function AnimeTable() {
 
   if (userRole === `"banned"`) {
     return (
-      <MainLayout breadcrumbs={["Home"]}>
         <div className="banned-message">
           <Typography.Title level={2}>Access Denied</Typography.Title>
           <Typography.Paragraph>
@@ -160,12 +156,10 @@ function AnimeTable() {
             content.
           </Typography.Paragraph>
         </div>
-      </MainLayout>
     );
   }
 
   return (
-    <MainLayout breadcrumbs={["Home"]}>
       <div className="top-anime-table-container">
         <h2 className="top-header">Top Anime Series</h2>
 
@@ -202,7 +196,6 @@ function AnimeTable() {
           </>
         )}
       </div>
-    </MainLayout>
   );
 }
 
